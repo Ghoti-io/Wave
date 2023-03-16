@@ -5,14 +5,20 @@ BUILD := ./build
 OBJ_DIR := $(BUILD)/objects
 GEN_DIR := $(BUILD)/generated
 APP_DIR := $(BUILD)/apps
-TARGET := libghoti-io-wave.so
-INCLUDE := -I include/
+
+BASE_NAME := libghoti.io-wave.so
+MAJOR_VERSION := 0
+MINOR_VERSION := 0.0
+SO_NAME := $(BASE_NAME).$(MAJOR_VERSION)
+TARGET := $(SO_NAME).$(MINOR_VERSION)
+
+INCLUDE := -I include/ -I include/wave
 LIBOBJECTS := $(OBJ_DIR)/wave.o
 
 TESTFLAGS := `pkg-config --libs --cflags gtest`
 
 
-WAVELIBRARY := -L $(APP_DIR) -Wl,-R -Wl,$(APP_DIR) -l:$(TARGET)
+WAVELIBRARY := -L $(APP_DIR) -lghoti.io-wave
 
 
 all: $(APP_DIR)/$(TARGET) ## Build the shared library
@@ -44,7 +50,9 @@ $(APP_DIR)/$(TARGET): \
 				$(LIBOBJECTS)
 	@echo "\n### Compiling Ghoti.io Wave Shared Library ###"
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -shared -o $@ $^ $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -shared -o $@ $^ $(LDFLAGS) -Wl,-soname,$(SO_NAME)
+	@ln -f -s $(TARGET) $(APP_DIR)/$(SO_NAME)
+	@ln -f -s $(SO_NAME) $(APP_DIR)/$(BASE_NAME)
 
 ####################################################################
 # Unit Tests
@@ -62,7 +70,7 @@ $(APP_DIR)/test: \
 # Commands
 ####################################################################
 
-.PHONY: all clean cloc docs docs-pdf test test-watch watch
+.PHONY: all clean cloc docs docs-pdf install test test-watch watch
 
 watch: ## Watch the file directory for changes and compile the target
 	@while true; do \
@@ -94,12 +102,30 @@ test: \
 	@echo "### Running normal tests ###"
 	@echo "############################"
 	@echo "\033[0m"
-	$(APP_DIR)/test --gtest_brief=1
+	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test --gtest_brief=1
 
 clean: ## Remove all contents of the build directories.
 	-@rm -rvf $(OBJ_DIR)/*
 	-@rm -rvf $(APP_DIR)/*
 	-@rm -rvf $(GEN_DIR)/*
+
+install: ## Install the library globally, requires sudo
+	# Install the Shared Library
+	@mkdir -p /usr/local/lib/ghoti.io
+	@cp $(APP_DIR)/$(TARGET) /usr/local/lib/ghoti.io/
+	@ln -f -s $(TARGET) /usr/local/lib/ghoti.io/$(SO_NAME)
+	@ln -f -s $(SO_NAME) /usr/local/lib/ghoti.io/$(BASE_NAME)
+	@echo "/usr/local/lib/ghoti.io" > /etc/ld.so.conf.d/ghoti.io-wave.conf
+	# Install the headers
+	@mkdir -p /usr/local/include/ghoti.io/wave
+	@cp include/wave.hpp /usr/local/include/ghoti.io/
+	@#cp include/wave/*.hpp /usr/local/include/ghoti.io/wave/
+	# Install the pkgconfig files
+	@mkdir -p /usr/local/share/pkgconfig
+	@cp pkgconfig/ghoti.io-wave.pc /usr/local/share/pkgconfig/
+	# Run ldconfig
+	@ldconfig >> /dev/null 2>&1
+	@echo "Ghoti.io Wave installed"
 
 docs: ## Generate the documentation in the ./docs subdirectory
 	doxygen

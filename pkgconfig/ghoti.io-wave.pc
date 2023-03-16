@@ -1,0 +1,7 @@
+Name: Ghoti.io Wave
+Description: HTTP Client and Server
+Version: 0.0.0
+URL: https://github.com/Ghoti-io
+Libs: -lghoti.io-wave
+CFlags: -std=c++20 -L /usr/local/lib/ghoti.io
+
