@@ -13,7 +13,10 @@ SO_NAME := $(BASE_NAME).$(MAJOR_VERSION)
 TARGET := $(SO_NAME).$(MINOR_VERSION)
 
 INCLUDE := -I include/ -I include/wave
-LIBOBJECTS := $(OBJ_DIR)/wave.o
+LIBOBJECTS := $(OBJ_DIR)/client.o \
+							$(OBJ_DIR)/response.o \
+							$(OBJ_DIR)/request.o \
+							$(OBJ_DIR)/server.o
 
 TESTFLAGS := `pkg-config --libs --cflags gtest`
 
@@ -26,7 +29,19 @@ all: $(APP_DIR)/$(TARGET) ## Build the shared library
 ####################################################################
 # Dependency Variables
 ####################################################################
+DEP_CLIENT = \
+	include/wave/client.hpp
+DEP_RESPONSE = \
+	include/wave/response.hpp
+DEP_REQUEST = \
+	include/wave/request.hpp
+DEP_SERVER = \
+	include/wave/server.hpp
 DEP_WAVE = \
+	$(DEP_CLIENT) \
+	$(DEP_RESPONSE) \
+	$(DEP_REQUEST) \
+	$(DEP_SERVER) \
 	include/wave.hpp
 
 ####################################################################
@@ -37,6 +52,22 @@ $(LIBOBJECTS) :
 	@echo "\n### Compiling $@ ###"
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -MMD -o $@ -fPIC
+
+$(OBJ_DIR)/client.o: \
+				src/client.cpp \
+				$(DEP_CLIENT)
+
+$(OBJ_DIR)/response.o: \
+				src/response.cpp \
+				$(DEP_)
+
+$(OBJ_DIR)/request.o: \
+				src/request.cpp \
+				$(DEP_)
+
+$(OBJ_DIR)/server.o: \
+				src/server.cpp \
+				$(DEP_)
 
 $(OBJ_DIR)/wave.o: \
 				src/wave.cpp \

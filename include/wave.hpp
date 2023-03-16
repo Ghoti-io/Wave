@@ -7,6 +7,11 @@
 #ifndef WAVE_HPP
 #define WAVE_HPP
 
+#include "wave/client.hpp"
+#include "wave/request.hpp"
+#include "wave/response.hpp"
+#include "wave/server.hpp"
+
 namespace Ghoti::Wave {
 
 };
