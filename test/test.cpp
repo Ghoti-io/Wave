@@ -11,11 +11,11 @@
 using namespace std;
 using namespace Ghoti::Wave;
 
-string request {R"(GET /hello.html HTTP/1.1
+static string request {R"(GET /hello.html HTTP/1.1
 Host: 0.0.0.0
 Accept-Language: en)"};
 
-string response {R"(HTTP/1.1 200 OK
+static string response {R"(HTTP/1.1 200 OK
 Server: Hello
 Content-Length: 13
 Content-Type: text/plain
@@ -26,6 +26,7 @@ TEST(Simple, Simple){
   Server s{};
   s.start();
   cout << "listening on " << s.getAddress() << ":" << s.getPort() << endl;
+  this_thread::sleep_for(5ms);
 }
 
 int main(int argc, char** argv) {

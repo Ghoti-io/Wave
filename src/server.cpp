@@ -4,6 +4,7 @@
  */
 
 #include <arpa/inet.h>
+#include <ghoti.io/pool.hpp>
 #include <iostream>
 #include <sys/socket.h>
 #include <sstream>
@@ -13,13 +14,42 @@ using namespace std;
 using namespace Ghoti::Pool;
 using namespace Ghoti::Wave;
 
-static void dispatchLoop(stop_token stoken) {
+static string request {R"(GET /hello.html HTTP/1.1
+Host: 0.0.0.0
+Accept-Language: en)"};
+
+static string response {R"(HTTP/1.1 200 OK
+Server: Hello
+Content-Length: 13
+Content-Type: text/plain
+
+Hello, world)"};
+
+static void dispatchLoop(stop_token stoken, [[maybe_unused]] Server * server) {
+  // Create the worker pool queue.
+  Pool pool{};
+  pool.start();
+
   while (1) {
     if (stoken.stop_requested()) {
-      return;
+      break;
     }
-    return;
+    sockaddr_in client;
+    socklen_t clientLength = sizeof(client);
+    int hClient = accept4(server->getSocketHandle(), (sockaddr *)&client, &clientLength, SOCK_NONBLOCK);
+    if (hClient < 0) {
+      // Nothing to do.
+      this_thread::sleep_for(1ms);
+      cout << "Nothing" << endl;
+      continue;
+    }
+    else {
+      // There is a request.  Give it to the worker pool.
+    }
   }
+
+  // Stop and join the worker threads.
+  pool.join();
 }
 
 Server::Server() : errorCode{ErrorCode::NO_ERROR}, errorMessage{}, running{false}, hSocket{0}, address{"127.0.0.1"}, port{0} {}
@@ -55,7 +85,7 @@ uint16_t Server::getPort() const {
   return this->port;
 }
 
-Server& Server::setAddress(const char * ip) {
+Server & Server::setAddress(const char * ip) {
   if (this->running) {
     this->errorCode = ErrorCode::SERVER_ALREADY_RUNNING;
     this->errorMessage = "Could not set server listening address because server is already running.";
@@ -66,8 +96,12 @@ Server& Server::setAddress(const char * ip) {
   return *this;
 }
 
-const char *Server::getAddress() const {
-  return this->address.c_str();
+const string & Server::getAddress() const {
+  return this->address;
+}
+
+int Server::getSocketHandle() const {
+  return this->hSocket;
 }
 
 Server& Server::start() {
@@ -126,7 +160,9 @@ Server& Server::start() {
   }
 
   // Start the dispatch thread.
-  this->dispatchThread = jthread{dispatchLoop};
+  this->dispatchThread = jthread{dispatchLoop, this};
+
+  this->running = true;
 
   return *this;
 }

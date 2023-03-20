@@ -6,8 +6,9 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
-#include <thread>
 #include <ghoti.io/pool.hpp>
+#include <string>
+#include <thread>
 
 namespace Ghoti::Wave {
 class Server {
@@ -20,14 +21,15 @@ class Server {
   Server();
   ~Server();
   ErrorCode getErrorCode() const;
-  const std::string& getErrorMessage() const;
+  const std::string & getErrorMessage() const;
   bool isRunning() const;
-  Server& setPort(uint16_t port);
+  Server & setPort(uint16_t port);
   uint16_t getPort() const;
-  Server& setAddress(const char * ip);
-  const char * getAddress() const;
-  Server& start();
-  Server& stop();
+  Server & setAddress(const char * ip);
+  const std::string & getAddress() const;
+  int getSocketHandle() const;
+  Server & start();
+  Server & stop();
 
   private:
   Ghoti::Pool::Pool workers;
