@@ -24,6 +24,8 @@ Hello, world)"};
 
 TEST(Simple, Simple){
   Server s{};
+  s.start();
+  cout << "listening on " << s.getAddress() << ":" << s.getPort() << endl;
 }
 
 int main(int argc, char** argv) {
