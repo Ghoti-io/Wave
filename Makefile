@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := `pkg-config --libs --cflags ghoti.io-pool` -pedantic-errors -Wall -Wextra -Werror -Wno-error=unused-function -O3 -g
+CXXFLAGS := -pedantic-errors -Wall -Wextra -Werror -Wno-error=unused-function -std=c++20 -O3 -g
 LDFLAGS := -L /usr/lib -lstdc++ -lm
 BUILD := ./build
 OBJ_DIR := $(BUILD)/objects
@@ -81,7 +81,7 @@ $(APP_DIR)/$(TARGET): \
 				$(LIBOBJECTS)
 	@echo "\n### Compiling Ghoti.io Wave Shared Library ###"
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -shared -o $@ $^ $(LDFLAGS) -Wl,-soname,$(SO_NAME)
+	$(CXX) $(CXXFLAGS) -shared -o $@ $^ $(LDFLAGS) `pkg-config --libs --cflags ghoti.io-pool` -Wl,-soname,$(SO_NAME)
 	@ln -f -s $(TARGET) $(APP_DIR)/$(SO_NAME)
 	@ln -f -s $(SO_NAME) $(APP_DIR)/$(BASE_NAME)
 

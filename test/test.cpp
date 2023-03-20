@@ -23,7 +23,7 @@ Content-Type: text/plain
 Hello, world)"};
 
 TEST(Simple, Simple){
-
+  Server s{};
 }
 
 int main(int argc, char** argv) {

@@ -20,7 +20,7 @@ class Server {
   std::jthread dispatchThread;
 };
 
-};
+}
 
 #endif // SERVER_HPP
 
