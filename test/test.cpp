@@ -27,6 +27,8 @@ TEST(Simple, Simple){
   s.start();
   cout << "listening on " << s.getAddress() << ":" << s.getPort() << endl;
   this_thread::sleep_for(5ms);
+  //int x;
+  //cin >> x;
 }
 
 int main(int argc, char** argv) {

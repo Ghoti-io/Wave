@@ -10,6 +10,8 @@
 #include <string>
 #include <thread>
 
+#define MAXBUFFERSIZE (4096)
+
 namespace Ghoti::Wave {
 class Server {
   public:
@@ -30,6 +32,7 @@ class Server {
   int getSocketHandle() const;
   Server & start();
   Server & stop();
+  void dispatchLoop(std::stop_token stoken);
 
   private:
   Ghoti::Pool::Pool workers;

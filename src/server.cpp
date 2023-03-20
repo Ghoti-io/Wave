@@ -25,9 +25,9 @@ Content-Type: text/plain
 
 Hello, world)"};
 
-static void dispatchLoop(stop_token stoken, [[maybe_unused]] Server * server) {
+void Server::dispatchLoop(stop_token stoken) {
   // Create the worker pool queue.
-  Pool pool{};
+  Pool::Pool pool{};
   pool.start();
 
   while (1) {
@@ -36,15 +36,24 @@ static void dispatchLoop(stop_token stoken, [[maybe_unused]] Server * server) {
     }
     sockaddr_in client;
     socklen_t clientLength = sizeof(client);
-    int hClient = accept4(server->getSocketHandle(), (sockaddr *)&client, &clientLength, SOCK_NONBLOCK);
+    int hClient = accept4(this->hSocket, (sockaddr *)&client, &clientLength, SOCK_NONBLOCK);
     if (hClient < 0) {
-      // Nothing to do.
       this_thread::sleep_for(1ms);
-      cout << "Nothing" << endl;
       continue;
     }
     else {
       // There is a request.  Give it to the worker pool.
+      pool.enqueue({[=]() {
+        char buffer[MAXBUFFERSIZE] = {0};
+        ssize_t byte_count = recv(hClient, buffer, MAXBUFFERSIZE, 0);
+        if (byte_count > 0) {
+          cout << buffer << endl;
+        }
+
+        [[maybe_unused]] size_t cursor{0};
+        [[maybe_unused]] size_t count = send(hClient, response.c_str(), response.length(), 0);
+        close(hClient);
+      }});
     }
   }
 
@@ -160,7 +169,9 @@ Server& Server::start() {
   }
 
   // Start the dispatch thread.
-  this->dispatchThread = jthread{dispatchLoop, this};
+  this->dispatchThread = jthread{[&] (stop_token stoken) {
+    this->dispatchLoop(stoken);
+  }};
 
   this->running = true;
 
