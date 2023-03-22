@@ -16,7 +16,8 @@ INCLUDE := -I include/ -I include/wave
 LIBOBJECTS := $(OBJ_DIR)/client.o \
 							$(OBJ_DIR)/response.o \
 							$(OBJ_DIR)/request.o \
-							$(OBJ_DIR)/server.o
+							$(OBJ_DIR)/server.o \
+							$(OBJ_DIR)/session.o
 
 TESTFLAGS := `pkg-config --libs --cflags gtest`
 
@@ -37,11 +38,14 @@ DEP_REQUEST = \
 	include/wave/request.hpp
 DEP_SERVER = \
 	include/wave/server.hpp
+DEP_SESSION = \
+	include/wave/session.hpp
 DEP_WAVE = \
 	$(DEP_CLIENT) \
 	$(DEP_RESPONSE) \
 	$(DEP_REQUEST) \
 	$(DEP_SERVER) \
+	$(DEP_SESSION) \
 	include/wave.hpp
 
 ####################################################################
@@ -59,15 +63,19 @@ $(OBJ_DIR)/client.o: \
 
 $(OBJ_DIR)/response.o: \
 				src/response.cpp \
-				$(DEP_)
+				$(DEP_RESPONSE)
 
 $(OBJ_DIR)/request.o: \
 				src/request.cpp \
-				$(DEP_)
+				$(DEP_REQUEST)
 
 $(OBJ_DIR)/server.o: \
 				src/server.cpp \
-				$(DEP_)
+				$(DEP_SERVER)
+
+$(OBJ_DIR)/session.o: \
+				src/session.cpp \
+				$(DEP_SESSION)
 
 $(OBJ_DIR)/wave.o: \
 				src/wave.cpp \

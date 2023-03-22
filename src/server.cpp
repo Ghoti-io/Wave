@@ -1,5 +1,6 @@
 /**
  * @file
+ *
  * Define the Ghoti::Wave::Server class.
  */
 
@@ -9,6 +10,7 @@
 #include <sys/socket.h>
 #include <sstream>
 #include "server.hpp"
+#include "session.hpp"
 
 using namespace std;
 using namespace Ghoti::Pool;
@@ -25,35 +27,41 @@ Content-Type: text/plain
 
 Hello, world)"};
 
-void Server::dispatchLoop(stop_token stoken) {
+void Server::dispatchLoop(stop_token stopToken) {
   // Create the worker pool queue.
   Pool::Pool pool{};
   pool.start();
 
-  while (1) {
-    if (stoken.stop_requested()) {
-      break;
+  while (!stopToken.stop_requested()) {
+    // Poll existing connections
+    for (auto it = this->sessions.begin(); it != this->sessions.end();) {
+      auto & session = it->second;
+
+      // Service existing requests.
+      if (session->hasDataWaiting()) {
+        pool.enqueue({[=](){
+          session->read();
+        }});
+      }
+
+      // Remove any requests that are dead.
+      if (session->isFinished()) {
+        it = this->sessions.erase(it);
+      }
+      else {
+        ++it;
+      }
     }
+
+    // Service new requests.
     sockaddr_in client;
     socklen_t clientLength = sizeof(client);
     int hClient = accept4(this->hSocket, (sockaddr *)&client, &clientLength, SOCK_NONBLOCK);
     if (hClient < 0) {
       this_thread::sleep_for(1ms);
-      continue;
     }
     else {
-      // There is a request.  Give it to the worker pool.
-      pool.enqueue({[=]() {
-        char buffer[MAXBUFFERSIZE] = {0};
-        ssize_t byte_count = recv(hClient, buffer, MAXBUFFERSIZE, 0);
-        if (byte_count > 0) {
-          cout << buffer << endl;
-        }
-
-        [[maybe_unused]] size_t cursor{0};
-        [[maybe_unused]] size_t count = send(hClient, response.c_str(), response.length(), 0);
-        close(hClient);
-      }});
+      this->sessions.emplace(hClient, make_shared<Session>(hClient, this));
     }
   }
 

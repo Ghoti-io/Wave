@@ -1,5 +1,6 @@
 /**
  * @file
+ *
  * Header file for declaring the Server class.
  */
 
@@ -7,12 +8,15 @@
 #define SERVER_HPP
 
 #include <ghoti.io/pool.hpp>
+#include <map>
+#include <memory>
 #include <string>
 #include <thread>
 
 #define MAXBUFFERSIZE (4096)
 
 namespace Ghoti::Wave {
+class Session;
 class Server {
   public:
     enum ErrorCode {
@@ -36,6 +40,7 @@ class Server {
 
   private:
   Ghoti::Pool::Pool workers;
+  std::map<int, std::shared_ptr<Ghoti::Wave::Session>> sessions;
   std::jthread dispatchThread;
   ErrorCode errorCode;
   std::string errorMessage;

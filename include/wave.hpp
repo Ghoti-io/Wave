@@ -11,6 +11,7 @@
 #include "wave/request.hpp"
 #include "wave/response.hpp"
 #include "wave/server.hpp"
+#include "wave/session.hpp"
 
 namespace Ghoti::Wave {
 
