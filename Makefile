@@ -39,6 +39,7 @@ DEP_REQUEST = \
 DEP_SERVER = \
 	include/wave/server.hpp
 DEP_SESSION = \
+	$(DEP_REQUEST) \
 	include/wave/session.hpp
 DEP_WAVE = \
 	$(DEP_CLIENT) \

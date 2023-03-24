@@ -14,6 +14,7 @@
 #include <thread>
 
 #define MAXBUFFERSIZE (4096)
+//#define MAXBUFFERSIZE (40)
 
 namespace Ghoti::Wave {
 class Session;

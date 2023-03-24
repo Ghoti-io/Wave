@@ -26,9 +26,7 @@ TEST(Simple, Simple){
   Server s{};
   s.setPort(50000).start();
   cout << "listening on " << s.getAddress() << ":" << s.getPort() << endl;
-  this_thread::sleep_for(5ms);
-  int x;
-  cin >> x;
+  this_thread::sleep_for(10000ms);
 }
 
 int main(int argc, char** argv) {

@@ -29,7 +29,7 @@ Hello, world)"};
 
 void Server::dispatchLoop(stop_token stopToken) {
   // Create the worker pool queue.
-  Pool::Pool pool{};
+  Pool::Pool pool{1};
   pool.start();
 
   while (!stopToken.stop_requested()) {
