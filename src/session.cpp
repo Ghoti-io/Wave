@@ -19,6 +19,61 @@ using namespace std;
 using namespace Ghoti::Pool;
 using namespace Ghoti::Wave;
 
+#define SET_MINOR_STATE(nextState) \
+  this->readStateMinor = nextState; \
+  this->minorStart = cursor;
+
+#define SET_MAJOR_STATE(nextState) \
+  this->readStateMajor = nextState; \
+  this->majorStart = cursor; \
+  SET_MINOR_STATE(BEGINNING_OF_LINE);
+
+#define SKIP_WHITESPACE_OPTIONAL(nextState) \
+  while ((cursor < input_length) && ( \
+      isspace(this->input[cursor]) \
+      && (this->input[cursor] != '\n') \
+      && (this->input[cursor] != '\r'))) { \
+    ++cursor; \
+  } \
+  if ((cursor < input_length) && ( \
+      !isspace(this->input[cursor]) \
+      || (this->input[cursor] == '\n') \
+      || (this->input[cursor] == '\r'))) { \
+    SET_MINOR_STATE(nextState); \
+  }
+
+#define SKIP_WHITESPACE_REQUIRED(nextState, statusCode, errorMessage) \
+  while ((cursor < input_length) && ( \
+      isspace(this->input[cursor]) \
+      && (this->input[cursor] != '\n') \
+      && (this->input[cursor] != '\r'))) { \
+    ++cursor; \
+  } \
+  if (cursor < input_length) { \
+    if (cursor > this->minorStart) { \
+      SET_MINOR_STATE(nextState); \
+    } \
+    else { \
+      this->currentRequest.setStatusCode(statusCode).setErrorMessage(errorMessage); \
+    } \
+  }
+
+#define READ_CRLF(nextState, statusCode, errorMessage) \
+  size_t len = cursor - this->minorStart; \
+  while ((cursor < input_length) && (len < 2)) { \
+    if (((len == 0) && (this->input[cursor] != '\r')) \
+      || ((len == 1) && (this->input[cursor] != '\n'))) { \
+      this->currentRequest.setStatusCode(statusCode).setErrorMessage(errorMessage); \
+    } \
+    if (!this->currentRequest.hasError() && (len == 1)) { \
+      SET_MINOR_STATE(nextState); \
+      break; \
+    } \
+    ++cursor; \
+    ++len; \
+  }
+
+
 // https://www.rfc-editor.org/rfc/rfc9110#name-overview
 // PATCH - https://www.rfc-editor.org/rfc/rfc5789
 static set<string> requestMethods{"GET", "HEAD", "POST", "PUT", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH"};
@@ -129,41 +184,6 @@ void Session::parseRequestTarget([[maybe_unused]]const std::string & target) {
   // https://datatracker.ietf.org/doc/html/rfc9112#name-asterisk-form
 }
 
-#define SET_MINOR_STATE(nextState) \
-  this->readStateMinor = nextState; \
-  this->minorStart = cursor;
-
-#define SET_MAJOR_STATE(nextState) \
-  this->readStateMajor = nextState; \
-  this->majorStart = cursor; \
-  SET_MINOR_STATE(BEGINNING_OF_LINE);
-
-#define SKIP_WHITESPACE(nextState, required) \
-  while ((cursor < input_length) && ( \
-      isspace(this->input[cursor]) \
-      && (this->input[cursor] != '\n') \
-      && (this->input[cursor] != '\r'))) { \
-    ++cursor; \
-  } \
-  if ((cursor < input_length) && (!required || (cursor > this->minorStart))) { \
-    SET_MINOR_STATE(nextState); \
-  }
-
-#define READ_CRLF(nextState, statusCode, errorMessage) \
-  size_t len = cursor - this->minorStart; \
-  while ((cursor < input_length) && (len < 2)) { \
-    if (((len == 0) && (this->input[cursor] != '\r')) \
-      || ((len == 1) && (this->input[cursor] != '\n'))) { \
-      this->currentRequest.setStatusCode(statusCode).setErrorMessage(errorMessage); \
-    } \
-    if (!this->currentRequest.hasError() && (len == 1)) { \
-      SET_MINOR_STATE(nextState); \
-      break; \
-    } \
-    ++cursor; \
-    ++len; \
-  }
-
 void Session::processChunk(const char * buffer, size_t len) {
   cout << "Processing (" << len << "): " << string(buffer, len) << endl;
   size_t cursor = this->input.length();
@@ -176,7 +196,7 @@ void Session::processChunk(const char * buffer, size_t len) {
         // request-line   = method SP request-target SP HTTP-version
         switch (this->readStateMinor) {
           case BEGINNING_OF_LINE: {
-            SKIP_WHITESPACE(METHOD, false);
+            SKIP_WHITESPACE_OPTIONAL(METHOD);
             break;
           }
           case METHOD: {
@@ -199,7 +219,7 @@ void Session::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_METHOD: {
-            SKIP_WHITESPACE(REQUEST_TARGET, true);
+            SKIP_WHITESPACE_REQUIRED(REQUEST_TARGET, 400, "Error reading request line.");
             break;
           }
           case REQUEST_TARGET: {
@@ -216,7 +236,7 @@ void Session::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_REQUEST_TARGET: {
-            SKIP_WHITESPACE(HTTP_VERSION, true);
+            SKIP_WHITESPACE_REQUIRED(HTTP_VERSION, 400, "Error reading request line.");
             break;
           }
           case HTTP_VERSION: {
@@ -232,7 +252,7 @@ void Session::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_HTTP_VERSION: {
-            SKIP_WHITESPACE(CRLF, false);
+            SKIP_WHITESPACE_OPTIONAL(CRLF);
             break;
           }
           case CRLF: {
