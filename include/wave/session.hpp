@@ -38,6 +38,7 @@ class Session {
     BEGINNING_OF_LINE,
     CRLF,
     AFTER_CRLF,
+    BEGINNING_OF_REQUEST,
     METHOD,
     AFTER_METHOD,
     REQUEST_TARGET,

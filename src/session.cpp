@@ -29,7 +29,7 @@ using namespace Ghoti::Wave;
   this->majorStart = cursor; \
   SET_MINOR_STATE(BEGINNING_OF_LINE);
 
-#define SKIP_WHITESPACE_OPTIONAL(nextState) \
+#define READ_WHITESPACE_OPTIONAL(nextState) \
   while ((cursor < input_length) && ( \
       isspace(this->input[cursor]) \
       && (this->input[cursor] != '\n') \
@@ -43,7 +43,7 @@ using namespace Ghoti::Wave;
     SET_MINOR_STATE(nextState); \
   }
 
-#define SKIP_WHITESPACE_REQUIRED(nextState, statusCode, errorMessage) \
+#define READ_WHITESPACE_REQUIRED(nextState, statusCode, errorMessage) \
   while ((cursor < input_length) && ( \
       isspace(this->input[cursor]) \
       && (this->input[cursor] != '\n') \
@@ -57,6 +57,17 @@ using namespace Ghoti::Wave;
     else { \
       this->currentRequest.setStatusCode(statusCode).setErrorMessage(errorMessage); \
     } \
+  }
+
+// CR `MAY` be ignored, so look for either CRLF or just LF.
+// https://datatracker.ietf.org/doc/html/rfc9112#section-2.2-3
+#define READ_CRLF_OPTIONAL(nextState) \
+  while (cursor < input_length) { \
+    if ((this->input[cursor] != '\r') && (this->input[cursor] != '\n')) { \
+      SET_MINOR_STATE(nextState); \
+      break; \
+    } \
+    ++cursor; \
   }
 
 // CR `MAY` be ignored, so look for either CRLF or just LF.
@@ -200,7 +211,12 @@ void Session::processChunk(const char * buffer, size_t len) {
         // request-line   = method SP request-target SP HTTP-version
         switch (this->readStateMinor) {
           case BEGINNING_OF_LINE: {
-            SKIP_WHITESPACE_OPTIONAL(METHOD);
+            // https://datatracker.ietf.org/doc/html/rfc9112#section-2.2-6
+            READ_CRLF_OPTIONAL(BEGINNING_OF_REQUEST);
+            break;
+          }
+          case BEGINNING_OF_REQUEST: {
+            READ_WHITESPACE_OPTIONAL(METHOD);
             break;
           }
           case METHOD: {
@@ -223,7 +239,7 @@ void Session::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_METHOD: {
-            SKIP_WHITESPACE_REQUIRED(REQUEST_TARGET, 400, "Error reading request line.");
+            READ_WHITESPACE_REQUIRED(REQUEST_TARGET, 400, "Error reading request line.");
             break;
           }
           case REQUEST_TARGET: {
@@ -240,7 +256,7 @@ void Session::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_REQUEST_TARGET: {
-            SKIP_WHITESPACE_REQUIRED(HTTP_VERSION, 400, "Error reading request line.");
+            READ_WHITESPACE_REQUIRED(HTTP_VERSION, 400, "Error reading request line.");
             break;
           }
           case HTTP_VERSION: {
@@ -256,7 +272,7 @@ void Session::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_HTTP_VERSION: {
-            SKIP_WHITESPACE_OPTIONAL(CRLF);
+            READ_WHITESPACE_OPTIONAL(CRLF);
             break;
           }
           case CRLF: {
@@ -277,6 +293,7 @@ void Session::processChunk(const char * buffer, size_t len) {
         // https://datatracker.ietf.org/doc/html/rfc9110#section-5.2
         switch (this->readStateMinor) {
           case BEGINNING_OF_LINE: {
+            ++cursor;
             break;
           }
           default: {
