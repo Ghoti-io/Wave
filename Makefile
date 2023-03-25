@@ -14,6 +14,7 @@ TARGET := $(SO_NAME).$(MINOR_VERSION)
 
 INCLUDE := -I include/ -I include/wave
 LIBOBJECTS := $(OBJ_DIR)/client.o \
+							$(OBJ_DIR)/parsing.o \
 							$(OBJ_DIR)/response.o \
 							$(OBJ_DIR)/request.o \
 							$(OBJ_DIR)/server.o \
@@ -32,6 +33,8 @@ all: $(APP_DIR)/$(TARGET) ## Build the shared library
 ####################################################################
 DEP_CLIENT = \
 	include/wave/client.hpp
+DEP_PARSING = \
+	include/wave/parsing.hpp
 DEP_RESPONSE = \
 	include/wave/response.hpp
 DEP_REQUEST = \
@@ -39,6 +42,7 @@ DEP_REQUEST = \
 DEP_SERVER = \
 	include/wave/server.hpp
 DEP_SESSION = \
+	$(DEP_PARSING) \
 	$(DEP_REQUEST) \
 	include/wave/session.hpp
 DEP_WAVE = \
@@ -61,6 +65,10 @@ $(LIBOBJECTS) :
 $(OBJ_DIR)/client.o: \
 				src/client.cpp \
 				$(DEP_CLIENT)
+
+$(OBJ_DIR)/parsing.o: \
+				src/parsing.cpp \
+				$(DEP_PARSING)
 
 $(OBJ_DIR)/response.o: \
 				src/response.cpp \

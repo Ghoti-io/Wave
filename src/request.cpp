@@ -69,7 +69,7 @@ const std::string & Request::getVersion() const {
 }
 
 void Request::addFieldLine(const std::string & name, const std::string & value) {
-  this->headers[name] = value;
+  this->headers[name].push_back(value);
 }
 
 ostream & Ghoti::Wave::operator<<(ostream & out, Request & request) {

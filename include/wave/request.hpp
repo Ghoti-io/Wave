@@ -37,7 +37,7 @@ class Request {
   std::string method;
   std::string target;
   std::string version;
-  std::map<std::string, std::string> headers;
+  std::map<std::string, std::vector<std::string>> headers;
 };
 
 std::ostream & operator<<(std::ostream & out, Request & request);

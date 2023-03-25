@@ -11,6 +11,7 @@
 #include <sys/socket.h>
 #include <sstream>
 #include <set>
+#include "parsing.hpp"
 #include "server.hpp"
 #include "session.hpp"
 #include <string.h>
@@ -58,15 +59,18 @@ using namespace Ghoti::Wave;
     } \
   }
 
-#define READ_CRLF(nextState, statusCode, errorMessage) \
+// CR `MAY` be ignored, so look for either CRLF or just LF.
+// https://datatracker.ietf.org/doc/html/rfc9112#section-2.2-3
+#define READ_CRLF_REQUIRED(nextState, statusCode, errorMessage) \
   size_t len = cursor - this->minorStart; \
   while ((cursor < input_length) && (len < 2)) { \
-    if (((len == 0) && (this->input[cursor] != '\r')) \
+    if (((len == 0) && !((this->input[cursor] == '\r') || (this->input[cursor] == '\n'))) \
       || ((len == 1) && (this->input[cursor] != '\n'))) { \
       this->currentRequest.setStatusCode(statusCode).setErrorMessage(errorMessage); \
     } \
-    if (!this->currentRequest.hasError() && (len == 1)) { \
+    if (!this->currentRequest.hasError() && (this->input[cursor] == '\n')) { \
       SET_MINOR_STATE(nextState); \
+      ++cursor; \
       break; \
     } \
     ++cursor; \
@@ -256,11 +260,12 @@ void Session::processChunk(const char * buffer, size_t len) {
             break;
           }
           case CRLF: {
-            READ_CRLF(AFTER_CRLF, 400, "Error reading request line.");
+            READ_CRLF_REQUIRED(AFTER_CRLF, 400, "Error reading request line.");
             break;
           }
           case AFTER_CRLF: {
-              SET_MAJOR_STATE(START_LINE);
+            SET_MAJOR_STATE(FIELD_LINE);
+            this->tempFieldName = "";
             break;
           }
           default: {
@@ -268,18 +273,16 @@ void Session::processChunk(const char * buffer, size_t len) {
           }
         }
       break;
-      case START_LINE:
+      case FIELD_LINE:
+        // https://datatracker.ietf.org/doc/html/rfc9110#section-5.2
         switch (this->readStateMinor) {
+          case BEGINNING_OF_LINE: {
+            break;
+          }
           default: {
             // Placeholder of where to start next.
             this->currentRequest.setErrorMessage("foo");
             this->requestReady = true;
-          }
-        }
-      break;
-      case FIELD_LINE:
-        switch (this->readStateMinor) {
-          default: {
           }
         }
       break;

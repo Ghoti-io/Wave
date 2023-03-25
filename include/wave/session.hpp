@@ -31,7 +31,6 @@ class Session {
   private:
   enum ReadStateMajor {
     NEW_HEADER,
-    START_LINE,
     FIELD_LINE,
     MESSAGE_BODY,
   };
@@ -57,6 +56,7 @@ class Session {
   size_t minorStart;
   std::string input;
   std::string errorMessage;
+  std::string tempFieldName;
   Request currentRequest;
 };
 
