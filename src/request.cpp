@@ -68,8 +68,12 @@ const std::string & Request::getVersion() const {
   return this->version;
 }
 
-void Request::addFieldLine(const std::string & name, const std::string & value) {
+void Request::addFieldValue(const std::string & name, const std::string & value) {
   this->headers[name].push_back(value);
+}
+
+const map<string, vector<string>> & Request::getFields() const {
+  return this->headers;
 }
 
 ostream & Ghoti::Wave::operator<<(ostream & out, Request & request) {
@@ -79,6 +83,15 @@ ostream & Ghoti::Wave::operator<<(ostream & out, Request & request) {
   out << "  Version: " << request.getVersion() << endl;
   out << "  StatusCode: " << request.getStatusCode() << endl;
   out << "  Error Message: " << request.getErrorMessage() << endl;
+  if (request.getFields().size()) {
+    out << "  Fields:" << endl;
+    for (auto & [name, values] : request.getFields()) {
+      out << "    " << name << ":" << endl;
+      for (auto & value : values) {
+        out << "      " << value << endl;
+      }
+    }
+  }
   return out;
 }
 

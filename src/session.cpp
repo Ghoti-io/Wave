@@ -293,11 +293,91 @@ void Session::processChunk(const char * buffer, size_t len) {
         // https://datatracker.ietf.org/doc/html/rfc9110#section-5.2
         switch (this->readStateMinor) {
           case BEGINNING_OF_LINE: {
-            ++cursor;
+            // Field lines must not begin with whitespace, unless packaged
+            // within the "message/http" media type.
+            // https://datatracker.ietf.org/doc/html/rfc9112#name-obsolete-line-folding
+            //
+            // Identify the first character of a field name.
+            // https://datatracker.ietf.org/doc/html/rfc9110#section-16.3.1-6.2
+            // Note that the specification makes a "SHOULD" recommendation, but
+            // does not actually disallow the token characters.
+            while ((cursor < input_length) && isTokenChar(this->input[cursor])) {
+              ++cursor;
+            }
+            if (cursor < input_length) {
+              // Finished reading request target.
+              string name = this->input.substr(this->minorStart, cursor - this->minorStart);
+              transform(name.begin(), name.end(), name.begin(), ::toupper);
+              this->tempFieldName = name;
+              SET_MINOR_STATE(AFTER_FIELD_NAME);
+            }
+            break;
+          }
+          case AFTER_FIELD_NAME: {
+            // https://datatracker.ietf.org/doc/html/rfc9112#section-5-1
+            if (this->input[cursor] == ':') {
+              SET_MINOR_STATE(BEFORE_FIELD_VALUE);
+              ++cursor;
+            }
+            else {
+              // https://datatracker.ietf.org/doc/html/rfc9112#section-5.1-2
+              this->currentRequest.setStatusCode(400).setErrorMessage("Illegal character between field name and colon");
+            }
+            break;
+          }
+          case BEFORE_FIELD_VALUE: {
+            // https://datatracker.ietf.org/doc/html/rfc9112#section-5-1
+            READ_WHITESPACE_OPTIONAL(FIELD_VALUE);
+            break;
+          }
+          case FIELD_VALUE: {
+            if (this->input[cursor] == '"') {
+              SET_MINOR_STATE(QUOTED_FIELD_VALUE);
+              ++cursor;
+            }
+            else if (isTokenChar(this->input[cursor])) {
+              SET_MINOR_STATE(UNQUOTED_FIELD_VALUE);
+              // Intentionally not advancing the cursor.
+            }
+            else {
+              this->currentRequest.setStatusCode(400).setErrorMessage("Illegal character in field value");
+            }
+            break;
+          }
+          case UNQUOTED_FIELD_VALUE: {
+            while ((cursor < input_length) && isTokenChar(this->input[cursor])) {
+              ++cursor;
+            }
+            if (cursor < input_length) {
+              // Finished reading request target.
+              string value = this->input.substr(this->minorStart, cursor - this->minorStart);
+              this->currentRequest.addFieldValue(this->tempFieldName, value);
+              SET_MINOR_STATE(AFTER_FIELD_VALUE);
+            }
+            // Placeholder of where to start next.
+            this->currentRequest.setErrorMessage("foo");
+            this->requestReady = true;
+            break;
+          }
+          case QUOTED_FIELD_VALUE: {
+            // Placeholder of where to start next.
+            this->currentRequest.setErrorMessage("foo");
+            this->requestReady = true;
+            break;
+          }
+          case AFTER_FIELD_VALUE: {
+            // Placeholder of where to start next.
+            this->currentRequest.setErrorMessage("foo");
+            this->requestReady = true;
+            break;
+          }
+          case FIELD_VALUE_COMMA: {
+            // Placeholder of where to start next.
+            this->currentRequest.setErrorMessage("foo");
+            this->requestReady = true;
             break;
           }
           default: {
-            // Placeholder of where to start next.
             this->currentRequest.setErrorMessage("foo");
             this->requestReady = true;
           }

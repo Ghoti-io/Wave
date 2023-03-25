@@ -14,7 +14,7 @@ namespace Ghoti::Wave {
  * @param c The character to test.
  * @result Whether or not the character is a valid token character.
  */
-bool isTChar(uint8_t c);
+bool isTokenChar(uint8_t c);
 
 /**
  * Identify valid Visible (printing) characters.
@@ -22,7 +22,7 @@ bool isTChar(uint8_t c);
  * @param c The character to test.
  * @result Whether or not the character is a valid visible character.
  */
-bool isVChar(uint8_t c);
+bool isVisibleChar(uint8_t c);
 
 /**
  * Identify valid obs-text characters.
@@ -30,7 +30,15 @@ bool isVChar(uint8_t c);
  * @param c The character to test.
  * @result Whether or not the character is a valid obs-text character.
  */
-bool isObsTextChar(uint8_t c);
+bool isObsoleteTextChar(uint8_t c);
+
+/**
+ * Identify valid field-name characters.
+ *
+ * @param c The character to test.
+ * @result Whether or not the character is a valid field-name character.
+ */
+bool isFieldNameChar(uint8_t c);
 
 /**
  * Identify valid field-content characters.

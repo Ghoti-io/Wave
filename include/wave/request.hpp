@@ -28,7 +28,8 @@ class Request {
   const std::string & getTarget() const;
   Request & setVersion(const std::string & method);
   const std::string & getVersion() const;
-  void addFieldLine(const std::string & name, const std::string & value);
+  void addFieldValue(const std::string & name, const std::string & value);
+  const std::map<std::string, std::vector<std::string>> & getFields() const;
 
   private:
   bool errorIsSet;
