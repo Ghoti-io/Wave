@@ -64,6 +64,14 @@ bool isFieldNameChar(uint8_t c);
  */
 bool isFieldContentChar(uint8_t c);
 
+/**
+ * Identify CRLF characters.
+ *
+ * @param c The character to test.
+ * @result Whether or not the character is a valid CRLF character.
+ */
+bool isCRLFChar(uint8_t c);
+
 };
 
 #endif // CLIENT_HPP

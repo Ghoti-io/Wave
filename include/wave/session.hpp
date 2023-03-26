@@ -54,6 +54,7 @@ class Session {
     QUOTED_FIELD_VALUE,
     AFTER_FIELD_VALUE,
     FIELD_VALUE_COMMA,
+    AFTER_FIELD_VALUE_COMMA,
   };
   int hClient;
   Server * server;

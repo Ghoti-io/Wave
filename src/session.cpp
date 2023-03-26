@@ -390,18 +390,47 @@ void Session::processChunk(const char * buffer, size_t len) {
             break;
           }
           case UNQUOTED_FIELD_VALUE: {
-            while ((cursor < input_length) && isTokenChar(this->input[cursor])) {
+            while((cursor < input_length) && (this->input[cursor] != ',') && (this->input[cursor] != '\n')) {
               ++cursor;
             }
             if (cursor < input_length) {
-              // Finished reading request target.
-              string value = this->input.substr(this->minorStart, cursor - this->minorStart);
-              this->currentRequest.addFieldValue(this->tempFieldName, value);
-              SET_MINOR_STATE(AFTER_FIELD_VALUE);
+              // We found either a comma or a \n.
+
+              size_t tempCursor = cursor - 1;
+              if (this->input[cursor] == '\n') {
+                // Back up tempCursor to be before the CRLF, if present.
+                // CR is optional.
+                // https://datatracker.ietf.org/doc/html/rfc9112#section-2.2-3
+                if ((tempCursor >= this->minorStart) && (this->input[tempCursor] == '\r')) {
+                  --tempCursor;
+                }
+              }
+              // Eliminate trailing whitespace.
+              // https://datatracker.ietf.org/doc/html/rfc9110#section-5.5-3
+              while ((tempCursor >= this->minorStart) && isWhitespaceChar(this->input[tempCursor])) {
+                --tempCursor;
+              }
+              // Verify that there are no illegal characters.
+              for (size_t i = this->minorStart; i <= tempCursor; ++i) {
+                if (!isFieldContentChar(this->input[i])) {
+                  this->currentRequest.setStatusCode(400).setErrorMessage("Illegal character in singleton field value");
+                  break;
+                }
+              }
+              // If anything remains, then it is the field value.
+              if (tempCursor >= this->minorStart) {
+                this->currentRequest.addFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
+                if (this->input[cursor] == ',') {
+                  SET_MINOR_STATE(FIELD_VALUE_COMMA);
+                }
+                else {
+                  SET_MINOR_STATE(CRLF);
+                }
+              }
+              else {
+                this->currentRequest.setStatusCode(400).setErrorMessage("Singleton field value is blank/empty");
+              }
             }
-            // Placeholder of where to start next.
-            this->currentRequest.setErrorMessage("foo");
-            this->requestReady = true;
             break;
           }
           case QUOTED_FIELD_VALUE: {
@@ -411,15 +440,18 @@ void Session::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_FIELD_VALUE: {
-            // Placeholder of where to start next.
-            this->currentRequest.setErrorMessage("foo");
-            this->requestReady = true;
+            READ_WHITESPACE_OPTIONAL(FIELD_VALUE_COMMA);
             break;
           }
           case FIELD_VALUE_COMMA: {
-            // Placeholder of where to start next.
-            this->currentRequest.setErrorMessage("foo");
-            this->requestReady = true;
+            if (this->input[cursor] == ',') {
+              ++cursor;
+              SET_MINOR_STATE(AFTER_FIELD_VALUE_COMMA);
+              break;
+            }
+          }
+          case AFTER_FIELD_VALUE_COMMA: {
+            READ_WHITESPACE_OPTIONAL(LIST_FIELD_VALUE);
             break;
           }
           case CRLF: {

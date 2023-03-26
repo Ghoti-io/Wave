@@ -86,10 +86,13 @@ ostream & Ghoti::Wave::operator<<(ostream & out, Request & request) {
   if (request.getFields().size()) {
     out << "  Fields:" << endl;
     for (auto & [name, values] : request.getFields()) {
-      out << "    " << name << ":" << endl;
+      out << "    " << name << ": ";
+      size_t i = values.size();
+
       for (auto & value : values) {
-        out << "      " << value << endl;
+        out << '"' << value << '"' << (--i ? "," : "");
       }
+      out << endl;
     }
   }
   return out;
