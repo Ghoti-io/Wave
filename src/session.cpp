@@ -377,12 +377,12 @@ void Session::processChunk(const char * buffer, size_t len) {
           }
           case LIST_FIELD_VALUE: {
             if (this->input[cursor] == '"') {
-              SET_MINOR_STATE(QUOTED_FIELD_VALUE);
+              SET_MINOR_STATE(QUOTED_FIELD_VALUE_OPEN);
               ++cursor;
             }
             else if (isTokenChar(this->input[cursor])) {
-              SET_MINOR_STATE(UNQUOTED_FIELD_VALUE);
               // Intentionally not advancing the cursor.
+              SET_MINOR_STATE(UNQUOTED_FIELD_VALUE);
             }
             else {
               this->currentRequest.setStatusCode(400).setErrorMessage("Illegal character in field value");
@@ -433,10 +433,43 @@ void Session::processChunk(const char * buffer, size_t len) {
             }
             break;
           }
-          case QUOTED_FIELD_VALUE: {
-            // Placeholder of where to start next.
-            this->currentRequest.setErrorMessage("foo");
-            this->requestReady = true;
+          case QUOTED_FIELD_VALUE_OPEN: {
+            this->tempFieldValue = "";
+            SET_MINOR_STATE(QUOTED_FIELD_VALUE_PROCESS);
+            break;
+          }
+          case QUOTED_FIELD_VALUE_PROCESS: {
+            while((cursor < input_length) && isQuotedChar(this->input[cursor])) {
+              ++cursor;
+            }
+            if (cursor < input_length) {
+              // Input scanning hit either an escaped character, a double
+              // quote, or an illegal character.
+              if (this->input[cursor] == '\\') {
+                this->tempFieldValue += this->input.substr(this->minorStart, cursor - this->minorStart);
+                ++cursor;
+                SET_MINOR_STATE(QUOTED_FIELD_VALUE_ESCAPE);
+              }
+              else if (this->input[cursor] == '"') {
+                this->tempFieldValue += this->input.substr(this->minorStart, cursor - this->minorStart);
+                ++cursor;
+                SET_MINOR_STATE(QUOTED_FIELD_VALUE_CLOSE);
+              }
+              else {
+                this->currentRequest.setStatusCode(400).setErrorMessage("Quoted field value is malformed");
+              }
+            }
+            break;
+          }
+          case QUOTED_FIELD_VALUE_ESCAPE: {
+            this->tempFieldValue += this->input[cursor];
+            ++cursor;
+            SET_MINOR_STATE(QUOTED_FIELD_VALUE_PROCESS);
+            break;
+          }
+          case QUOTED_FIELD_VALUE_CLOSE: {
+            SET_MINOR_STATE(AFTER_FIELD_VALUE);
+            this->currentRequest.addFieldValue(this->tempFieldName, this->tempFieldValue);
             break;
           }
           case AFTER_FIELD_VALUE: {
@@ -447,15 +480,22 @@ void Session::processChunk(const char * buffer, size_t len) {
             if (this->input[cursor] == ',') {
               ++cursor;
               SET_MINOR_STATE(AFTER_FIELD_VALUE_COMMA);
-              break;
             }
+            else if (isCRLFChar(this->input[cursor])) {
+              SET_MINOR_STATE(CRLF);
+            }
+            else {
+              READ_CRLF_REQUIRED(AFTER_CRLF, 400, "Error reading field line.");
+            }
+
+            break;
           }
           case AFTER_FIELD_VALUE_COMMA: {
             READ_WHITESPACE_OPTIONAL(LIST_FIELD_VALUE);
             break;
           }
           case CRLF: {
-            READ_CRLF_REQUIRED(AFTER_CRLF, 400, "Error reading request line.");
+            READ_CRLF_REQUIRED(AFTER_CRLF, 400, "Error reading field line.");
             break;
           }
           case AFTER_CRLF: {

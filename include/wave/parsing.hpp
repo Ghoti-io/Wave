@@ -57,6 +57,14 @@ bool isObsoleteTextChar(uint8_t c);
 bool isFieldNameChar(uint8_t c);
 
 /**
+ * Identify valid quoted characters.
+ *
+ * @param c The character to test.
+ * @result Whether or not the character is a valid quoted character.
+ */
+bool isQuotedChar(uint8_t c);
+
+/**
  * Identify valid field-content characters.
  *
  * @param c The character to test.

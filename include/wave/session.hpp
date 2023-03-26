@@ -51,7 +51,10 @@ class Session {
     SINGLETON_FIELD_VALUE,
     LIST_FIELD_VALUE,
     UNQUOTED_FIELD_VALUE,
-    QUOTED_FIELD_VALUE,
+    QUOTED_FIELD_VALUE_OPEN,
+    QUOTED_FIELD_VALUE_PROCESS,
+    QUOTED_FIELD_VALUE_ESCAPE,
+    QUOTED_FIELD_VALUE_CLOSE,
     AFTER_FIELD_VALUE,
     FIELD_VALUE_COMMA,
     AFTER_FIELD_VALUE_COMMA,
@@ -68,6 +71,7 @@ class Session {
   std::string input;
   std::string errorMessage;
   std::string tempFieldName;
+  std::string tempFieldValue;
   Request currentRequest;
 };
 
