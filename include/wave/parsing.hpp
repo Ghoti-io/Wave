@@ -9,12 +9,28 @@
 namespace Ghoti::Wave {
 
 /**
+ * Identify a field name as accepting a list-based set of values.
+ *
+ * @param name The field name.
+ * @result Whether or not the field name is recognized as a list-based field.
+ */
+bool isListField(const std::string & name);
+
+/**
  * Identify valid Token characters.
  *
  * @param c The character to test.
  * @result Whether or not the character is a valid token character.
  */
 bool isTokenChar(uint8_t c);
+
+/**
+ * Identify valid whitespace characters.
+ *
+ * @param c The character to test.
+ * @result Whether or not the character is a valid visible character.
+ */
+bool isWhitespaceChar(uint8_t c);
 
 /**
  * Identify valid Visible (printing) characters.

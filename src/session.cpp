@@ -326,11 +326,56 @@ void Session::processChunk(const char * buffer, size_t len) {
             break;
           }
           case BEFORE_FIELD_VALUE: {
+            // Remove leading whitespace.
             // https://datatracker.ietf.org/doc/html/rfc9112#section-5-1
+            // https://datatracker.ietf.org/doc/html/rfc9110#section-5.5-3
             READ_WHITESPACE_OPTIONAL(FIELD_VALUE);
             break;
           }
           case FIELD_VALUE: {
+            if (isListField(this->tempFieldName)) {
+              SET_MINOR_STATE(LIST_FIELD_VALUE);
+            }
+            else {
+              SET_MINOR_STATE(SINGLETON_FIELD_VALUE);
+            }
+            break;
+          }
+          case SINGLETON_FIELD_VALUE: {
+            while((cursor < input_length) && (this->input[cursor] != '\n')) {
+              ++cursor;
+            }
+            if (cursor < input_length) {
+              // Back up tempCursor to be before the CRLF.  CR is optional.
+              // https://datatracker.ietf.org/doc/html/rfc9112#section-2.2-3
+              size_t tempCursor = cursor - 1;
+              if ((tempCursor >= this->minorStart) && (this->input[tempCursor] == '\r')) {
+                --tempCursor;
+              }
+              // Eliminate trailing whitespace.
+              // https://datatracker.ietf.org/doc/html/rfc9110#section-5.5-3
+              while ((tempCursor >= this->minorStart) && isWhitespaceChar(this->input[tempCursor])) {
+                --tempCursor;
+              }
+              // Verify that there are no illegal characters.
+              for (size_t i = this->minorStart; i <= tempCursor; ++i) {
+                if (!isFieldContentChar(this->input[i])) {
+                  this->currentRequest.setStatusCode(400).setErrorMessage("Illegal character in singleton field value");
+                  break;
+                }
+              }
+              // If anything remains, then it is the field value.
+              if (tempCursor >= this->minorStart) {
+                this->currentRequest.addFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
+                SET_MINOR_STATE(CRLF);
+              }
+              else {
+                this->currentRequest.setStatusCode(400).setErrorMessage("Singleton field value is blank/empty");
+              }
+            }
+            break;
+          }
+          case LIST_FIELD_VALUE: {
             if (this->input[cursor] == '"') {
               SET_MINOR_STATE(QUOTED_FIELD_VALUE);
               ++cursor;
@@ -375,6 +420,15 @@ void Session::processChunk(const char * buffer, size_t len) {
             // Placeholder of where to start next.
             this->currentRequest.setErrorMessage("foo");
             this->requestReady = true;
+            break;
+          }
+          case CRLF: {
+            READ_CRLF_REQUIRED(AFTER_CRLF, 400, "Error reading request line.");
+            break;
+          }
+          case AFTER_CRLF: {
+            SET_MAJOR_STATE(FIELD_LINE);
+            this->tempFieldName = "";
             break;
           }
           default: {
