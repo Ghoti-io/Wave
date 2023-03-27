@@ -14,6 +14,7 @@ TARGET := $(SO_NAME).$(MINOR_VERSION)
 
 INCLUDE := -I include/ -I include/wave
 LIBOBJECTS := $(OBJ_DIR)/client.o \
+							$(OBJ_DIR)/parser.o \
 							$(OBJ_DIR)/parsing.o \
 							$(OBJ_DIR)/response.o \
 							$(OBJ_DIR)/request.o \
@@ -35,6 +36,9 @@ DEP_CLIENT = \
 	include/wave/client.hpp
 DEP_PARSING = \
 	include/wave/parsing.hpp
+DEP_PARSER = \
+	$(DEP_PARSING) \
+	include/wave/parser.hpp
 DEP_RESPONSE = \
 	include/wave/response.hpp
 DEP_REQUEST = \
@@ -42,7 +46,7 @@ DEP_REQUEST = \
 DEP_SERVER = \
 	include/wave/server.hpp
 DEP_SESSION = \
-	$(DEP_PARSING) \
+	$(DEP_PARSER) \
 	$(DEP_REQUEST) \
 	include/wave/session.hpp
 DEP_WAVE = \
@@ -65,6 +69,10 @@ $(LIBOBJECTS) :
 $(OBJ_DIR)/client.o: \
 				src/client.cpp \
 				$(DEP_CLIENT)
+
+$(OBJ_DIR)/parser.o: \
+				src/parser.cpp \
+				$(DEP_PARSER)
 
 $(OBJ_DIR)/parsing.o: \
 				src/parsing.cpp \
