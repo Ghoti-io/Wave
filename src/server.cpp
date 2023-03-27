@@ -65,6 +65,9 @@ void Server::dispatchLoop(stop_token stopToken) {
     }
   }
 
+  // TODO: Make session cleanup more elegant.
+  this->sessions.clear();
+
   // Stop and join the worker threads.
   pool.join();
 }

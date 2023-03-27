@@ -21,6 +21,7 @@ class Server;
 class Session {
   public:
   Session(int hClient, Server * server);
+  ~Session();
   bool hasDataWaiting();
   bool isFinished();
   void read();

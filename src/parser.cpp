@@ -111,7 +111,7 @@ void Parser::parseRequestTarget([[maybe_unused]]const std::string & target) {
 }
 
 void Parser::processChunk(const char * buffer, size_t len) {
-  cout << "Processing (" << len << "): " << string(buffer, len) << endl;
+  //cout << "Processing (" << len << "): " << string(buffer, len) << endl;
   size_t cursor = this->input.length();
   this->input += string(buffer, len);
   size_t input_length = this->input.length();
@@ -410,7 +410,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_CRLF: {
-            cout << this->currentRequest;
+            //cout << this->currentRequest;
             SET_MAJOR_STATE(FIELD_LINE);
             this->tempFieldName = "";
             break;

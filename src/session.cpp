@@ -25,7 +25,14 @@ Session::Session(int hClient, Server * server) :
   server{server},
   working{false},
   finished{false},
-  requestReady{false} {}
+  requestReady{false} {
+  cout << "Open: " << this->hClient << endl;
+}
+
+Session::~Session() {
+  cout << "Close: " << this->hClient << endl;
+  close(this->hClient);
+}
 
 bool Session::hasDataWaiting() {
   bool dataIsWaiting{false};
@@ -56,6 +63,8 @@ void Session::read() {
     ssize_t byte_count = recv(hClient, buffer, MAXBUFFERSIZE, 0);
     if (byte_count > 0) {
       this->parser.processChunk(buffer, byte_count);
+
+      // Enqueue the completed messages for processing.
       while (!this->parser.messages.empty()) {
         auto temp = this->parser.messages.front();
         this->parser.messages.pop();
