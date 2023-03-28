@@ -25,7 +25,7 @@ Session::Session(int hClient, Server * server) :
   server{server},
   working{false},
   finished{false},
-  requestReady{false} {
+  messageReady{false} {
   cout << "Open: " << this->hClient << endl;
 }
 
@@ -71,7 +71,7 @@ void Session::read() {
         cout << temp;
       }
       /*
-      if (this->requestReady) {
+      if (this->messageReady) {
         // Yeah, none of this is right.  It's just for testing.
         close(this->hClient);
         this->finished = true;

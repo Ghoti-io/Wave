@@ -17,7 +17,7 @@ LIBOBJECTS := $(OBJ_DIR)/client.o \
 							$(OBJ_DIR)/parser.o \
 							$(OBJ_DIR)/parsing.o \
 							$(OBJ_DIR)/response.o \
-							$(OBJ_DIR)/request.o \
+							$(OBJ_DIR)/message.o \
 							$(OBJ_DIR)/server.o \
 							$(OBJ_DIR)/session.o
 
@@ -41,18 +41,18 @@ DEP_PARSER = \
 	include/wave/parser.hpp
 DEP_RESPONSE = \
 	include/wave/response.hpp
-DEP_REQUEST = \
-	include/wave/request.hpp
+DEP_MESSAGE = \
+	include/wave/message.hpp
 DEP_SERVER = \
 	include/wave/server.hpp
 DEP_SESSION = \
 	$(DEP_PARSER) \
-	$(DEP_REQUEST) \
+	$(DEP_MESSAGE) \
 	include/wave/session.hpp
 DEP_WAVE = \
 	$(DEP_CLIENT) \
 	$(DEP_RESPONSE) \
-	$(DEP_REQUEST) \
+	$(DEP_MESSAGE) \
 	$(DEP_SERVER) \
 	$(DEP_SESSION) \
 	include/wave.hpp
@@ -82,9 +82,9 @@ $(OBJ_DIR)/response.o: \
 				src/response.cpp \
 				$(DEP_RESPONSE)
 
-$(OBJ_DIR)/request.o: \
-				src/request.cpp \
-				$(DEP_REQUEST)
+$(OBJ_DIR)/message.o: \
+				src/message.cpp \
+				$(DEP_MESSAGE)
 
 $(OBJ_DIR)/server.o: \
 				src/server.cpp \

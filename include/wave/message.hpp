@@ -1,11 +1,11 @@
 /**
  * @file
  *
- * Header file for declaring the Request class.
+ * Header file for declaring the Message class.
  */
 
-#ifndef REQUEST_HPP
-#define REQUEST_HPP
+#ifndef MESSAGE_HPP
+#define MESSAGE_HPP
 
 #include <map>
 #include <ostream>
@@ -13,20 +13,20 @@
 #include <vector>
 
 namespace Ghoti::Wave {
-class Request {
+class Message {
   public:
-  Request();
+  Message();
 
   bool hasError() const;
-  Request & setStatusCode(size_t statusCode);
+  Message & setStatusCode(size_t statusCode);
   size_t getStatusCode() const;
-  Request & setErrorMessage(const std::string & errorMessage);
+  Message & setErrorMessage(const std::string & errorMessage);
   const std::string & getErrorMessage() const;
-  Request & setMethod(const std::string & method);
+  Message & setMethod(const std::string & method);
   const std::string & getMethod() const;
-  Request & setTarget(const std::string & method);
+  Message & setTarget(const std::string & method);
   const std::string & getTarget() const;
-  Request & setVersion(const std::string & method);
+  Message & setVersion(const std::string & method);
   const std::string & getVersion() const;
   void addFieldValue(const std::string & name, const std::string & value);
   const std::map<std::string, std::vector<std::string>> & getFields() const;
@@ -41,9 +41,9 @@ class Request {
   std::map<std::string, std::vector<std::string>> headers;
 };
 
-std::ostream & operator<<(std::ostream & out, Request & request);
+std::ostream & operator<<(std::ostream & out, Message & message);
 
 }
 
-#endif // REQUEST_HPP
+#endif // MESSAGE_HPP
 

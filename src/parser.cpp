@@ -51,7 +51,7 @@ using namespace Ghoti::Wave;
       SET_MINOR_STATE(nextState); \
     } \
     else { \
-      this->currentRequest.setStatusCode(statusCode).setErrorMessage(errorMessage); \
+      this->currentMessage.setStatusCode(statusCode).setErrorMessage(errorMessage); \
     } \
   }
 
@@ -73,9 +73,9 @@ using namespace Ghoti::Wave;
   while ((cursor < input_length) && (len < 2)) { \
     if (((len == 0) && !((this->input[cursor] == '\r') || (this->input[cursor] == '\n'))) \
       || ((len == 1) && (this->input[cursor] != '\n'))) { \
-      this->currentRequest.setStatusCode(statusCode).setErrorMessage(errorMessage); \
+      this->currentMessage.setStatusCode(statusCode).setErrorMessage(errorMessage); \
     } \
-    if (!this->currentRequest.hasError() && (this->input[cursor] == '\n')) { \
+    if (!this->currentMessage.hasError() && (this->input[cursor] == '\n')) { \
       SET_MINOR_STATE(nextState); \
       ++cursor; \
       break; \
@@ -87,7 +87,7 @@ using namespace Ghoti::Wave;
 
 // https://www.rfc-editor.org/rfc/rfc9110#name-overview
 // PATCH - https://www.rfc-editor.org/rfc/rfc5789
-static set<string> requestMethods{"GET", "HEAD", "POST", "PUT", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH"};
+static set<string> messageMethods{"GET", "HEAD", "POST", "PUT", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH"};
 
 Parser::Parser() :
   readStateMajor{NEW_HEADER},
@@ -96,7 +96,7 @@ Parser::Parser() :
   minorStart{0},
   input{} {}
 
-void Parser::parseRequestTarget([[maybe_unused]]const std::string & target) {
+void Parser::parseMessageTarget([[maybe_unused]]const std::string & target) {
   // Parse origin-form
   // https://datatracker.ietf.org/doc/html/rfc9112#name-origin-form
   //
@@ -115,7 +115,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
   size_t cursor = this->input.length();
   this->input += string(buffer, len);
   size_t input_length = this->input.length();
-  while (!this->currentRequest.hasError() && (cursor < input_length)) {
+  while (!this->currentMessage.hasError() && (cursor < input_length)) {
     switch (this->readStateMajor) {
       case NEW_HEADER:
         // https://datatracker.ietf.org/doc/html/rfc9112#name-request-line
@@ -137,14 +137,14 @@ void Parser::processChunk(const char * buffer, size_t len) {
             if (cursor < input_length) {
               // Finished reading Method.
               string method = this->input.substr(this->minorStart, cursor - this->minorStart);
-              if (requestMethods.contains(method)) {
+              if (messageMethods.contains(method)) {
                 // Finished reading a valid method.
-                this->currentRequest.setMethod(method);
+                this->currentMessage.setMethod(method);
                 SET_MINOR_STATE(AFTER_METHOD);
               }
               else {
                 // https://www.rfc-editor.org/rfc/rfc9110#section-9.1-10
-                this->currentRequest.setStatusCode(501).setErrorMessage("Unrecognized method");
+                this->currentMessage.setStatusCode(501).setErrorMessage("Unrecognized method");
               }
             }
             break;
@@ -160,8 +160,8 @@ void Parser::processChunk(const char * buffer, size_t len) {
             if (cursor < input_length) {
               // Finished reading request target.
               string target = this->input.substr(this->minorStart, cursor - this->minorStart);
-              this->parseRequestTarget(target);
-              this->currentRequest.setTarget(target);
+              this->parseMessageTarget(target);
+              this->currentMessage.setTarget(target);
               SET_MINOR_STATE(AFTER_REQUEST_TARGET);
             }
             break;
@@ -175,9 +175,9 @@ void Parser::processChunk(const char * buffer, size_t len) {
               ++cursor;
             }
             if (cursor < input_length) {
-              // Finished reading request target.
+              // Finished reading message target.
               string version = this->input.substr(this->minorStart, cursor - this->minorStart);
-              this->currentRequest.setVersion(version);
+              this->currentMessage.setVersion(version);
               SET_MINOR_STATE(AFTER_HTTP_VERSION);
             }
             break;
@@ -196,7 +196,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             break;
           }
           default: {
-            this->currentRequest.setStatusCode(400).setErrorMessage("Error reading request line.");
+            this->currentMessage.setStatusCode(400).setErrorMessage("Error reading message line.");
           }
         }
       break;
@@ -232,7 +232,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             }
             else {
               // https://datatracker.ietf.org/doc/html/rfc9112#section-5.1-2
-              this->currentRequest.setStatusCode(400).setErrorMessage("Illegal character between field name and colon");
+              this->currentMessage.setStatusCode(400).setErrorMessage("Illegal character between field name and colon");
             }
             break;
           }
@@ -271,17 +271,17 @@ void Parser::processChunk(const char * buffer, size_t len) {
               // Verify that there are no illegal characters.
               for (size_t i = this->minorStart; i <= tempCursor; ++i) {
                 if (!isFieldContentChar(this->input[i])) {
-                  this->currentRequest.setStatusCode(400).setErrorMessage("Illegal character in singleton field value");
+                  this->currentMessage.setStatusCode(400).setErrorMessage("Illegal character in singleton field value");
                   break;
                 }
               }
               // If anything remains, then it is the field value.
               if (tempCursor >= this->minorStart) {
-                this->currentRequest.addFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
+                this->currentMessage.addFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
                 SET_MINOR_STATE(CRLF);
               }
               else {
-                this->currentRequest.setStatusCode(400).setErrorMessage("Singleton field value is blank/empty");
+                this->currentMessage.setStatusCode(400).setErrorMessage("Singleton field value is blank/empty");
               }
             }
             break;
@@ -296,7 +296,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
               SET_MINOR_STATE(UNQUOTED_FIELD_VALUE);
             }
             else {
-              this->currentRequest.setStatusCode(400).setErrorMessage("Illegal character in field value");
+              this->currentMessage.setStatusCode(400).setErrorMessage("Illegal character in field value");
             }
             break;
           }
@@ -324,13 +324,13 @@ void Parser::processChunk(const char * buffer, size_t len) {
               // Verify that there are no illegal characters.
               for (size_t i = this->minorStart; i <= tempCursor; ++i) {
                 if (!isFieldContentChar(this->input[i])) {
-                  this->currentRequest.setStatusCode(400).setErrorMessage("Illegal character in singleton field value");
+                  this->currentMessage.setStatusCode(400).setErrorMessage("Illegal character in singleton field value");
                   break;
                 }
               }
               // If anything remains, then it is the field value.
               if (tempCursor >= this->minorStart) {
-                this->currentRequest.addFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
+                this->currentMessage.addFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
                 if (this->input[cursor] == ',') {
                   SET_MINOR_STATE(FIELD_VALUE_COMMA);
                 }
@@ -339,7 +339,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
                 }
               }
               else {
-                this->currentRequest.setStatusCode(400).setErrorMessage("Singleton field value is blank/empty");
+                this->currentMessage.setStatusCode(400).setErrorMessage("Singleton field value is blank/empty");
               }
             }
             break;
@@ -367,7 +367,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
                 SET_MINOR_STATE(QUOTED_FIELD_VALUE_CLOSE);
               }
               else {
-                this->currentRequest.setStatusCode(400).setErrorMessage("Quoted field value is malformed");
+                this->currentMessage.setStatusCode(400).setErrorMessage("Quoted field value is malformed");
               }
             }
             break;
@@ -380,7 +380,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
           }
           case QUOTED_FIELD_VALUE_CLOSE: {
             SET_MINOR_STATE(AFTER_FIELD_VALUE);
-            this->currentRequest.addFieldValue(this->tempFieldName, this->tempFieldValue);
+            this->currentMessage.addFieldValue(this->tempFieldName, this->tempFieldValue);
             break;
           }
           case AFTER_FIELD_VALUE: {
@@ -410,25 +410,25 @@ void Parser::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_CRLF: {
-            //cout << this->currentRequest;
+            //cout << this->currentMessage;
             SET_MAJOR_STATE(FIELD_LINE);
             this->tempFieldName = "";
             break;
           }
           default: {
-            this->currentRequest.setErrorMessage("foo");
+            this->currentMessage.setErrorMessage("foo");
           }
         }
       break;
       case MESSAGE_BODY:
         switch (this->readStateMinor) {
           default: {
-            this->currentRequest.setErrorMessage("foo");
+            this->currentMessage.setErrorMessage("foo");
           }
         }
       break;
       default: {
-        this->currentRequest.setErrorMessage("foo");
+        this->currentMessage.setErrorMessage("foo");
       }
     }
   }

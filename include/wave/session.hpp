@@ -13,7 +13,7 @@
 #include <mutex>
 #include <ostream>
 #include "parser.hpp"
-#include "request.hpp"
+#include "message.hpp"
 #include <string>
 
 namespace Ghoti::Wave {
@@ -33,7 +33,7 @@ class Session {
   Server * server;
   bool working;
   bool finished;
-  bool requestReady;
+  bool messageReady;
   Parser parser;
 };
 

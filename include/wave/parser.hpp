@@ -8,7 +8,7 @@
 #define PARSER_HPP
 
 #include <queue>
-#include "request.hpp"
+#include "message.hpp"
 #include <string>
 
 namespace Ghoti::Wave {
@@ -16,8 +16,8 @@ class Parser {
   public:
   Parser();
   void processChunk(const char * buffer, size_t len);
-  void parseRequestTarget(const std::string & target);
-  std::queue<Request> messages;
+  void parseMessageTarget(const std::string & target);
+  std::queue<Message> messages;
 
   private:
   enum ReadStateMajor {
@@ -58,7 +58,7 @@ class Parser {
   std::string errorMessage;
   std::string tempFieldName;
   std::string tempFieldValue;
-  Request currentRequest;
+  Message currentMessage;
 };
 
 }
