@@ -35,7 +35,7 @@ void Server::dispatchLoop(stop_token stopToken) {
   while (!stopToken.stop_requested()) {
     // Poll existing connections
     for (auto it = this->sessions.begin(); it != this->sessions.end();) {
-      auto & session = it->second;
+      auto session = it->second;
 
       // Service existing requests.
       if (session->hasDataWaiting()) {

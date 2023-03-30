@@ -14,7 +14,11 @@
 namespace Ghoti::Wave {
 class Parser {
   public:
-  Parser();
+  enum Type {
+    REQUEST,
+    RESPONSE,
+  };
+  Parser(Type type);
   void processChunk(const char * buffer, size_t len);
   void parseMessageTarget(const std::string & target);
   std::queue<Message> messages;
@@ -26,7 +30,9 @@ class Parser {
     MESSAGE_BODY,
   };
   enum ReadStateMinor {
-    BEGINNING_OF_LINE,
+    BEGINNING_OF_REQUEST_LINE,
+    BEGINNING_OF_STATUS_LINE,
+    BEGINNING_OF_FIELD_LINE,
     CRLF,
     AFTER_CRLF,
     BEGINNING_OF_REQUEST,
@@ -50,6 +56,8 @@ class Parser {
     FIELD_VALUE_COMMA,
     AFTER_FIELD_VALUE_COMMA,
   };
+  Type type;
+  size_t cursor;
   ReadStateMajor readStateMajor;
   ReadStateMinor readStateMinor;
   size_t majorStart;

@@ -25,7 +25,8 @@ Session::Session(int hClient, Server * server) :
   server{server},
   working{false},
   finished{false},
-  messageReady{false} {
+  messageReady{false},
+  parser{Parser::Type::REQUEST} {
   cout << "Open: " << this->hClient << endl;
 }
 
