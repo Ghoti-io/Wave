@@ -15,23 +15,32 @@ using namespace Ghoti::Wave;
 
 namespace Ghoti::Wave {
 
+/**
+ * Fields identified as having values that are expected to be a list.
+ * https://datatracker.ietf.org/doc/html/rfc9110
+ */
 static set<string> listFields{
   "ACCEPT",
   "ACCEPT-CHARSET",
   "ACCEPT-ENCODING",
   "ACCEPT-LANGUAGE",
   "ACCEPT-RANGES",
+  "ALLOW",
+  "AUTHENTICATION-INFO",
   "CONNECTION",
   "CONTENT-ENCODING",
   "CONTENT-LANGUAGE",
   "EXPECT",
   "IF-MATCH",
   "IF-NONE-MATCH",
+  "PROXY-AUTHENTICATE",
+  "PROXY-AUTHENTICATION-INFO",
   "TE",
   "TRAILER",
   "UPGRADE",
   "VARY",
   "VIA",
+  "WWW-AUTHENTICATE",
 };
 
 bool isListField(const string & name) {
