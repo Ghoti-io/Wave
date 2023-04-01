@@ -32,11 +32,11 @@ TEST(Simple, Simple){
 int main(int argc, char** argv) {
   testing::InitGoogleTest(&argc, argv);
   //return RUN_ALL_TESTS();
-  while (1) {
+  //while (1) {
     Server s{};
     s.setPort(50000).start();
     cout << "listening on " << s.getAddress() << ":" << s.getPort() << endl;
     this_thread::sleep_for(10000ms);
-  }
+  //}
 }
 

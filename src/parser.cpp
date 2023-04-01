@@ -28,10 +28,10 @@ using namespace Ghoti::Wave;
   this->readStateMinor = nextState; \
   this->minorStart = this->cursor;
 
-#define SET_MAJOR_STATE(nextState) \
-  this->readStateMajor = nextState; \
+#define SET_MAJOR_STATE(nextMajorState, nextMinorState) \
+  this->readStateMajor = nextMajorState; \
   this->majorStart = this->cursor; \
-  SET_MINOR_STATE(BEGINNING_OF_FIELD_LINE);
+  SET_MINOR_STATE(nextMinorState);
 
 #define READ_WHITESPACE_OPTIONAL(nextState) \
   while ((this->cursor < input_length) && ( \
@@ -198,7 +198,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_CRLF: {
-            SET_MAJOR_STATE(FIELD_LINE);
+            SET_MAJOR_STATE(FIELD_LINE, BEGINNING_OF_FIELD_LINE);
             this->tempFieldName = "";
             break;
           }
@@ -211,6 +211,16 @@ void Parser::processChunk(const char * buffer, size_t len) {
         // https://datatracker.ietf.org/doc/html/rfc9110#section-5.2
         switch (this->readStateMinor) {
           case BEGINNING_OF_FIELD_LINE: {
+            // Intentionally not advancing the cursor in this step.
+            if ((this->input[this->cursor] == '\r') || (this->input[this->cursor] == '\n')) {
+              SET_MINOR_STATE(AFTER_HEADER_FIELDS);
+            }
+            else {
+              SET_MINOR_STATE(FIELD_NAME);
+            }
+            break;
+          }
+          case FIELD_NAME: {
             // Field lines must not begin with whitespace, unless packaged
             // within the "message/http" media type.
             // https://datatracker.ietf.org/doc/html/rfc9112#name-obsolete-line-folding
@@ -418,8 +428,31 @@ void Parser::processChunk(const char * buffer, size_t len) {
           }
           case AFTER_CRLF: {
             //cout << this->currentMessage;
-            SET_MAJOR_STATE(FIELD_LINE);
+            SET_MAJOR_STATE(FIELD_LINE, BEGINNING_OF_FIELD_LINE);
             this->tempFieldName = "";
+            break;
+          }
+          case AFTER_HEADER_FIELDS: {
+            // CR `MAY` be ignored, so look for either CRLF or just LF.
+            // https://datatracker.ietf.org/doc/html/rfc9112#section-2.2-3
+            size_t len = this->cursor - this->minorStart;
+            while ((this->cursor < input_length) && (len < 2)) {
+              if (((len == 0) && !((this->input[this->cursor] == '\r') || (this->input[this->cursor] == '\n')))
+                || ((len == 1) && (this->input[this->cursor] != '\n'))) {
+                this->currentMessage.setStatusCode(400).setErrorMessage("Error reading field line.");
+              }
+              if (!this->currentMessage.hasError() && (this->input[this->cursor] == '\n')) {
+                // Note: We are not incrementing the cursor here.  That way, in
+                // the event that the message ends at this point (e.g., there
+                // is no body message), the not-yet-incremented cursor allows
+                // us to move execution to the next phase.  If we need to end
+                // processing at that point, then so be it.
+                SET_MAJOR_STATE(MESSAGE_BODY, MESSAGE_START);
+                break;
+              }
+              ++this->cursor;
+              ++len;
+            }
             break;
           }
           default: {
@@ -429,6 +462,24 @@ void Parser::processChunk(const char * buffer, size_t len) {
       break;
       case MESSAGE_BODY:
         switch (this->readStateMinor) {
+          case MESSAGE_START: {
+            // Increment the cursor, which was not done at the end of the
+            // previous step, AFTER_HEADER_FIELDS.
+            ++this->cursor;
+
+            // Determine whether or not there is a message body.
+            // https://datatracker.ietf.org/doc/html/rfc9112#section-6-4
+            auto fields = this->currentMessage.getFields();
+            if (fields.contains("CONTENT-LENGTH") || fields.contains("TRANSFER-ENCODING")) {
+              // Do something.
+            }
+            else {
+              // This is the end of the message.
+              this->messages.emplace(move(this->currentMessage));
+              this->currentMessage = Message();
+            }
+            break;
+          }
           default: {
             this->currentMessage.setErrorMessage("foo");
           }
@@ -438,6 +489,10 @@ void Parser::processChunk(const char * buffer, size_t len) {
         this->currentMessage.setErrorMessage("foo");
       }
     }
+  }
+  if (this->currentMessage.hasError()) {
+    this->messages.emplace(move(this->currentMessage));
+    this->currentMessage = Message();
   }
 }
 

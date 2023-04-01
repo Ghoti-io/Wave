@@ -42,6 +42,7 @@ class Parser {
     AFTER_REQUEST_TARGET,
     HTTP_VERSION,
     AFTER_HTTP_VERSION,
+    FIELD_NAME,
     AFTER_FIELD_NAME,
     BEFORE_FIELD_VALUE,
     FIELD_VALUE,
@@ -55,6 +56,8 @@ class Parser {
     AFTER_FIELD_VALUE,
     FIELD_VALUE_COMMA,
     AFTER_FIELD_VALUE_COMMA,
+    AFTER_HEADER_FIELDS,
+    MESSAGE_START,
   };
   Type type;
   size_t cursor;
