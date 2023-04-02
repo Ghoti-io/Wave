@@ -10,7 +10,7 @@
 #include <sys/socket.h>
 #include <sstream>
 #include "server.hpp"
-#include "session.hpp"
+#include "serverSession.hpp"
 
 using namespace std;
 using namespace Ghoti::Pool;
@@ -61,7 +61,7 @@ void Server::dispatchLoop(stop_token stopToken) {
       this_thread::sleep_for(1ms);
     }
     else {
-      this->sessions.emplace(hClient, make_shared<Session>(hClient, this));
+      this->sessions.emplace(hClient, make_shared<ServerSession>(hClient, this));
     }
   }
 

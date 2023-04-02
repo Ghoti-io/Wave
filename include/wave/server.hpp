@@ -17,7 +17,7 @@
 //#define MAXBUFFERSIZE (40)
 
 namespace Ghoti::Wave {
-class Session;
+class ServerSession;
 class Server {
   public:
     enum ErrorCode {
@@ -41,7 +41,7 @@ class Server {
 
   private:
   Ghoti::Pool::Pool workers;
-  std::map<int, std::shared_ptr<Ghoti::Wave::Session>> sessions;
+  std::map<int, std::shared_ptr<Ghoti::Wave::ServerSession>> sessions;
   std::jthread dispatchThread;
   ErrorCode errorCode;
   std::string errorMessage;

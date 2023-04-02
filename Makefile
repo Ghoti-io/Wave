@@ -14,12 +14,13 @@ TARGET := $(SO_NAME).$(MINOR_VERSION)
 
 INCLUDE := -I include/ -I include/wave
 LIBOBJECTS := $(OBJ_DIR)/client.o \
+							$(OBJ_DIR)/clientSession.o \
 							$(OBJ_DIR)/parser.o \
 							$(OBJ_DIR)/parsing.o \
 							$(OBJ_DIR)/response.o \
 							$(OBJ_DIR)/message.o \
 							$(OBJ_DIR)/server.o \
-							$(OBJ_DIR)/session.o
+							$(OBJ_DIR)/serverSession.o
 
 TESTFLAGS := `pkg-config --libs --cflags gtest`
 
@@ -32,8 +33,6 @@ all: $(APP_DIR)/$(TARGET) ## Build the shared library
 ####################################################################
 # Dependency Variables
 ####################################################################
-DEP_CLIENT = \
-	include/wave/client.hpp
 DEP_PARSING = \
 	include/wave/parsing.hpp
 DEP_PARSER = \
@@ -43,18 +42,27 @@ DEP_RESPONSE = \
 	include/wave/response.hpp
 DEP_MESSAGE = \
 	include/wave/message.hpp
-DEP_SERVER = \
-	include/wave/server.hpp
-DEP_SESSION = \
+DEP_CLIENTSESSION = \
 	$(DEP_PARSER) \
 	$(DEP_MESSAGE) \
-	include/wave/session.hpp
+	include/wave/clientSession.hpp
+DEP_SERVERSESSION = \
+	$(DEP_PARSER) \
+	$(DEP_MESSAGE) \
+	include/wave/serverSession.hpp
+DEP_CLIENT = \
+	$(DEP_CLIENTSESSION) \
+	include/wave/client.hpp
+DEP_SERVER = \
+	$(DEP_SERVERSESSION) \
+	include/wave/server.hpp
 DEP_WAVE = \
 	$(DEP_CLIENT) \
+	$(DEP_CLIENTSESSION) \
 	$(DEP_RESPONSE) \
 	$(DEP_MESSAGE) \
 	$(DEP_SERVER) \
-	$(DEP_SESSION) \
+	$(DEP_SERVERSESSION) \
 	include/wave.hpp
 
 ####################################################################
@@ -69,6 +77,10 @@ $(LIBOBJECTS) :
 $(OBJ_DIR)/client.o: \
 				src/client.cpp \
 				$(DEP_CLIENT)
+
+$(OBJ_DIR)/clientSession.o: \
+				src/clientSession.cpp \
+				$(DEP_CLIENTSESSION)
 
 $(OBJ_DIR)/parser.o: \
 				src/parser.cpp \
@@ -90,9 +102,9 @@ $(OBJ_DIR)/server.o: \
 				src/server.cpp \
 				$(DEP_SERVER)
 
-$(OBJ_DIR)/session.o: \
-				src/session.cpp \
-				$(DEP_SESSION)
+$(OBJ_DIR)/serverSession.o: \
+				src/serverSession.cpp \
+				$(DEP_SERVERSESSION)
 
 $(OBJ_DIR)/wave.o: \
 				src/wave.cpp \

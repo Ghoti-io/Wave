@@ -8,11 +8,12 @@
 #define WAVE_HPP
 
 #include "wave/client.hpp"
+#include "wave/clientSession.hpp"
 #include "wave/message.hpp"
 #include "wave/parser.hpp"
 #include "wave/parsing.hpp"
 #include "wave/server.hpp"
-#include "wave/session.hpp"
+#include "wave/serverSession.hpp"
 
 namespace Ghoti::Wave {
 

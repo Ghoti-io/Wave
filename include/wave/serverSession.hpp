@@ -1,11 +1,11 @@
 /**
  * @file
  *
- * Header file for declaring the Session class.
+ * Header file for declaring the ServerSession class.
  */
 
-#ifndef SESSION_HPP
-#define SESSION_HPP
+#ifndef SERVERSESSION_HPP
+#define SERVERSESSION_HPP
 
 #include <condition_variable>
 #include <ghoti.io/pool.hpp>
@@ -18,10 +18,10 @@
 
 namespace Ghoti::Wave {
 class Server;
-class Session {
+class ServerSession {
   public:
-  Session(int hClient, Server * server);
-  ~Session();
+  ServerSession(int hClient, Server * server);
+  ~ServerSession();
   bool hasDataWaiting();
   bool isFinished();
   void read();
@@ -39,5 +39,5 @@ class Session {
 
 }
 
-#endif // SESSION_HPP
+#endif // SERVERSESSION_HPP
 

@@ -1,7 +1,7 @@
 /**
  * @file
  *
- * Define the Ghoti::Wave::Session class.
+ * Define the Ghoti::Wave::ClientSession class.
  */
 
 #include <arpa/inet.h>
@@ -11,36 +11,38 @@
 #include <sys/socket.h>
 #include <sstream>
 #include <set>
-#include "server.hpp"
-#include "session.hpp"
+#include "client.hpp"
+#include "clientSession.hpp"
 #include <string.h>
 
 using namespace std;
 using namespace Ghoti::Pool;
 using namespace Ghoti::Wave;
 
-Session::Session(int hClient, Server * server) :
+#define MAXBUFFERSIZE (40)
+
+ClientSession::ClientSession(int hServer, Client * client) :
   controlMutex{make_unique<mutex>()},
-  hClient{hClient},
-  server{server},
+  hServer{hServer},
+  client{client},
   working{false},
   finished{false},
   messageReady{false},
-  parser{Parser::Type::REQUEST} {
-  cout << "Open: " << this->hClient << endl;
+  parser{Parser::Type::RESPONSE} {
+  cout << "Open: " << this->hServer << endl;
 }
 
-Session::~Session() {
-  cout << "Close: " << this->hClient << endl;
-  close(this->hClient);
+ClientSession::~ClientSession() {
+  cout << "Close: " << this->hServer << endl;
+  close(this->hServer);
 }
 
-bool Session::hasDataWaiting() {
+bool ClientSession::hasDataWaiting() {
   bool dataIsWaiting{false};
   if (this->controlMutex->try_lock()) {
     if (!this->working) {
       // See if there is anything waiting to be read on the socket.
-      pollfd pollFd{this->hClient, POLLIN, 0};
+      pollfd pollFd{this->hServer, POLLIN, 0};
       if (poll(&pollFd, 1, 0)) {
         dataIsWaiting = true;
         this->working = true;
@@ -51,17 +53,17 @@ bool Session::hasDataWaiting() {
   return dataIsWaiting;
 }
 
-bool Session::isFinished() {
+bool ClientSession::isFinished() {
   scoped_lock lock{*this->controlMutex};
   return this->finished;
 }
 
-void Session::read() {
+void ClientSession::read() {
   scoped_lock lock{*this->controlMutex};
 
   while (1) {
     char buffer[MAXBUFFERSIZE] = {0};
-    ssize_t byte_count = recv(hClient, buffer, MAXBUFFERSIZE, 0);
+    ssize_t byte_count = recv(hServer, buffer, MAXBUFFERSIZE, 0);
     if (byte_count > 0) {
       this->parser.processChunk(buffer, byte_count);
 
@@ -74,7 +76,7 @@ void Session::read() {
       /*
       if (this->messageReady) {
         // Yeah, none of this is right.  It's just for testing.
-        close(this->hClient);
+        close(this->hServer);
         this->finished = true;
         this->currentRequest = Request();
       }
@@ -82,7 +84,7 @@ void Session::read() {
     }
     else if (byte_count == 0) {
       // There was an orderly shutdown.
-      close(this->hClient);
+      close(this->hServer);
       this->finished = true;
       break;
     }
@@ -101,7 +103,7 @@ void Session::read() {
         }
         default: {
           //cout << strerror(errno) << endl;
-          close(this->hClient);
+          close(this->hServer);
           this->finished = true;
         }
       }
@@ -109,12 +111,12 @@ void Session::read() {
     }
   }
   //[[maybe_unused]] size_t cursor{0};
-  //[[maybe_unused]] size_t count = send(hClient, response.c_str(), response.length(), 0);
+  //[[maybe_unused]] size_t count = send(hServer, response.c_str(), response.length(), 0);
 
   /*
-  cout << this->hClient << ":(" << this->input.length() << ") " << this->input << endl;
+  cout << this->hServer << ":(" << this->input.length() << ") " << this->input << endl;
   if (this->input.length() > 255) {
-    close(this->hClient);
+    close(this->hServer);
   }
   */
   this->working = false;
