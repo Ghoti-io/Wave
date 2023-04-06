@@ -14,6 +14,7 @@
 #include "server.hpp"
 #include "serverSession.hpp"
 #include <string.h>
+#include <unistd.h>
 
 using namespace std;
 using namespace Ghoti::Pool;
@@ -22,11 +23,14 @@ using namespace Ghoti::Wave;
 ServerSession::ServerSession(int hClient, Server * server) :
   controlMutex{make_unique<mutex>()},
   hClient{hClient},
-  server{server},
+  sequence{0},
+  writeOffset{0},
   working{false},
   finished{false},
-  messageReady{false},
-  parser{Parser::Type::REQUEST} {
+  parser{Parser::Type::REQUEST},
+  server{server},
+  messages{},
+  pipeline{} {
   cout << "Open: " << this->hClient << endl;
 }
 
@@ -35,8 +39,12 @@ ServerSession::~ServerSession() {
   close(this->hClient);
 }
 
-bool ServerSession::hasDataWaiting() {
+bool ServerSession::hasReadDataWaiting() {
+  // It may be that the socket is currently in use by another thread.  If so,
+  // then do not wait for a response, but rather just return false so as not
+  // to block the calling thread.
   bool dataIsWaiting{false};
+
   if (this->controlMutex->try_lock()) {
     if (!this->working) {
       // See if there is anything waiting to be read on the socket.
@@ -46,6 +54,19 @@ bool ServerSession::hasDataWaiting() {
         this->working = true;
       }
     }
+    this->controlMutex->unlock();
+  }
+  return dataIsWaiting;
+}
+
+bool ServerSession::hasWriteDataWaiting() {
+  // It may be that the socket is currently in use by another thread.  If so,
+  // then do not wait for a response, but rather just return false so as not
+  // to block the calling thread.
+  bool dataIsWaiting{false};
+
+  if (this->controlMutex->try_lock()) {
+    dataIsWaiting = this->pipeline.size();
     this->controlMutex->unlock();
   }
   return dataIsWaiting;
@@ -68,8 +89,11 @@ void ServerSession::read() {
       // Enqueue the completed messages for processing.
       while (!this->parser.messages.empty()) {
         auto temp = this->parser.messages.front();
-        this->parser.messages.pop();
         cout << temp;
+        this->parser.messages.pop();
+        this->messages[this->sequence] = {make_shared<Message>(temp), make_shared<Message>()};
+        this->pipeline.push(this->sequence);
+        ++this->sequence;
       }
       /*
       if (this->messageReady) {
@@ -118,5 +142,37 @@ void ServerSession::read() {
   }
   */
   this->working = false;
+}
+
+void ServerSession::write() {
+  scoped_lock lock{*this->controlMutex};
+
+  if (this->pipeline.size()) {
+    // Attempt to write out some of the response.
+    auto currentRequest = this->pipeline.front();
+    auto [request, response] = this->messages[currentRequest];
+    string header = "HTTP/1.1 200 OK\r\nServer: Hello\r\n\r\n";
+
+    // Write out as much as possible.
+    auto bytesWritten = ::write(this->hClient, header.c_str() + this->writeOffset, header.length() - this->writeOffset);
+
+    // Detect any errors.
+    if (bytesWritten == -1) {
+      cout << "Error writing response: " << strerror(errno) << endl;
+      this->finished = true;
+      close(this->hClient);
+      return;
+    }
+
+    // Advance the internal pointer.
+    this->writeOffset += bytesWritten;
+
+    // If everything has been written, then emove this message from the
+    // pipeline queue.
+    if (this->writeOffset == header.length()) {
+      this->messages.erase(currentRequest);
+      this->pipeline.pop();
+    }
+  }
 }
 

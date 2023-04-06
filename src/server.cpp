@@ -38,9 +38,14 @@ void Server::dispatchLoop(stop_token stopToken) {
       auto session = it->second;
 
       // Service existing requests.
-      if (session->hasDataWaiting()) {
+      if (session->hasReadDataWaiting()) {
         pool.enqueue({[=](){
           session->read();
+        }});
+      }
+      else if (session->hasWriteDataWaiting()) {
+        pool.enqueue({[=](){
+          session->write();
         }});
       }
 

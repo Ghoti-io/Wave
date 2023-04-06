@@ -13,6 +13,7 @@
 #include <mutex>
 #include <ostream>
 #include "parser.hpp"
+#include <map>
 #include "message.hpp"
 #include <string>
 
@@ -22,19 +23,24 @@ class ServerSession {
   public:
   ServerSession(int hClient, Server * server);
   ~ServerSession();
-  bool hasDataWaiting();
+  bool hasReadDataWaiting();
+  bool hasWriteDataWaiting();
   bool isFinished();
   void read();
   std::unique_ptr<std::mutex> controlMutex;
   std::unique_ptr<std::condition_variable> controlConditionVariable;
+  void write();
 
   private:
   int hClient;
-  Server * server;
+  int sequence;
+  size_t writeOffset;
   bool working;
   bool finished;
-  bool messageReady;
   Parser parser;
+  Server * server;
+  std::map<uint64_t, std::pair<std::shared_ptr<Message>, std::shared_ptr<Message>>> messages;
+  std::queue<uint64_t> pipeline;
 };
 
 }
