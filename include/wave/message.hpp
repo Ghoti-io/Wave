@@ -15,7 +15,13 @@
 namespace Ghoti::Wave {
 class Message {
   public:
-  Message();
+  enum Type {
+    REQUEST,
+    RESPONSE,
+  };
+
+  Message(Type type);
+  const std::string & getRenderedHeader();
 
   bool hasError() const;
   Message & setStatusCode(size_t statusCode);
@@ -32,8 +38,11 @@ class Message {
   const std::map<std::string, std::vector<std::string>> & getFields() const;
 
   private:
+  bool headerIsRendered;
   bool errorIsSet;
+  Type type;
   size_t statusCode;
+  std::string renderedHeader;
   std::string errorMessage;
   std::string method;
   std::string target;

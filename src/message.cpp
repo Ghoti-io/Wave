@@ -8,8 +8,10 @@
 using namespace std;
 using namespace Ghoti::Wave;
 
-Message::Message() :
+Message::Message(Type type) :
+  headerIsRendered{false},
   errorIsSet{false},
+  type{type},
   statusCode{},
   errorMessage{},
   method{},
@@ -18,12 +20,20 @@ Message::Message() :
   headers{} {
 }
 
+const string & Message::getRenderedHeader() {
+  if (!this->headerIsRendered) {
+    this->headerIsRendered = true;
+  }
+  return this->renderedHeader;
+}
+
 bool Message::hasError() const {
   return this->errorIsSet;
 }
 
 Message & Message::setStatusCode(size_t statusCode) {
   this->statusCode = statusCode;
+  this->headerIsRendered = false;
   return *this;
 }
 
@@ -34,6 +44,7 @@ size_t Message::getStatusCode() const {
 Message & Message::setErrorMessage(const std::string & errorMessage) {
   this->errorMessage = errorMessage;
   this->errorIsSet = true;
+  this->headerIsRendered = false;
   return *this;
 }
 
@@ -43,6 +54,7 @@ const std::string & Message::getErrorMessage() const {
 
 Message & Message::setMethod(const std::string & method) {
   this->method = method;
+  this->headerIsRendered = false;
   return *this;
 }
 
@@ -52,6 +64,7 @@ const std::string & Message::getMethod() const {
 
 Message & Message::setTarget(const std::string & target) {
   this->target = target;
+  this->headerIsRendered = false;
   return *this;
 }
 
@@ -61,6 +74,7 @@ const std::string & Message::getTarget() const {
 
 Message & Message::setVersion(const std::string & version) {
   this->version = version;
+  this->headerIsRendered = false;
   return *this;
 }
 
@@ -70,6 +84,7 @@ const std::string & Message::getVersion() const {
 
 void Message::addFieldValue(const std::string & name, const std::string & value) {
   this->headers[name].push_back(value);
+  this->headerIsRendered = false;
 }
 
 const map<string, vector<string>> & Message::getFields() const {

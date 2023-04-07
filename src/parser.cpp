@@ -100,7 +100,8 @@ static set<string> messageMethods{"GET", "HEAD", "POST", "PUT", "DELETE", "CONNE
 Parser::Parser(Type type) :
   type{type},
   cursor{0},
-  input{} {
+  input{},
+  currentMessage{type == REQUEST ? Message::Type::REQUEST : Message::Type::RESPONSE} {
     SET_NEW_HEADER;
   }
 
@@ -476,7 +477,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             else {
               // This is the end of the message.
               this->messages.emplace(move(this->currentMessage));
-              this->currentMessage = Message();
+              this->currentMessage = this->createNewMessage();
             }
             break;
           }
@@ -492,7 +493,16 @@ void Parser::processChunk(const char * buffer, size_t len) {
   }
   if (this->currentMessage.hasError()) {
     this->messages.emplace(move(this->currentMessage));
-    this->currentMessage = Message();
+    this->currentMessage = this->createNewMessage();
   }
 }
 
+Message Parser::createNewMessage() const {
+  switch (this->type) {
+    case REQUEST:
+      return Message(Message::Type::REQUEST);
+    case RESPONSE:
+    default:
+      return Message(Message::Type::RESPONSE);
+  }
+}

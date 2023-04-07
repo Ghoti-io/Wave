@@ -33,15 +33,16 @@ all: $(APP_DIR)/$(TARGET) ## Build the shared library
 ####################################################################
 # Dependency Variables
 ####################################################################
+DEP_MESSAGE = \
+	include/wave/message.hpp
 DEP_PARSING = \
 	include/wave/parsing.hpp
 DEP_PARSER = \
 	$(DEP_PARSING) \
+	$(DEP_MESSAGE) \
 	include/wave/parser.hpp
 DEP_RESPONSE = \
 	include/wave/response.hpp
-DEP_MESSAGE = \
-	include/wave/message.hpp
 DEP_CLIENTSESSION = \
 	$(DEP_PARSER) \
 	$(DEP_MESSAGE) \

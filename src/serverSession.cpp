@@ -7,6 +7,7 @@
 #include <arpa/inet.h>
 #include <ghoti.io/pool.hpp>
 #include <iostream>
+#include "message.hpp"
 #include <poll.h>
 #include <sys/socket.h>
 #include <sstream>
@@ -91,7 +92,7 @@ void ServerSession::read() {
         auto temp = this->parser.messages.front();
         cout << temp;
         this->parser.messages.pop();
-        this->messages[this->sequence] = {make_shared<Message>(temp), make_shared<Message>()};
+        this->messages[this->sequence] = {make_shared<Message>(temp), make_shared<Message>(Message::Type::RESPONSE)};
         this->pipeline.push(this->sequence);
         ++this->sequence;
       }

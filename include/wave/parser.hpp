@@ -70,6 +70,7 @@ class Parser {
   std::string tempFieldName;
   std::string tempFieldValue;
   Message currentMessage;
+  Message createNewMessage() const;
 };
 
 }
