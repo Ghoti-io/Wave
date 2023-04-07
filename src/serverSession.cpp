@@ -48,7 +48,7 @@ bool ServerSession::hasReadDataWaiting() {
   if (this->controlMutex->try_lock()) {
     if (!this->working) {
       // See if there is anything waiting to be read on the socket.
-      pollfd pollFd{this->hClient, POLLIN, 0};
+      pollfd pollFd{this->hClient, POLLIN | POLLERR, 0};
       if (poll(&pollFd, 1, 0)) {
         dataIsWaiting = true;
         this->working = true;
@@ -95,14 +95,6 @@ void ServerSession::read() {
         this->pipeline.push(this->sequence);
         ++this->sequence;
       }
-      /*
-      if (this->messageReady) {
-        // Yeah, none of this is right.  It's just for testing.
-        close(this->hClient);
-        this->finished = true;
-        this->currentRequest = Request();
-      }
-      */
     }
     else if (byte_count == 0) {
       // There was an orderly shutdown.
@@ -118,6 +110,10 @@ void ServerSession::read() {
         // POSIX.1 allows either error to be returned for this case, and does
         // not require these constants to have the same value, so a portable
         // application should check for both possibilities.
+        //
+        // In C++, however, the two cases cannot coexist if EAGAIN and
+        // EWOULDBLOCK have the same value, therefore one must be wrapped in a
+        // #if preprocessor block.
         case EAGAIN:
 #endif
         case EWOULDBLOCK: {
@@ -151,7 +147,7 @@ void ServerSession::write() {
     // Attempt to write out some of the response.
     auto currentRequest = this->pipeline.front();
     auto [request, response] = this->messages[currentRequest];
-    string header = "HTTP/1.1 200 OK\r\nServer: Hello\r\n\r\n";
+    string header = "HTTP/1.1 200 OK\r\nServer: Hello\r\nContent-Length: 0\r\n\r\n";
 
     // Write out as much as possible.
     auto bytesWritten = ::write(this->hClient, header.c_str() + this->writeOffset, header.length() - this->writeOffset);
@@ -167,7 +163,7 @@ void ServerSession::write() {
     // Advance the internal pointer.
     this->writeOffset += bytesWritten;
 
-    // If everything has been written, then emove this message from the
+    // If everything has been written, then remove this message from the
     // pipeline queue.
     if (this->writeOffset == header.length()) {
       this->messages.erase(currentRequest);
