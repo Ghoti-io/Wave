@@ -4,6 +4,7 @@
  */
 
 #include "message.hpp"
+#include "parsing.hpp"
 
 using namespace std;
 using namespace Ghoti::Wave;
@@ -22,6 +23,42 @@ Message::Message(Type type) :
 
 const string & Message::getRenderedHeader() {
   if (!this->headerIsRendered) {
+    this->renderedHeader = this->version
+      + " " + to_string(this->statusCode)
+      + " " + this->errorMessage
+      + "\r\n";
+    for (auto & [field, values] : this->headers) {
+      if (values.size()) {
+        // Output the field name as provided.
+        this->renderedHeader += field + ": ";
+
+        // Convert the field name to uppercase for use by isListField().
+        auto temp = field;
+        transform(temp.begin(), temp.end(), temp.begin(), ::toupper);
+
+        // Wrap the field values with double quotes only when necessary.
+        if (!isListField(temp)) {
+          this->renderedHeader += field[0] + "\r\n";
+        }
+        else {
+          bool isFirst{true};
+          for (auto & value : values) {
+            this->renderedHeader += isFirst ? "" : ", ";
+            // Only use double quotes if necessary.
+            // https://www.rfc-editor.org/rfc/rfc9110.html#section-5.6.4-5
+            if (fieldValueQuotesNeeded(value)) {
+              this->renderedHeader += '"' + fieldValueEscape(value) + '"';
+            }
+            else {
+              this->renderedHeader += value;
+            }
+            isFirst = false;
+          }
+          this->renderedHeader += "\r\n";
+        }
+      }
+    }
+    this->renderedHeader += "\r\n";
     this->headerIsRendered = true;
   }
   return this->renderedHeader;
@@ -32,8 +69,9 @@ bool Message::hasError() const {
 }
 
 Message & Message::setStatusCode(size_t statusCode) {
-  this->statusCode = statusCode;
-  this->headerIsRendered = false;
+  if (!this->headerIsRendered) {
+    this->statusCode = statusCode;
+  }
   return *this;
 }
 
@@ -42,9 +80,10 @@ size_t Message::getStatusCode() const {
 }
 
 Message & Message::setErrorMessage(const std::string & errorMessage) {
-  this->errorMessage = errorMessage;
-  this->errorIsSet = true;
-  this->headerIsRendered = false;
+  if (!this->headerIsRendered) {
+    this->errorMessage = errorMessage;
+    this->errorIsSet = true;
+  }
   return *this;
 }
 
@@ -53,8 +92,9 @@ const std::string & Message::getErrorMessage() const {
 }
 
 Message & Message::setMethod(const std::string & method) {
-  this->method = method;
-  this->headerIsRendered = false;
+  if (!this->headerIsRendered) {
+    this->method = method;
+  }
   return *this;
 }
 
@@ -63,8 +103,9 @@ const std::string & Message::getMethod() const {
 }
 
 Message & Message::setTarget(const std::string & target) {
-  this->target = target;
-  this->headerIsRendered = false;
+  if (!this->headerIsRendered) {
+    this->target = target;
+  }
   return *this;
 }
 
@@ -73,8 +114,9 @@ const std::string & Message::getTarget() const {
 }
 
 Message & Message::setVersion(const std::string & version) {
-  this->version = version;
-  this->headerIsRendered = false;
+  if (!this->headerIsRendered) {
+    this->version = version;
+  }
   return *this;
 }
 
@@ -83,8 +125,9 @@ const std::string & Message::getVersion() const {
 }
 
 void Message::addFieldValue(const std::string & name, const std::string & value) {
-  this->headers[name].push_back(value);
-  this->headerIsRendered = false;
+  if (!this->headerIsRendered) {
+    this->headers[name].push_back(value);
+  }
 }
 
 const map<string, vector<string>> & Message::getFields() const {

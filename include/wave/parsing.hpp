@@ -6,12 +6,14 @@
 #ifndef CLIENT_HPP
 #define CLIENT_HPP
 
+#include <string>
+
 namespace Ghoti::Wave {
 
 /**
  * Identify a field name as accepting a list-based set of values.
  *
- * @param name The field name.
+ * @param name The field name.  The field name must be uppercase.
  * @result Whether or not the field name is recognized as a list-based field.
  */
 bool isListField(const std::string & name);
@@ -79,6 +81,23 @@ bool isFieldContentChar(uint8_t c);
  * @result Whether or not the character is a valid CRLF character.
  */
 bool isCRLFChar(uint8_t c);
+
+/**
+ * Indicate whether or not the string contains a character which makes it
+ * necessary to wrap the string in double quotes.
+ *
+ * @param str The string in question.
+ * @result Whether or not the string needs to be wrapped in double quotes.
+ */
+bool fieldValueQuotesNeeded(const std::string & str);
+
+/**
+ * Escape a field value.
+ *
+ * @param str The field value to be escaped.
+ * @result The escaped field value.
+ */
+std::string fieldValueEscape(const std::string & str);
 
 };
 
