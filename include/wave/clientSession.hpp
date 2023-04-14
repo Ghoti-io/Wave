@@ -9,6 +9,7 @@
 
 #include <condition_variable>
 #include <ghoti.io/pool.hpp>
+#include <future>
 #include <memory>
 #include <mutex>
 #include <ostream>
@@ -30,16 +31,18 @@ class ClientSession {
   std::unique_ptr<std::mutex> controlMutex;
   std::unique_ptr<std::condition_variable> controlConditionVariable;
   void write();
+  std::future<std::shared_ptr<Message>> enqueue(const Message & message);
 
   private:
   int hServer;
-  int sequence;
+  size_t requestSequence;
+  size_t writeSequence;
   size_t writeOffset;
   bool working;
   bool finished;
   Parser parser;
   Client * client;
-  std::map<uint64_t, std::pair<std::shared_ptr<Message>, std::shared_ptr<Message>>> messages;
+  std::map<uint64_t, std::pair<std::shared_ptr<Message>, std::promise<std::shared_ptr<Message>>>> messages;
   std::queue<uint64_t> pipeline;
 };
 

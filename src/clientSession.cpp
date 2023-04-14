@@ -25,7 +25,8 @@ using namespace Ghoti::Wave;
 ClientSession::ClientSession(int hServer, Client * client) :
   controlMutex{make_unique<mutex>()},
   hServer{hServer},
-  sequence{0},
+  requestSequence{0},
+  writeSequence{0},
   writeOffset{0},
   working{false},
   finished{false},
@@ -90,14 +91,17 @@ void ClientSession::read() {
 
       // Notify the requester that we have a response.
       while (!this->parser.messages.empty()) {
-        auto temp = this->parser.messages.front();
-        cout << temp;
+        auto temp = make_shared<Message>(move(this->parser.messages.front()));
         this->parser.messages.pop();
         cout << "RECEIVED:" << endl;
-        cout << temp;
-        //this->messages[this->sequence] = {make_shared<Message>(temp), response};
-        this->pipeline.push(this->sequence);
-        ++this->sequence;
+        cout << *temp;
+
+        auto currentRequest = this->pipeline.front();
+        auto & [request, responsePromise] = this->messages[currentRequest];
+        responsePromise.set_value(temp);
+
+        this->messages.erase(currentRequest);
+        this->pipeline.pop();
       }
     }
     else if (byte_count == 0) {
@@ -147,13 +151,12 @@ void ClientSession::read() {
 void ClientSession::write() {
   scoped_lock lock{*this->controlMutex};
 
-  if (this->pipeline.size()) {
+  if (this->writeSequence < this->requestSequence) {
     // Attempt to write out some of the response.
-    auto currentRequest = this->pipeline.front();
-    auto [request, response] = this->messages[currentRequest];
-    auto assembledMessage = response->getRenderedHeader1() + "Content-Length: " + to_string(response->getContentLength()) + "\r\n\r\n";
-    if (response->getContentLength()) {
-      assembledMessage += response->getMessageBody();
+    auto & [request, responsePromise] = this->messages[this->writeSequence];
+    auto assembledMessage = request->getRenderedHeader1() + "Content-Length: " + to_string(request->getContentLength()) + "\r\n\r\n";
+    if (request->getContentLength()) {
+      assembledMessage += request->getMessageBody();
     }
 
     // Write out as much as possible.
@@ -161,7 +164,7 @@ void ClientSession::write() {
 
     // Detect any errors.
     if (bytesWritten == -1) {
-      cout << "Error writing response: " << strerror(errno) << endl;
+      cout << "Error writing request: " << strerror(errno) << endl;
       this->finished = true;
       close(this->hServer);
       return;
@@ -173,9 +176,19 @@ void ClientSession::write() {
     // If everything has been written, then remove this message from the
     // pipeline queue.
     if (this->writeOffset == assembledMessage.length()) {
-      this->messages.erase(currentRequest);
+      this->messages.erase(this->writeSequence);
       this->pipeline.pop();
+      ++this->writeSequence;
     }
   }
+}
+
+future<shared_ptr<Message>> ClientSession::enqueue(const Message & request) {
+  promise<shared_ptr<Message>> responsePromise;
+  auto f = responsePromise.get_future();
+  this->messages[this->requestSequence] = {make_shared<Message>(request), move(responsePromise)};
+  this->pipeline.push(this->requestSequence);
+  ++this->requestSequence;
+  return f;
 }
 
