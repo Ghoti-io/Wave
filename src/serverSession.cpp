@@ -25,7 +25,7 @@ using namespace Ghoti::Wave;
 ServerSession::ServerSession(int hClient, Server * server) :
   controlMutex{make_unique<mutex>()},
   hClient{hClient},
-  sequence{0},
+  requestSequence{0},
   writeOffset{0},
   working{false},
   finished{false},
@@ -97,9 +97,9 @@ void ServerSession::read() {
         response->setStatusCode(200)
           .setMessageBody("Hello World!");
         cout << *response;
-        this->messages[this->sequence] = {make_shared<Message>(temp), response};
-        this->pipeline.push(this->sequence);
-        ++this->sequence;
+        this->messages[this->requestSequence] = {make_shared<Message>(temp), response};
+        this->pipeline.push(this->requestSequence);
+        ++this->requestSequence;
       }
     }
     else if (byte_count == 0) {

@@ -33,7 +33,7 @@ class ServerSession {
 
   private:
   int hClient;
-  int sequence;
+  size_t requestSequence;
   size_t writeOffset;
   bool working;
   bool finished;
