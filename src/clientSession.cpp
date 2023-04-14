@@ -5,30 +5,34 @@
  */
 
 #include <arpa/inet.h>
+#include "client.hpp"
+#include "clientSession.hpp"
 #include <ghoti.io/pool.hpp>
 #include <iostream>
+#include "macros.hpp"
+#include "message.hpp"
 #include <poll.h>
 #include <sys/socket.h>
 #include <sstream>
 #include <set>
-#include "client.hpp"
-#include "clientSession.hpp"
 #include <string.h>
+#include <unistd.h>
 
 using namespace std;
 using namespace Ghoti::Pool;
 using namespace Ghoti::Wave;
 
-#define MAXBUFFERSIZE (40)
-
 ClientSession::ClientSession(int hServer, Client * client) :
   controlMutex{make_unique<mutex>()},
   hServer{hServer},
-  client{client},
+  sequence{0},
+  writeOffset{0},
   working{false},
   finished{false},
-  messageReady{false},
-  parser{Parser::Type::RESPONSE} {
+  parser{Parser::Type::RESPONSE},
+  client{client},
+  messages{},
+  pipeline{} {
   cout << "Open: " << this->hServer << endl;
 }
 
@@ -37,17 +41,34 @@ ClientSession::~ClientSession() {
   close(this->hServer);
 }
 
-bool ClientSession::hasDataWaiting() {
+bool ClientSession::hasReadDataWaiting() {
+  // It may be that the socket is currently in use by another thread.  If so,
+  // then do not wait for a response, but rather just return false so as not
+  // to block the calling thread.
   bool dataIsWaiting{false};
+
   if (this->controlMutex->try_lock()) {
     if (!this->working) {
       // See if there is anything waiting to be read on the socket.
-      pollfd pollFd{this->hServer, POLLIN, 0};
+      pollfd pollFd{this->hServer, POLLIN | POLLERR, 0};
       if (poll(&pollFd, 1, 0)) {
         dataIsWaiting = true;
         this->working = true;
       }
     }
+    this->controlMutex->unlock();
+  }
+  return dataIsWaiting;
+}
+
+bool ClientSession::hasWriteDataWaiting() {
+  // It may be that the socket is currently in use by another thread.  If so,
+  // then do not wait for a response, but rather just return false so as not
+  // to block the calling thread.
+  bool dataIsWaiting{false};
+
+  if (this->controlMutex->try_lock()) {
+    dataIsWaiting = this->pipeline.size();
     this->controlMutex->unlock();
   }
   return dataIsWaiting;
@@ -67,20 +88,17 @@ void ClientSession::read() {
     if (byte_count > 0) {
       this->parser.processChunk(buffer, byte_count);
 
-      // Enqueue the completed messages for processing.
+      // Notify the requester that we have a response.
       while (!this->parser.messages.empty()) {
         auto temp = this->parser.messages.front();
-        this->parser.messages.pop();
         cout << temp;
+        this->parser.messages.pop();
+        cout << "RECEIVED:" << endl;
+        cout << temp;
+        //this->messages[this->sequence] = {make_shared<Message>(temp), response};
+        this->pipeline.push(this->sequence);
+        ++this->sequence;
       }
-      /*
-      if (this->messageReady) {
-        // Yeah, none of this is right.  It's just for testing.
-        close(this->hServer);
-        this->finished = true;
-        this->currentRequest = Request();
-      }
-      */
     }
     else if (byte_count == 0) {
       // There was an orderly shutdown.
@@ -96,6 +114,10 @@ void ClientSession::read() {
         // POSIX.1 allows either error to be returned for this case, and does
         // not require these constants to have the same value, so a portable
         // application should check for both possibilities.
+        //
+        // In C++, however, the two cases cannot coexist if EAGAIN and
+        // EWOULDBLOCK have the same value, therefore one must be wrapped in a
+        // #if preprocessor block.
         case EAGAIN:
 #endif
         case EWOULDBLOCK: {
@@ -120,5 +142,40 @@ void ClientSession::read() {
   }
   */
   this->working = false;
+}
+
+void ClientSession::write() {
+  scoped_lock lock{*this->controlMutex};
+
+  if (this->pipeline.size()) {
+    // Attempt to write out some of the response.
+    auto currentRequest = this->pipeline.front();
+    auto [request, response] = this->messages[currentRequest];
+    auto assembledMessage = response->getRenderedHeader1() + "Content-Length: " + to_string(response->getContentLength()) + "\r\n\r\n";
+    if (response->getContentLength()) {
+      assembledMessage += response->getMessageBody();
+    }
+
+    // Write out as much as possible.
+    auto bytesWritten = ::write(this->hServer, assembledMessage.c_str() + this->writeOffset, assembledMessage.length() - this->writeOffset);
+
+    // Detect any errors.
+    if (bytesWritten == -1) {
+      cout << "Error writing response: " << strerror(errno) << endl;
+      this->finished = true;
+      close(this->hServer);
+      return;
+    }
+
+    // Advance the internal pointer.
+    this->writeOffset += bytesWritten;
+
+    // If everything has been written, then remove this message from the
+    // pipeline queue.
+    if (this->writeOffset == assembledMessage.length()) {
+      this->messages.erase(currentRequest);
+      this->pipeline.pop();
+    }
+  }
 }
 

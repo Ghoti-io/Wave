@@ -7,6 +7,7 @@
 #include <arpa/inet.h>
 #include <ghoti.io/pool.hpp>
 #include <iostream>
+#include "macros.hpp"
 #include "message.hpp"
 #include <poll.h>
 #include <sys/socket.h>

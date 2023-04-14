@@ -33,6 +33,8 @@ all: $(APP_DIR)/$(TARGET) ## Build the shared library
 ####################################################################
 # Dependency Variables
 ####################################################################
+DEP_MACROS = \
+	include/wave/macros.hpp
 DEP_PARSING = \
 	include/wave/parsing.hpp
 DEP_MESSAGE = \
@@ -45,10 +47,12 @@ DEP_PARSER = \
 DEP_RESPONSE = \
 	include/wave/response.hpp
 DEP_CLIENTSESSION = \
+	$(DEP_MACROS) \
 	$(DEP_PARSER) \
 	$(DEP_MESSAGE) \
 	include/wave/clientSession.hpp
 DEP_SERVERSESSION = \
+	$(DEP_MACROS) \
 	$(DEP_PARSER) \
 	$(DEP_MESSAGE) \
 	include/wave/serverSession.hpp
@@ -61,6 +65,7 @@ DEP_SERVER = \
 DEP_WAVE = \
 	$(DEP_CLIENT) \
 	$(DEP_CLIENTSESSION) \
+	$(DEP_MACROS) \
 	$(DEP_RESPONSE) \
 	$(DEP_MESSAGE) \
 	$(DEP_SERVER) \

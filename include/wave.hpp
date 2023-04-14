@@ -9,6 +9,7 @@
 
 #include "wave/client.hpp"
 #include "wave/clientSession.hpp"
+#include "wave/macros.hpp"
 #include "wave/message.hpp"
 #include "wave/parser.hpp"
 #include "wave/parsing.hpp"
