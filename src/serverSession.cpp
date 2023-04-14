@@ -92,7 +92,11 @@ void ServerSession::read() {
         auto temp = this->parser.messages.front();
         cout << temp;
         this->parser.messages.pop();
-        this->messages[this->sequence] = {make_shared<Message>(temp), make_shared<Message>(Message::Type::RESPONSE)};
+        auto response = make_shared<Message>(Message::Type::RESPONSE);
+        response->setStatusCode(200);
+        cout << "RESPONSE:" << endl;
+        cout << *response;
+        this->messages[this->sequence] = {make_shared<Message>(temp), response};
         this->pipeline.push(this->sequence);
         ++this->sequence;
       }

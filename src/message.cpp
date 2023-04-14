@@ -14,7 +14,7 @@ Message::Message(Type type) :
   errorIsSet{false},
   type{type},
   statusCode{},
-  errorMessage{},
+  message{},
   method{},
   target{},
   version{},
@@ -25,7 +25,7 @@ const string & Message::getRenderedHeader() {
   if (!this->headerIsRendered) {
     this->renderedHeader = this->version
       + " " + to_string(this->statusCode)
-      + " " + this->errorMessage
+      + " " + this->message
       + "\r\n";
     for (auto & [field, values] : this->headers) {
       if (values.size()) {
@@ -81,14 +81,21 @@ size_t Message::getStatusCode() const {
 
 Message & Message::setErrorMessage(const std::string & errorMessage) {
   if (!this->headerIsRendered) {
-    this->errorMessage = errorMessage;
+    this->message = errorMessage;
     this->errorIsSet = true;
   }
   return *this;
 }
 
-const std::string & Message::getErrorMessage() const {
-  return this->errorMessage;
+Message & Message::setMessage(const std::string & message) {
+  if (!this->headerIsRendered) {
+    this->message = message;
+  }
+  return *this;
+}
+
+const std::string & Message::getMessage() const {
+  return this->message;
 }
 
 Message & Message::setMethod(const std::string & method) {
@@ -134,13 +141,23 @@ const map<string, vector<string>> & Message::getFields() const {
   return this->headers;
 }
 
+Message::Type Message::getType() const {
+  return this->type;
+}
+
 ostream & Ghoti::Wave::operator<<(ostream & out, Message & message) {
-  out << "Message:" << endl;
-  out << "  Method: " << message.getMethod() << endl;
-  out << "  Target: " << message.getTarget() << endl;
-  out << "  Version: " << message.getVersion() << endl;
-  out << "  StatusCode: " << message.getStatusCode() << endl;
-  out << "  Error Message: " << message.getErrorMessage() << endl;
+  if (message.getType() == Message::Type::REQUEST) {
+    out << "Request:" << endl;
+    out << "  Method: " << message.getMethod() << endl;
+    out << "  Target: " << message.getTarget() << endl;
+    out << "  Version: " << message.getVersion() << endl;
+  }
+  else {
+    out << "Response:" << endl;
+    out << "  StatusCode: " << message.getStatusCode() << endl;
+  }
+
+  out << "  Message: " << message.getMessage() << endl;
   if (message.getFields().size()) {
     out << "  Fields:" << endl;
     for (auto & [name, values] : message.getFields()) {

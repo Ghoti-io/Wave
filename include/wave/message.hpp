@@ -26,8 +26,9 @@ class Message {
   bool hasError() const;
   Message & setStatusCode(size_t statusCode);
   size_t getStatusCode() const;
-  Message & setErrorMessage(const std::string & errorMessage);
-  const std::string & getErrorMessage() const;
+  Message & setErrorMessage(const std::string & Message);
+  Message & setMessage(const std::string & Message);
+  const std::string & getMessage() const;
   Message & setMethod(const std::string & method);
   const std::string & getMethod() const;
   Message & setTarget(const std::string & method);
@@ -36,6 +37,7 @@ class Message {
   const std::string & getVersion() const;
   void addFieldValue(const std::string & name, const std::string & value);
   const std::map<std::string, std::vector<std::string>> & getFields() const;
+  Type getType() const;
 
   private:
   bool headerIsRendered;
@@ -43,7 +45,7 @@ class Message {
   Type type;
   size_t statusCode;
   std::string renderedHeader;
-  std::string errorMessage;
+  std::string message;
   std::string method;
   std::string target;
   std::string version;
