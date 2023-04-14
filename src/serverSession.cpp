@@ -93,8 +93,8 @@ void ServerSession::read() {
         cout << temp;
         this->parser.messages.pop();
         auto response = make_shared<Message>(Message::Type::RESPONSE);
-        response->setStatusCode(200);
-        cout << "RESPONSE:" << endl;
+        response->setStatusCode(200)
+          .setMessageBody("Hello World!");
         cout << *response;
         this->messages[this->sequence] = {make_shared<Message>(temp), response};
         this->pipeline.push(this->sequence);
@@ -152,10 +152,13 @@ void ServerSession::write() {
     // Attempt to write out some of the response.
     auto currentRequest = this->pipeline.front();
     auto [request, response] = this->messages[currentRequest];
-    string header = "HTTP/1.1 200 OK\r\nServer: Hello\r\nContent-Length: 0\r\n\r\n";
+    auto assembledMessage = response->getRenderedHeader1() + "Content-Length: " + to_string(response->getContentLength()) + "\r\n\r\n";
+    if (response->getContentLength()) {
+      assembledMessage += response->getMessageBody();
+    }
 
     // Write out as much as possible.
-    auto bytesWritten = ::write(this->hClient, header.c_str() + this->writeOffset, header.length() - this->writeOffset);
+    auto bytesWritten = ::write(this->hClient, assembledMessage.c_str() + this->writeOffset, assembledMessage.length() - this->writeOffset);
 
     // Detect any errors.
     if (bytesWritten == -1) {
@@ -170,7 +173,7 @@ void ServerSession::write() {
 
     // If everything has been written, then remove this message from the
     // pipeline queue.
-    if (this->writeOffset == header.length()) {
+    if (this->writeOffset == assembledMessage.length()) {
       this->messages.erase(currentRequest);
       this->pipeline.pop();
     }

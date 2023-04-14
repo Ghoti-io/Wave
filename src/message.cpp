@@ -14,18 +14,20 @@ Message::Message(Type type) :
   errorIsSet{false},
   type{type},
   statusCode{},
+  contentLength{0},
   message{},
   method{},
   target{},
   version{},
+  messageBody{},
   headers{} {
 }
 
-const string & Message::getRenderedHeader() {
+const string & Message::getRenderedHeader1() {
   if (!this->headerIsRendered) {
-    this->renderedHeader = this->version
-      + " " + to_string(this->statusCode)
-      + " " + this->message
+    this->renderedHeader = "HTTP/1.1 "
+      + to_string(this->statusCode)
+      + " " + (this->message.length() ? this->message : "OK")
       + "\r\n";
     for (auto & [field, values] : this->headers) {
       if (values.size()) {
@@ -58,7 +60,6 @@ const string & Message::getRenderedHeader() {
         }
       }
     }
-    this->renderedHeader += "\r\n";
     this->headerIsRendered = true;
   }
   return this->renderedHeader;
@@ -145,6 +146,20 @@ Message::Type Message::getType() const {
   return this->type;
 }
 
+Message & Message::setMessageBody(const std::string & messageBody) {
+  this->messageBody = messageBody;
+  this->contentLength = messageBody.length();
+  return *this;
+}
+
+const string & Message::getMessageBody() const {
+  return this->messageBody;
+}
+
+size_t Message::getContentLength() const {
+  return this->contentLength;
+}
+
 ostream & Ghoti::Wave::operator<<(ostream & out, Message & message) {
   if (message.getType() == Message::Type::REQUEST) {
     out << "Request:" << endl;
@@ -169,6 +184,14 @@ ostream & Ghoti::Wave::operator<<(ostream & out, Message & message) {
       }
       out << endl;
     }
+  }
+  if (message.getType() == Message::Type::RESPONSE) {
+    size_t contentLength = message.getContentLength();
+    out << "Content-Length: " << contentLength << endl;
+    if (contentLength) {
+      out << endl << message.getMessageBody();
+    }
+   out << endl;
   }
   return out;
 }

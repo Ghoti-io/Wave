@@ -21,7 +21,7 @@ class Message {
   };
 
   Message(Type type);
-  const std::string & getRenderedHeader();
+  const std::string & getRenderedHeader1();
 
   bool hasError() const;
   Message & setStatusCode(size_t statusCode);
@@ -38,17 +38,22 @@ class Message {
   void addFieldValue(const std::string & name, const std::string & value);
   const std::map<std::string, std::vector<std::string>> & getFields() const;
   Type getType() const;
+  Message & setMessageBody(const std::string & body);
+  const std::string & getMessageBody() const;
+  size_t getContentLength() const;
 
   private:
   bool headerIsRendered;
   bool errorIsSet;
   Type type;
   size_t statusCode;
+  size_t contentLength;
   std::string renderedHeader;
   std::string message;
   std::string method;
   std::string target;
   std::string version;
+  std::string messageBody;
   std::map<std::string, std::vector<std::string>> headers;
 };
 
