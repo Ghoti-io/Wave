@@ -35,14 +35,18 @@ int main(int argc, char** argv) {
   //while (1) {
     Server s{};
     s.setPort(50000).start();
+    cout << "listening on " << s.getAddress() << ":" << s.getPort() << endl;
+
     Client c{};
     auto request = make_shared<Message>(Message::Type::REQUEST);
     request
       ->setDomain("127.0.0.1")
       .setPort(50000)
       .setTarget("/foo");
-    c.sendRequest(request);
-    cout << "listening on " << s.getAddress() << ":" << s.getPort() << endl;
+    auto response = c.sendRequest(request);
+    response->getReadyFuture().wait();
+
+    cout << *response;
     this_thread::sleep_for(10000ms);
   //}
 }
