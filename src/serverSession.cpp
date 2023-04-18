@@ -91,13 +91,13 @@ void ServerSession::read() {
       // Enqueue the completed messages for processing.
       while (!this->parser.messages.empty()) {
         auto temp = this->parser.messages.front();
-        cout << temp;
+        cout << *temp;
         this->parser.messages.pop();
         auto response = make_shared<Message>(Message::Type::RESPONSE);
         response->setStatusCode(200)
           .setMessageBody("Hello World!");
         cout << *response;
-        this->messages[this->requestSequence] = {make_shared<Message>(temp), response};
+        this->messages[this->requestSequence] = {temp, response};
         this->pipeline.push(this->requestSequence);
         ++this->requestSequence;
       }

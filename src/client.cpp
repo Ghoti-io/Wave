@@ -22,165 +22,123 @@ void Client::dispatchLoop(stop_token stopToken) {
   pool.start();
 
   while (!stopToken.stop_requested()) {
-    // Poll existing connections
-    for (auto it = this->sessions.begin(); it != this->sessions.end();) {
-      auto session = it->second;
+    bool workDone{false};
 
-      // Service existing requests.
-      if (session->hasReadDataWaiting()) {
-        pool.enqueue({[=](){
-          session->read();
-        }});
-      }
-      else if (session->hasWriteDataWaiting()) {
-        pool.enqueue({[=](){
-          session->write();
-        }});
-      }
+    // Poll existing connections.
+    // Must loop through domains, then sessions.
+    for (auto & [domain, sessionsPair] : this->domains) {
+      auto & [sessions, requestQueue] = sessionsPair;
+      for (auto & session : sessions) {
+        // Service existing requests.
+        if (session->hasReadDataWaiting()) {
+          pool.enqueue({[=](){
+            session->read();
+          }});
+          workDone = true;
+        }
+        else if (session->hasWriteDataWaiting()) {
+          pool.enqueue({[=](){
+            session->write();
+          }});
+          workDone = true;
+        }
 
-      // Remove any requests that are dead.
-      if (session->isFinished()) {
-        it = this->sessions.erase(it);
-      }
-      else {
-        ++it;
+        // Remove any requests that are dead.
+        if (session->isFinished()) {
+          sessions.erase(session);
+        }
       }
     }
 
-    // Service new requests.
-    sockaddr_in client;
-    socklen_t clientLength = sizeof(client);
-    int hClient = accept4(this->hSocket, (sockaddr *)&client, &clientLength, SOCK_NONBLOCK);
-    if (hClient < 0) {
+    if (!workDone) {
       this_thread::sleep_for(1ms);
-    }
-    else {
-      this->sessions.emplace(hClient, make_shared<ClientSession>(hClient, this));
     }
   }
 
   // TODO: Make session cleanup more elegant.
-  this->sessions.clear();
+  // Specifically, make sure that all client sessions are stopped.
+  this->domains.clear();
 
   // Stop and join the worker threads.
   pool.join();
 }
 
-Client::Client() : errorCode{ErrorCode::NO_ERROR}, errorMessage{}, running{false}, hSocket{0}, address{"127.0.0.1"}, port{0} {}
+Client::Client() : running{true} {
+  this->dispatchThread = jthread{[&] (stop_token stoken) {
+    this->dispatchLoop(stoken);
+  }};
+}
 
 Client::~Client() {
   this->stop();
-}
-
-Client::ErrorCode Client::getErrorCode() const {
-  return this->errorCode;
-}
-
-const std::string& Client::getErrorMessage() const {
-  return this->errorMessage;
 }
 
 bool Client::isRunning() const {
   return this->running;
 }
 
-Client& Client::setPort(uint16_t port) {
-  if (this->running) {
-    this->errorCode = ErrorCode::CLIENT_ALREADY_RUNNING;
-    this->errorMessage = "Could not set port of client because it is already running.";
+shared_ptr<Message> Client::sendRequest(shared_ptr<Message> message) {
+  // The response which will eventually be returned from this function,
+  // if there is an error.
+  auto response = make_shared<Message>(Message::Type::RESPONSE);
+
+  // Determine whether or not a suitable session already exists.
+  string domainPort = message->getDomain() + ":" + to_string(message->getPort());
+
+  string errorMessage{};
+
+  if (this->domains.contains(domainPort)) {
+    auto & [sessions, requestQueue] = this->domains[domainPort];
+    for (auto & session : sessions) {
+      // TODO: Handle multiple sessions, if needed.
+      //if (session->isIdle())
+      return session->enqueue(message);
+    }
   }
   else {
-    this->port = port;
-  }
-  return *this;
-}
+    int hSocket;
+    // Open a new connection.
+    sockaddr_in client_address;
+    //socklen_t addrlen{sizeof(client_address)};
+    client_address.sin_family = AF_INET;
+    client_address.sin_addr.s_addr = INADDR_ANY;
 
-uint16_t Client::getPort() const {
-  return this->port;
-}
+    // Verify that the address is valid.
+    char processed_address[INET_ADDRSTRLEN];
+    auto isValid = inet_pton(AF_INET, message->getDomain().c_str(), &(client_address.sin_addr));
+    if (isValid != 1) {
+      response->setMessage("Error parsing client listen address: `" + message->getDomain() + "`");
+      response->setReady(false);
+      return response;
+    }
+    inet_ntop(AF_INET, &(client_address.sin_addr), processed_address, INET_ADDRSTRLEN);
+    //this->address = processed_address;
 
-Client & Client::setAddress(const char * ip) {
-  if (this->running) {
-    this->errorCode = ErrorCode::CLIENT_ALREADY_RUNNING;
-    this->errorMessage = "Could not set client listening address because client is already running.";
-  }
-  else {
-    this->address = ip;
-  }
-  return *this;
-}
+    // Create the socket.
+    if ((hSocket = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0)) < 0) {
+      response->setMessage("Failed to create a TCP socket");
+      response->setReady(false);
+      return response;
+    }
 
-const string & Client::getAddress() const {
-  return this->address;
-}
+    /*
+    // Get the socket number that was bound to.
+    if (getsockname(this->hSocket, (sockaddr *)&client_address, &addrlen) < 0) {
+      this->errorCode = ErrorCode::START_FAILED;
+      this->errorMessage = "Could not get the socket number";
+      return *this;
+    }
+    this->port = ntohs(client_address.sin_port);
+    */
 
-int Client::getSocketHandle() const {
-  return this->hSocket;
-}
-
-Client& Client::start() {
-  sockaddr_in client_address;
-  socklen_t addrlen{sizeof(client_address)};
-  client_address.sin_family = AF_INET;
-  client_address.sin_addr.s_addr = INADDR_ANY;
-
-  // Verify that the address is valid.
-  char processed_address[INET_ADDRSTRLEN];
-  auto isValid = inet_pton(AF_INET, this->address.c_str(), &(client_address.sin_addr));
-  if (isValid != 1) {
-    this->errorCode = ErrorCode::START_FAILED;
-    this->errorMessage = "Error parsing client listen address: `" + this->address + "`";
-    return *this;
-  }
-  inet_ntop(AF_INET, &(client_address.sin_addr), processed_address, INET_ADDRSTRLEN);
-  this->address = processed_address;
-
-  // Create the socket.
-  if ((this->hSocket = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0)) < 0) {
-    this->errorCode = ErrorCode::START_FAILED;
-    this->errorMessage = "Failed to create a TCP socket";
-    return *this;
+    if (connect(hSocket, (sockaddr*)&client_address, sizeof(client_address)) < 0) {
+      response->setMessage("Connection Failed");
+      response->setReady(false);
+      return response;
+    }
   }
 
-  // Set the socket options.
-  int opt = 1;
-  if (setsockopt(this->hSocket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)) < 0) {
-    this->errorCode = ErrorCode::START_FAILED;
-    this->errorMessage = "Filed to set socket options";
-    return *this;
-  }
-
-  // Bind to the port.
-  client_address.sin_port = htons(this->port);
-  if (bind(this->hSocket, (sockaddr *)&client_address, addrlen) < 0) {
-    this->errorCode = ErrorCode::START_FAILED;
-    this->errorMessage = "Failed to bind to socket";
-    return *this;
-  }
-
-  // Get the socket number that was bound to.
-  if (getsockname(this->hSocket, (sockaddr *)&client_address, &addrlen) < 0) {
-    this->errorCode = ErrorCode::START_FAILED;
-    this->errorMessage = "Could not get the socket number";
-    return *this;
-  }
-  this->port = ntohs(client_address.sin_port);
-
-  // Start listening.
-  if (listen(this->hSocket, 10) < 0) {
-    this->errorCode = ErrorCode::START_FAILED;
-    this->errorMessage = "Failed to listen on port " + to_string(port);
-    return *this;
-  }
-
-  // Start the dispatch thread.
-  this->dispatchThread = jthread{[&] (stop_token stoken) {
-    this->dispatchLoop(stoken);
-  }};
-
-  this->running = true;
-
-  return *this;
+  return response;
 }
 
 Client& Client::stop() {
@@ -190,11 +148,6 @@ Client& Client::stop() {
     this->dispatchThread.join();
     this->running = false;
   }
-  if (this->hSocket) {
-    close(this->hSocket);
-    this->hSocket = 0;
-  }
   return *this;
 }
-
 

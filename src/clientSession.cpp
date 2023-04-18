@@ -34,11 +34,11 @@ ClientSession::ClientSession(int hServer, Client * client) :
   client{client},
   messages{},
   pipeline{} {
-  cout << "Open: " << this->hServer << endl;
+  cout << "Client Open: " << this->hServer << endl;
 }
 
 ClientSession::~ClientSession() {
-  cout << "Close: " << this->hServer << endl;
+  cout << "Client Close: " << this->hServer << endl;
   close(this->hServer);
 }
 
@@ -91,14 +91,16 @@ void ClientSession::read() {
 
       // Notify the requester that we have a response.
       while (!this->parser.messages.empty()) {
-        auto temp = make_shared<Message>(move(this->parser.messages.front()));
+        auto temp = this->parser.messages.front();
         this->parser.messages.pop();
         cout << "RECEIVED:" << endl;
         cout << *temp;
 
         auto currentRequest = this->pipeline.front();
-        auto & [request, responsePromise] = this->messages[currentRequest];
-        responsePromise.set_value(temp);
+        auto & [request, response] = this->messages[currentRequest];
+        // TODO: The value should be true only if the response is from the
+        // server, and false otherwise (client closed before finishing, etc.)
+        response->setReady(true);
 
         this->messages.erase(currentRequest);
         this->pipeline.pop();
@@ -183,12 +185,11 @@ void ClientSession::write() {
   }
 }
 
-future<shared_ptr<Message>> ClientSession::enqueue(const Message & request) {
-  promise<shared_ptr<Message>> responsePromise;
-  auto f = responsePromise.get_future();
-  this->messages[this->requestSequence] = {make_shared<Message>(request), move(responsePromise)};
+shared_ptr<Message> ClientSession::enqueue(shared_ptr<Message> request) {
+  auto response = make_shared<Message>(Message::Type::RESPONSE);
+  this->messages[this->requestSequence] = {request, response};
   this->pipeline.push(this->requestSequence);
   ++this->requestSequence;
-  return f;
+  return response;
 }
 

@@ -13,14 +13,27 @@ Message::Message(Type type) :
   headerIsRendered{false},
   errorIsSet{false},
   type{type},
+  id{0},
+  port{0},
   statusCode{},
   contentLength{0},
   message{},
   method{},
+  domain{},
   target{},
   version{},
   messageBody{},
-  headers{} {
+  headers{},
+  readyPromise{},
+  readyFuture{this->readyPromise.get_future()} {
+}
+
+void Message::adoptContents(Message & source) {
+  auto tempPromise = move(this->readyPromise);
+  auto tempFuture = move(this->readyFuture);
+  *this = move(source);
+  this->readyPromise = move(tempPromise);
+  this->readyFuture = move(tempFuture);
 }
 
 const string & Message::getRenderedHeader1() {
@@ -160,19 +173,55 @@ size_t Message::getContentLength() const {
   return this->contentLength;
 }
 
+Message & Message::setPort(size_t port) {
+  this->port = port;
+  return *this;
+}
+
+size_t Message::getPort() const {
+  return this->port;
+}
+
+Message & Message::setDomain(const string & domain) {
+  this->domain = domain;
+  return *this;
+}
+
+const string & Message::getDomain() const {
+  return this->domain;
+}
+
+void Message::setReady(bool isError) {
+  this->readyPromise.set_value(isError);
+}
+
+future<bool> & Message::getReadyFuture() {
+  return this->readyFuture;
+}
+
+Message & Message::setId(uint32_t id) {
+  this->id = id;
+  return *this;
+}
+
+uint32_t Message::getId() const {
+  return this->id;
+}
+
 ostream & Ghoti::Wave::operator<<(ostream & out, Message & message) {
   if (message.getType() == Message::Type::REQUEST) {
-    out << "Request:" << endl;
-    out << "  Method: " << message.getMethod() << endl;
-    out << "  Target: " << message.getTarget() << endl;
-    out << "  Version: " << message.getVersion() << endl;
+    out << "Request:" << endl
+      << "  Domain: " << message.getDomain() << endl
+      << "  Port: " << message.getPort() << endl
+      << "  Target: " << message.getTarget() << endl;
   }
   else {
     out << "Response:" << endl;
+    out << "  Method: " << message.getMethod() << endl;
     out << "  StatusCode: " << message.getStatusCode() << endl;
+    out << "  Message: " << message.getMessage() << endl;
   }
 
-  out << "  Message: " << message.getMessage() << endl;
   if (message.getFields().size()) {
     out << "  Fields:" << endl;
     for (auto & [name, values] : message.getFields()) {

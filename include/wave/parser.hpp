@@ -21,7 +21,17 @@ class Parser {
   Parser(Type type);
   void processChunk(const char * buffer, size_t len);
   void parseMessageTarget(const std::string & target);
-  std::queue<Message> messages;
+
+  /**
+   * Use the provided Message as the recipient of parsing for the Message's id.
+   *
+   * If a Message with the target ID already exists, then the provided message
+   * will adopt the contents of the existing data.
+   *
+   * @param message The object that should receive the desired messages.
+   */
+  void registerMessage(std::shared_ptr<Message> message);
+  std::queue<std::shared_ptr<Message>> messages;
 
   private:
   enum ReadStateMajor {
@@ -69,8 +79,9 @@ class Parser {
   std::string errorMessage;
   std::string tempFieldName;
   std::string tempFieldValue;
-  Message currentMessage;
-  Message createNewMessage() const;
+  std::unordered_map<uint32_t, std::shared_ptr<Message>> messageRegister;
+  std::shared_ptr<Message> currentMessage;
+  std::shared_ptr<Message> createNewMessage() const;
 };
 
 }

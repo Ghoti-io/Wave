@@ -59,7 +59,7 @@ using namespace Ghoti::Wave;
       SET_MINOR_STATE(nextState); \
     } \
     else { \
-      this->currentMessage.setStatusCode(statusCode).setErrorMessage(errorMessage); \
+      this->currentMessage->setStatusCode(statusCode).setErrorMessage(errorMessage); \
     } \
   }
 
@@ -81,9 +81,9 @@ using namespace Ghoti::Wave;
   while ((this->cursor < input_length) && (len < 2)) { \
     if (((len == 0) && !((this->input[this->cursor] == '\r') || (this->input[this->cursor] == '\n'))) \
       || ((len == 1) && (this->input[this->cursor] != '\n'))) { \
-      this->currentMessage.setStatusCode(statusCode).setErrorMessage(errorMessage); \
+      this->currentMessage->setStatusCode(statusCode).setErrorMessage(errorMessage); \
     } \
-    if (!this->currentMessage.hasError() && (this->input[this->cursor] == '\n')) { \
+    if (!this->currentMessage->hasError() && (this->input[this->cursor] == '\n')) { \
       SET_MINOR_STATE(nextState); \
       ++this->cursor; \
       break; \
@@ -101,7 +101,7 @@ Parser::Parser(Type type) :
   type{type},
   cursor{0},
   input{},
-  currentMessage{type == REQUEST ? Message::Type::REQUEST : Message::Type::RESPONSE} {
+  currentMessage{make_shared<Message>(type == REQUEST ? Message::Type::REQUEST : Message::Type::RESPONSE)} {
     SET_NEW_HEADER;
   }
 
@@ -123,7 +123,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
   //cout << "Processing (" << len << "): " << string(buffer, len) << endl;
   this->input += string(buffer, len);
   size_t input_length = this->input.length();
-  while (!this->currentMessage.hasError() && (this->cursor < input_length)) {
+  while (!this->currentMessage->hasError() && (this->cursor < input_length)) {
     switch (this->readStateMajor) {
       case NEW_HEADER:
         // https://datatracker.ietf.org/doc/html/rfc9112#name-request-line
@@ -147,12 +147,12 @@ void Parser::processChunk(const char * buffer, size_t len) {
               string method = this->input.substr(this->minorStart, this->cursor - this->minorStart);
               if (messageMethods.contains(method)) {
                 // Finished reading a valid method.
-                this->currentMessage.setMethod(method);
+                this->currentMessage->setMethod(method);
                 SET_MINOR_STATE(AFTER_METHOD);
               }
               else {
                 // https://www.rfc-editor.org/rfc/rfc9110#section-9.1-10
-                this->currentMessage.setStatusCode(501).setErrorMessage("Unrecognized method");
+                this->currentMessage->setStatusCode(501).setErrorMessage("Unrecognized method");
               }
             }
             break;
@@ -169,7 +169,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
               // Finished reading request target.
               string target = this->input.substr(this->minorStart, this->cursor - this->minorStart);
               this->parseMessageTarget(target);
-              this->currentMessage.setTarget(target);
+              this->currentMessage->setTarget(target);
               SET_MINOR_STATE(AFTER_REQUEST_TARGET);
             }
             break;
@@ -185,7 +185,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             if (this->cursor < input_length) {
               // Finished reading message target.
               string version = this->input.substr(this->minorStart, this->cursor - this->minorStart);
-              this->currentMessage.setVersion(version);
+              this->currentMessage->setVersion(version);
               SET_MINOR_STATE(AFTER_HTTP_VERSION);
             }
             break;
@@ -204,7 +204,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             break;
           }
           default: {
-            this->currentMessage.setStatusCode(400).setErrorMessage("Error reading message line.");
+            this->currentMessage->setStatusCode(400).setErrorMessage("Error reading message line.");
           }
         }
       break;
@@ -250,7 +250,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             }
             else {
               // https://datatracker.ietf.org/doc/html/rfc9112#section-5.1-2
-              this->currentMessage.setStatusCode(400).setErrorMessage("Illegal character between field name and colon");
+              this->currentMessage->setStatusCode(400).setErrorMessage("Illegal character between field name and colon");
             }
             break;
           }
@@ -289,17 +289,17 @@ void Parser::processChunk(const char * buffer, size_t len) {
               // Verify that there are no illegal characters.
               for (size_t i = this->minorStart; i <= tempCursor; ++i) {
                 if (!isFieldContentChar(this->input[i])) {
-                  this->currentMessage.setStatusCode(400).setErrorMessage("Illegal character in singleton field value");
+                  this->currentMessage->setStatusCode(400).setErrorMessage("Illegal character in singleton field value");
                   break;
                 }
               }
               // If anything remains, then it is the field value.
               if (tempCursor >= this->minorStart) {
-                this->currentMessage.addFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
+                this->currentMessage->addFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
                 SET_MINOR_STATE(CRLF);
               }
               else {
-                this->currentMessage.setStatusCode(400).setErrorMessage("Singleton field value is blank/empty");
+                this->currentMessage->setStatusCode(400).setErrorMessage("Singleton field value is blank/empty");
               }
             }
             break;
@@ -314,7 +314,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
               SET_MINOR_STATE(UNQUOTED_FIELD_VALUE);
             }
             else {
-              this->currentMessage.setStatusCode(400).setErrorMessage("Illegal character in field value");
+              this->currentMessage->setStatusCode(400).setErrorMessage("Illegal character in field value");
             }
             break;
           }
@@ -342,13 +342,13 @@ void Parser::processChunk(const char * buffer, size_t len) {
               // Verify that there are no illegal characters.
               for (size_t i = this->minorStart; i <= tempCursor; ++i) {
                 if (!isFieldContentChar(this->input[i])) {
-                  this->currentMessage.setStatusCode(400).setErrorMessage("Illegal character in singleton field value");
+                  this->currentMessage->setStatusCode(400).setErrorMessage("Illegal character in singleton field value");
                   break;
                 }
               }
               // If anything remains, then it is the field value.
               if (tempCursor >= this->minorStart) {
-                this->currentMessage.addFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
+                this->currentMessage->addFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
                 if (this->input[this->cursor] == ',') {
                   SET_MINOR_STATE(FIELD_VALUE_COMMA);
                 }
@@ -357,7 +357,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
                 }
               }
               else {
-                this->currentMessage.setStatusCode(400).setErrorMessage("Singleton field value is blank/empty");
+                this->currentMessage->setStatusCode(400).setErrorMessage("Singleton field value is blank/empty");
               }
             }
             break;
@@ -385,7 +385,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
                 SET_MINOR_STATE(QUOTED_FIELD_VALUE_CLOSE);
               }
               else {
-                this->currentMessage.setStatusCode(400).setErrorMessage("Quoted field value is malformed");
+                this->currentMessage->setStatusCode(400).setErrorMessage("Quoted field value is malformed");
               }
             }
             break;
@@ -398,7 +398,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
           }
           case QUOTED_FIELD_VALUE_CLOSE: {
             SET_MINOR_STATE(AFTER_FIELD_VALUE);
-            this->currentMessage.addFieldValue(this->tempFieldName, this->tempFieldValue);
+            this->currentMessage->addFieldValue(this->tempFieldName, this->tempFieldValue);
             break;
           }
           case AFTER_FIELD_VALUE: {
@@ -440,9 +440,9 @@ void Parser::processChunk(const char * buffer, size_t len) {
             while ((this->cursor < input_length) && (len < 2)) {
               if (((len == 0) && !((this->input[this->cursor] == '\r') || (this->input[this->cursor] == '\n')))
                 || ((len == 1) && (this->input[this->cursor] != '\n'))) {
-                this->currentMessage.setStatusCode(400).setErrorMessage("Error reading field line.");
+                this->currentMessage->setStatusCode(400).setErrorMessage("Error reading field line.");
               }
-              if (!this->currentMessage.hasError() && (this->input[this->cursor] == '\n')) {
+              if (!this->currentMessage->hasError() && (this->input[this->cursor] == '\n')) {
                 // Note: We are not incrementing the cursor here.  That way, in
                 // the event that the message ends at this point (e.g., there
                 // is no body message), the not-yet-incremented cursor allows
@@ -457,7 +457,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             break;
           }
           default: {
-            this->currentMessage.setErrorMessage("foo");
+            this->currentMessage->setErrorMessage("foo");
           }
         }
       break;
@@ -470,7 +470,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
 
             // Determine whether or not there is a message body.
             // https://datatracker.ietf.org/doc/html/rfc9112#section-6-4
-            auto fields = this->currentMessage.getFields();
+            auto fields = this->currentMessage->getFields();
             if (fields.contains("CONTENT-LENGTH") || fields.contains("TRANSFER-ENCODING")) {
               // Do something.
             }
@@ -482,27 +482,47 @@ void Parser::processChunk(const char * buffer, size_t len) {
             break;
           }
           default: {
-            this->currentMessage.setErrorMessage("foo");
+            this->currentMessage->setErrorMessage("foo");
           }
         }
       break;
       default: {
-        this->currentMessage.setErrorMessage("foo");
+        this->currentMessage->setErrorMessage("foo");
       }
     }
   }
-  if (this->currentMessage.hasError()) {
+  if (this->currentMessage->hasError()) {
     this->messages.emplace(move(this->currentMessage));
     this->currentMessage = this->createNewMessage();
   }
 }
 
-Message Parser::createNewMessage() const {
-  switch (this->type) {
-    case REQUEST:
-      return Message(Message::Type::REQUEST);
-    case RESPONSE:
-    default:
-      return Message(Message::Type::RESPONSE);
+void Parser::registerMessage(shared_ptr<Message> message) {
+  auto id = message->getId();
+
+  if (this->messageRegister.contains(id)) {
+    // There is already a message with this id.
+    auto source = this->messageRegister[id];
+    message->adoptContents(*source);
+    this->messageRegister[id] = message;
+    if (future_status::ready == source->getReadyFuture().wait_for(0s)) {
+      // The source future is already ready, so pass the result to the target.
+      message->setReady(source->getReadyFuture().get());
+    }
+  }
+  else {
+    // There is not a message with this id.
+    this->messageRegister[message->getId()] = message;
   }
 }
+
+shared_ptr<Message> Parser::createNewMessage() const {
+  switch (this->type) {
+    case REQUEST:
+      return make_shared<Message>(Message::Type::REQUEST);
+    case RESPONSE:
+    default:
+      return make_shared<Message>(Message::Type::RESPONSE);
+  }
+}
+
