@@ -44,7 +44,9 @@ int main(int argc, char** argv) {
       .setPort(50000)
       .setTarget("/foo");
     auto response = c.sendRequest(request);
+    cout << "Starting wait" << endl;
     response->getReadyFuture().wait();
+    cout << "After wait" << endl;
 
     cout << *response;
     this_thread::sleep_for(10000ms);

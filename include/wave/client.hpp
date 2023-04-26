@@ -11,6 +11,7 @@
 #include <ghoti.io/pool.hpp>
 #include <map>
 #include <memory>
+#include <queue>
 #include <set>
 #include <string>
 #include <thread>
@@ -30,7 +31,12 @@ class Client {
 
   private:
   Ghoti::Pool::Pool workers;
-  std::map<std::string, std::map<size_t, std::pair<std::set<std::shared_ptr<Ghoti::Wave::ClientSession>>, std::vector<std::pair<std::shared_ptr<Message>, std::shared_ptr<Message>>>>>> domains;
+  /**
+   * Stores all connections and their request queues.
+   *
+   * [domain][port] = {set{ClientSession}, queue{{request, response}}}
+   */
+  std::map<std::string, std::map<size_t, std::pair<std::set<std::shared_ptr<Ghoti::Wave::ClientSession>>, std::queue<std::pair<std::shared_ptr<Message>, std::shared_ptr<Message>>>>>> domains;
   std::jthread dispatchThread;
   bool running;
 };

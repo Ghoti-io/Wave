@@ -75,10 +75,20 @@ void Client::dispatchLoop(stop_token stopToken) {
     bool workDone{false};
 
     // Poll existing connections.
-    // Must loop through domains, then sessions.
+    // Must loop through domains, then ports, then sessions.
     for (auto & [domain, portMap] : this->domains) {
       for (auto & [port, sessionsPair] : portMap) {
         auto & [sessions, requestQueue] = sessionsPair;
+        // Start a new session, if needed.
+        // TODO: Increase max_connections for HTTP/1.1.
+        size_t max_connections = 1;
+        if ((sessions.size() < max_connections) && (requestQueue.size())) {
+          auto [request, response] = requestQueue.front();
+          auto clientSession = createClientSession(domain, port, this, response);
+          requestQueue.pop();
+          clientSession->enqueue(request, response);
+          workDone = true;
+        }
         for (auto & session : sessions) {
           // Service existing requests.
           if (session->hasReadDataWaiting()) {
@@ -141,12 +151,10 @@ shared_ptr<Message> Client::sendRequest(shared_ptr<Message> message) {
     this->domains[domain][port] = {};
   }
 
-  //auto clientSession = createClientSession(message->getDomain(), message->getPort(), this, response);
-
   // Add the request to the domain/port queue.
   auto & [sessions, requestQueue] = this->domains[domain][port];
   auto response = make_shared<Message>(Message::Type::RESPONSE);
-  requestQueue.push_back({message, response});
+  requestQueue.push({message, response});
 
   return response;
 }

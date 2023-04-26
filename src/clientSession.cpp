@@ -185,11 +185,9 @@ void ClientSession::write() {
   }
 }
 
-shared_ptr<Message> ClientSession::enqueue(shared_ptr<Message> request) {
-  auto response = make_shared<Message>(Message::Type::RESPONSE);
+void ClientSession::enqueue(shared_ptr<Message> request, shared_ptr<Message> response) {
   this->messages[this->requestSequence] = {request, response};
   this->pipeline.push(this->requestSequence);
   ++this->requestSequence;
-  return response;
 }
 

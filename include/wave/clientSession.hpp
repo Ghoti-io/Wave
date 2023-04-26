@@ -31,7 +31,7 @@ class ClientSession {
   std::unique_ptr<std::mutex> controlMutex;
   std::unique_ptr<std::condition_variable> controlConditionVariable;
   void write();
-  std::shared_ptr<Message> enqueue(std::shared_ptr<Message> message);
+  void enqueue(std::shared_ptr<Message> request, std::shared_ptr<Message> response);
 
   private:
   int hServer;
