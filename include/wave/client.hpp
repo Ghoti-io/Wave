@@ -30,7 +30,7 @@ class Client {
 
   private:
   Ghoti::Pool::Pool workers;
-  std::map<std::string, std::pair<std::set<std::shared_ptr<Ghoti::Wave::ClientSession>>, std::vector<std::shared_ptr<Message>>>> domains;
+  std::map<std::string, std::map<size_t, std::pair<std::set<std::shared_ptr<Ghoti::Wave::ClientSession>>, std::vector<std::pair<std::shared_ptr<Message>, std::shared_ptr<Message>>>>>> domains;
   std::jthread dispatchThread;
   bool running;
 };
