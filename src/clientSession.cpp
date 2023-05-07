@@ -28,17 +28,15 @@ ClientSession::ClientSession(int hServer, Client * client) :
   requestSequence{0},
   writeSequence{0},
   writeOffset{0},
+  readSequence{0},
   working{false},
   finished{false},
   parser{Parser::Type::RESPONSE},
   client{client},
-  messages{},
-  pipeline{} {
-  cout << "Client Open: " << this->hServer << endl;
+  messages{} {
 }
 
 ClientSession::~ClientSession() {
-  cout << "Client Close: " << this->hServer << endl;
   close(this->hServer);
 }
 
@@ -53,8 +51,21 @@ bool ClientSession::hasReadDataWaiting() {
       // See if there is anything waiting to be read on the socket.
       pollfd pollFd{this->hServer, POLLIN | POLLERR, 0};
       if (poll(&pollFd, 1, 0)) {
-        dataIsWaiting = true;
-        this->working = true;
+        if (pollFd.revents & POLLIN) {
+          // Read Data is waiting.
+          dataIsWaiting = true;
+          this->working = true;
+        }
+        else if ((pollFd.revents & POLLERR) && (errno != EINPROGRESS)) {
+          cout << "Error in hasReadDataWaiting" << endl;
+          cout << strerror(errno) << endl;
+          dataIsWaiting = true;
+          this->working = true;
+        }
+      }
+      else {
+        // It Timed out.
+        // Nothing to do.
       }
     }
     this->controlMutex->unlock();
@@ -69,7 +80,30 @@ bool ClientSession::hasWriteDataWaiting() {
   bool dataIsWaiting{false};
 
   if (this->controlMutex->try_lock()) {
-    dataIsWaiting = this->pipeline.size();
+    if (!this->working && (this->writeSequence <= this->messages.size())) {
+      // See if there is anything waiting to be read on the socket.
+      pollfd pollFd{this->hServer, POLLOUT | POLLERR, 0};
+      if (poll(&pollFd, 1, 0)) {
+        if (pollFd.revents & POLLOUT) {
+          // Socket can be written to.
+          dataIsWaiting = true;
+          this->working = true;
+        }
+        if ((pollFd.revents & POLLERR) && (errno != EINPROGRESS)) {
+          cout << "Error in hasWriteDataWaiting" << endl;
+          cout << strerror(errno) << endl;
+          dataIsWaiting = true;
+          this->working = true;
+        }
+        else {
+          // There was an error, but it is EINPROGRESS.
+        }
+      }
+      else {
+        // It timed out.
+        // Nothing to do.
+      }
+    }
     this->controlMutex->unlock();
   }
   return dataIsWaiting;
@@ -85,7 +119,7 @@ void ClientSession::read() {
 
   while (1) {
     char buffer[MAXBUFFERSIZE] = {0};
-    ssize_t byte_count = recv(hServer, buffer, MAXBUFFERSIZE, 0);
+    ssize_t byte_count = recv(this->hServer, buffer, MAXBUFFERSIZE, 0);
     if (byte_count > 0) {
       this->parser.processChunk(buffer, byte_count);
 
@@ -96,14 +130,12 @@ void ClientSession::read() {
         cout << "RECEIVED:" << endl;
         cout << *temp;
 
-        auto currentRequest = this->pipeline.front();
-        auto & [request, response] = this->messages[currentRequest];
+        auto [request, response] = this->messages[this->readSequence];
         // TODO: The value should be true only if the response is from the
         // server, and false otherwise (client closed before finishing, etc.)
         response->setReady(true);
-
-        this->messages.erase(currentRequest);
-        this->pipeline.pop();
+        this->messages.erase(this->readSequence);
+        ++this->readSequence;
       }
     }
     else if (byte_count == 0) {
@@ -155,7 +187,7 @@ void ClientSession::write() {
 
   if (this->writeSequence < this->requestSequence) {
     // Attempt to write out some of the response.
-    auto & [request, responsePromise] = this->messages[this->writeSequence];
+    auto & [request, response] = this->messages[this->writeSequence];
     auto assembledMessage = request->getRenderedHeader1() + "Content-Length: " + to_string(request->getContentLength()) + "\r\n\r\n";
     if (request->getContentLength()) {
       assembledMessage += request->getMessageBody();
@@ -175,19 +207,16 @@ void ClientSession::write() {
     // Advance the internal pointer.
     this->writeOffset += bytesWritten;
 
-    // If everything has been written, then remove this message from the
-    // pipeline queue.
+    // If everything has been written, then move to the next message.
     if (this->writeOffset == assembledMessage.length()) {
-      this->messages.erase(this->writeSequence);
-      this->pipeline.pop();
       ++this->writeSequence;
     }
   }
+  this->working = false;
 }
 
 void ClientSession::enqueue(shared_ptr<Message> request, shared_ptr<Message> response) {
   this->messages[this->requestSequence] = {request, response};
-  this->pipeline.push(this->requestSequence);
   ++this->requestSequence;
 }
 

@@ -38,12 +38,12 @@ class ClientSession {
   size_t requestSequence;
   size_t writeSequence;
   size_t writeOffset;
+  size_t readSequence;
   bool working;
   bool finished;
   Parser parser;
   Client * client;
   std::map<uint64_t, std::pair<std::shared_ptr<Message>, std::shared_ptr<Message>>> messages;
-  std::queue<uint64_t> pipeline;
 };
 
 }
