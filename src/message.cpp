@@ -217,9 +217,7 @@ ostream & Ghoti::Wave::operator<<(ostream & out, Message & message) {
   }
   else {
     out << "Response:" << endl;
-    out << "  Method: " << message.getMethod() << endl;
     out << "  StatusCode: " << message.getStatusCode() << endl;
-    out << "  Message: " << message.getMessage() << endl;
   }
 
   if (message.getFields().size()) {
@@ -234,11 +232,13 @@ ostream & Ghoti::Wave::operator<<(ostream & out, Message & message) {
       out << endl;
     }
   }
+
   if (message.getType() == Message::Type::RESPONSE) {
     size_t contentLength = message.getContentLength();
-    out << "Content-Length: " << contentLength << endl;
+    out << "  Content-Length: " << contentLength << endl;
+    out << "  Message: " << message.getMessage() << endl;
     if (contentLength) {
-      out << endl << message.getMessageBody();
+      out << message.getMessageBody();
     }
    out << endl;
   }

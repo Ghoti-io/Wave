@@ -127,12 +127,11 @@ void ClientSession::read() {
       while (!this->parser.messages.empty()) {
         auto temp = this->parser.messages.front();
         this->parser.messages.pop();
-        cout << "RECEIVED:" << endl;
-        cout << *temp;
 
         auto [request, response] = this->messages[this->readSequence];
         // TODO: The value should be true only if the response is from the
         // server, and false otherwise (client closed before finishing, etc.)
+        response->adoptContents(*temp);
         response->setReady(true);
         this->messages.erase(this->readSequence);
         ++this->readSequence;

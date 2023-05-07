@@ -22,7 +22,8 @@ using namespace Ghoti::Wave;
     ? BEGINNING_OF_REQUEST_LINE \
     : BEGINNING_OF_STATUS_LINE; \
   this->majorStart = this->cursor; \
-  this->minorStart = this->cursor;
+  this->minorStart = this->cursor; \
+  this->contentLength = 0;
 
 #define SET_MINOR_STATE(nextState) \
   this->readStateMinor = nextState; \
@@ -92,6 +93,7 @@ using namespace Ghoti::Wave;
     ++len; \
   }
 
+#define REQUEST_STATUS_ERROR (this->type == REQUEST ? "Error reading request line." : "Error reading status line.")
 
 // https://www.rfc-editor.org/rfc/rfc9110#name-overview
 // PATCH - https://www.rfc-editor.org/rfc/rfc5789
@@ -101,7 +103,8 @@ Parser::Parser(Type type) :
   type{type},
   cursor{0},
   input{},
-  currentMessage{make_shared<Message>(type == REQUEST ? Message::Type::REQUEST : Message::Type::RESPONSE)} {
+  currentMessage{make_shared<Message>(type == REQUEST ? Message::Type::REQUEST : Message::Type::RESPONSE)},
+  contentLength{0} {
     SET_NEW_HEADER;
   }
 
@@ -138,6 +141,15 @@ void Parser::processChunk(const char * buffer, size_t len) {
             READ_WHITESPACE_OPTIONAL(METHOD);
             break;
           }
+          case BEGINNING_OF_STATUS_LINE: {
+            // https://datatracker.ietf.org/doc/html/rfc9112#section-4-1
+            READ_CRLF_OPTIONAL(BEGINNING_OF_STATUS);
+            break;
+          }
+          case BEGINNING_OF_STATUS: {
+            READ_WHITESPACE_OPTIONAL(HTTP_VERSION);
+            break;
+          }
           case METHOD: {
             while ((this->cursor < input_length) && isgraph(this->input[this->cursor])) {
               ++this->cursor;
@@ -158,7 +170,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_METHOD: {
-            READ_WHITESPACE_REQUIRED(REQUEST_TARGET, 400, "Error reading request line.");
+            READ_WHITESPACE_REQUIRED(REQUEST_TARGET, 400, REQUEST_STATUS_ERROR);
             break;
           }
           case REQUEST_TARGET: {
@@ -175,7 +187,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_REQUEST_TARGET: {
-            READ_WHITESPACE_REQUIRED(HTTP_VERSION, 400, "Error reading request line.");
+            READ_WHITESPACE_REQUIRED(HTTP_VERSION, 400, REQUEST_STATUS_ERROR);
             break;
           }
           case HTTP_VERSION: {
@@ -191,11 +203,41 @@ void Parser::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_HTTP_VERSION: {
-            READ_WHITESPACE_OPTIONAL(CRLF);
+            if (this->type == REQUEST) {
+              READ_WHITESPACE_OPTIONAL(CRLF);
+            }
+            else {
+              READ_WHITESPACE_REQUIRED(RESPONSE_CODE, 400, REQUEST_STATUS_ERROR);
+            }
+            break;
+          }
+          case RESPONSE_CODE: {
+            // https://datatracker.ietf.org/doc/html/rfc9112#section-4-4
+            // Must be 3 digits.
+            while ((this->cursor < input_length) && isdigit(this->input[this->cursor]) && ((this->cursor - this->minorStart) < 3)) {
+              ++this->cursor;
+            }
+            if ((this->cursor - this->minorStart) == 3) {
+              this->currentMessage->setStatusCode(
+                ((this->input[this->minorStart] - '0') * 100)
+                + ((this->input[this->minorStart + 1] - '0') * 10)
+                + ((this->input[this->minorStart + 2] - '0')));
+              READ_WHITESPACE_REQUIRED(REASON_PHRASE, 400, REQUEST_STATUS_ERROR);
+            }
+            break;
+          }
+          case REASON_PHRASE: {
+            // https://datatracker.ietf.org/doc/html/rfc9112#section-4-7
+            while ((this->cursor < input_length) && !isCRLFChar(this->input[this->cursor])) {
+              ++this->cursor;
+            }
+            if (this->cursor < input_length) {
+              SET_MINOR_STATE(CRLF);
+            }
             break;
           }
           case CRLF: {
-            READ_CRLF_REQUIRED(AFTER_CRLF, 400, "Error reading request line.");
+            READ_CRLF_REQUIRED(AFTER_CRLF, 400, REQUEST_STATUS_ERROR);
             break;
           }
           case AFTER_CRLF: {
@@ -204,7 +246,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             break;
           }
           default: {
-            this->currentMessage->setStatusCode(400).setErrorMessage("Error reading message line.");
+            this->currentMessage->setStatusCode(400).setErrorMessage(REQUEST_STATUS_ERROR);
           }
         }
       break;
@@ -295,7 +337,23 @@ void Parser::processChunk(const char * buffer, size_t len) {
               }
               // If anything remains, then it is the field value.
               if (tempCursor >= this->minorStart) {
-                this->currentMessage->addFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
+                auto value = this->input.substr(this->minorStart, tempCursor - this->minorStart + 1);
+                this->currentMessage->addFieldValue(this->tempFieldName, value);
+                if (this->tempFieldName == "CONTENT-LENGTH") {
+                  // https://datatracker.ietf.org/doc/html/rfc9112#name-content-length
+                  int32_t contentLength{0};
+                  for (auto ch : value) {
+                    if ((contentLength >= 0) && !isdigit(ch)) {
+                      contentLength = -1;
+                      this->currentMessage->setStatusCode(400).setErrorMessage("Invalid Content-Length");
+                    }
+                    else {
+                      contentLength *= 10;
+                      contentLength += ch - '0';
+                    }
+                  }
+                  this->contentLength = contentLength;
+                }
                 SET_MINOR_STATE(CRLF);
               }
               else {
@@ -428,7 +486,6 @@ void Parser::processChunk(const char * buffer, size_t len) {
             break;
           }
           case AFTER_CRLF: {
-            //cout << this->currentMessage;
             SET_MAJOR_STATE(FIELD_LINE, BEGINNING_OF_FIELD_LINE);
             this->tempFieldName = "";
             break;
@@ -470,14 +527,29 @@ void Parser::processChunk(const char * buffer, size_t len) {
 
             // Determine whether or not there is a message body.
             // https://datatracker.ietf.org/doc/html/rfc9112#section-6-4
-            auto fields = this->currentMessage->getFields();
-            if (fields.contains("CONTENT-LENGTH") || fields.contains("TRANSFER-ENCODING")) {
-              // Do something.
+            //auto fields = this->currentMessage->getFields();
+            //if (fields.contains("CONTENT-LENGTH") || fields.contains("TRANSFER-ENCODING")) {
+            if (this->contentLength > 0) {
+              SET_MINOR_STATE(MESSAGE_READ);
             }
             else {
               // This is the end of the message.
               this->messages.emplace(move(this->currentMessage));
               this->currentMessage = this->createNewMessage();
+              SET_NEW_HEADER;
+            }
+            break;
+          }
+          case MESSAGE_READ: {
+            while ((this->cursor < input_length) && ((this->cursor - this->minorStart) < this->contentLength)) {
+              ++this->cursor;
+            }
+            if ((this->cursor - this->minorStart) == this->contentLength) {
+              this->currentMessage->setMessageBody(this->input.substr(this->minorStart, this->cursor - this->minorStart));
+              // This is the end of the message.
+              this->messages.emplace(move(this->currentMessage));
+              this->currentMessage = this->createNewMessage();
+              SET_NEW_HEADER;
             }
             break;
           }

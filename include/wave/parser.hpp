@@ -46,12 +46,15 @@ class Parser {
     CRLF,
     AFTER_CRLF,
     BEGINNING_OF_REQUEST,
+    BEGINNING_OF_STATUS,
     METHOD,
     AFTER_METHOD,
     REQUEST_TARGET,
     AFTER_REQUEST_TARGET,
     HTTP_VERSION,
     AFTER_HTTP_VERSION,
+    RESPONSE_CODE,
+    REASON_PHRASE,
     FIELD_NAME,
     AFTER_FIELD_NAME,
     BEFORE_FIELD_VALUE,
@@ -68,6 +71,7 @@ class Parser {
     AFTER_FIELD_VALUE_COMMA,
     AFTER_HEADER_FIELDS,
     MESSAGE_START,
+    MESSAGE_READ,
   };
   Type type;
   size_t cursor;
@@ -82,6 +86,7 @@ class Parser {
   std::unordered_map<uint32_t, std::shared_ptr<Message>> messageRegister;
   std::shared_ptr<Message> currentMessage;
   std::shared_ptr<Message> createNewMessage() const;
+  size_t contentLength;
 };
 
 }
