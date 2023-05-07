@@ -83,6 +83,12 @@ Server::~Server() {
   this->stop();
 }
 
+Server & Server::clearError() {
+  this->errorCode = NO_ERROR;
+  this->errorMessage = "";
+  return *this;
+}
+
 Server::ErrorCode Server::getErrorCode() const {
   return this->errorCode;
 }
@@ -130,6 +136,10 @@ int Server::getSocketHandle() const {
 }
 
 Server& Server::start() {
+  if (this->running) {
+    return *this;
+  }
+
   sockaddr_in server_address;
   socklen_t addrlen{sizeof(server_address)};
   server_address.sin_family = AF_INET;

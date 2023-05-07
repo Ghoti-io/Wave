@@ -11,37 +11,75 @@
 using namespace std;
 using namespace Ghoti::Wave;
 
-static string request {R"(GET /hello.html HTTP/1.1
-Host: 0.0.0.0
-Accept-Language: en)"};
+Server s{};
+uint16_t serverPort = 0;
 
-static string response {R"(HTTP/1.1 200 OK
-Server: Hello
-Content-Length: 13
-Content-Type: text/plain
+TEST(Server, Startup){
+  // Verify default state.
+  ASSERT_EQ(s.getAddress(), "127.0.0.1");
+  ASSERT_EQ(s.getPort(), serverPort);
+  ASSERT_EQ(s.getErrorCode(), Server::ErrorCode::NO_ERROR);
+  ASSERT_EQ(s.getErrorMessage(), "");
+  ASSERT_EQ(s.isRunning(), true);
 
-Hello, world)"};
+  // Verify that "starting" and already running server does not cause an error.
+  s.start();
+  ASSERT_EQ(s.getErrorCode(), Server::ErrorCode::NO_ERROR);
 
-TEST(Simple, Simple){
-  Server s{};
-  s.setPort(50000).start();
-  cout << "listening on " << s.getAddress() << ":" << s.getPort() << endl;
-  this_thread::sleep_for(10000ms);
+  // Verify that stopping the server works.
+  s.stop();
+  ASSERT_EQ(s.isRunning(), false);
+
+  // Verify that the address can be changed on a stopped server.
+  s.setAddress("0.0.0.0");
+  ASSERT_EQ(s.getAddress(), "0.0.0.0");
+  ASSERT_EQ(s.getErrorCode(), Server::ErrorCode::NO_ERROR);
+  s.setAddress("127.0.0.1");
+
+  // Verify that the port can be changed on a stopped server.
+  s.setPort(80);
+  ASSERT_EQ(s.getPort(), 80);
+  ASSERT_EQ(s.getErrorCode(), Server::ErrorCode::NO_ERROR);
+  s.setPort(serverPort);
+
+  // Verify that restarting the server works.
+  s.start();
+  ASSERT_EQ(s.isRunning(), true);
+
+  // Verify that the address cannot be changed on an already running server.
+  s.setAddress("0.0.0.0");
+  ASSERT_EQ(s.getAddress(), "127.0.0.1");
+  ASSERT_EQ(s.getErrorCode(), Server::ErrorCode::SERVER_ALREADY_RUNNING);
+  ASSERT_NE(s.getErrorMessage(), "");
+
+  // Verify that errors are cleared.
+  s.clearError();
+  ASSERT_EQ(s.getErrorCode(), Server::ErrorCode::NO_ERROR);
+  ASSERT_EQ(s.getErrorMessage(), "");
+
+  // Verify that the port cannot be changed on an already running server.
+  s.setPort(80);
+  ASSERT_EQ(s.getPort(), serverPort);
+  ASSERT_EQ(s.getErrorCode(), Server::ErrorCode::SERVER_ALREADY_RUNNING);
+  ASSERT_NE(s.getErrorMessage(), "");
+  s.clearError();
+
 }
 
 int main(int argc, char** argv) {
+  s.start();
+  serverPort = s.getPort();
+
   testing::InitGoogleTest(&argc, argv);
-  //return RUN_ALL_TESTS();
-  //while (1) {
-    Server s{};
-    s.setPort(50000).start();
+  return RUN_ALL_TESTS();
+  while (0) {
     cout << "listening on " << s.getAddress() << ":" << s.getPort() << endl;
 
     Client c{};
     auto request = make_shared<Message>(Message::Type::REQUEST);
     request
       ->setDomain("127.0.0.1")
-      .setPort(50000)
+      .setPort(serverPort)
       .setTarget("/foo");
     auto response = c.sendRequest(request);
     cout << "Starting wait" << endl;
@@ -49,7 +87,7 @@ int main(int argc, char** argv) {
     cout << "After wait" << endl;
 
     cout << *response;
-    this_thread::sleep_for(10000ms);
-  //}
+    //this_thread::sleep_for(10000ms);
+  }
 }
 
