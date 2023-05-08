@@ -61,7 +61,7 @@ class Server {
    * Error messages are not cleared automatically.  This function must be
    * called explicitly.
    *
-   * @returns The server object
+   * @returns The server object.
    */
   Server & clearError();
 
@@ -71,7 +71,7 @@ class Server {
    * Calling the function does not clear the error.  The error must be cleared
    * explicitly by calling Server::clearError().
    *
-   * @returns The Server::ErrorCode error that was most recently generated
+   * @returns The Server::ErrorCode error that was most recently generated.
    */
   ErrorCode getErrorCode() const;
 
@@ -81,7 +81,7 @@ class Server {
    * Calling the function does not clear the error.  The error must be cleared
    * explicitly by calling Server::clearError().
    *
-   * @returns The error message string that was most recently generated
+   * @returns The error message string that was most recently generated.
    */
   const std::string & getErrorMessage() const;
 
@@ -98,8 +98,8 @@ class Server {
    * This setting cannot be changed if the server is running.  If the server is
    * running, then an error will be set.
    *
-   * @param port The port number that the server should listen on
-   * @returns The server object
+   * @param port The port number that the server should listen on.
+   * @returns The server object.
    */
   Server & setPort(uint16_t port);
 
@@ -118,8 +118,8 @@ class Server {
    * This setting cannot be changed if the server is running.  If the server is
    * running, then an error will be set.
    *
-   * @param ip The ip address that the server should listen on
-   * @returns The server object
+   * @param ip The ip address that the server should listen on.
+   * @returns The server object.
    */
   Server & setAddress(const char * ip);
 
@@ -135,21 +135,21 @@ class Server {
   /**
    * Returns the socket handle of the server (if set).
    *
-   * @returns The socket handle of the server
+   * @returns The socket handle of the server.
    */
   int getSocketHandle() const;
 
   /**
    * Start the server listening on the designated ip address and port.
    *
-   * @returns The server object
+   * @returns The server object.
    */
   Server & start();
 
   /**
    * Signal the server to stop listening and terminate its thread pool.
    *
-   * @returns The server object
+   * @returns The server object.
    */
   Server & stop();
 
