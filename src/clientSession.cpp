@@ -5,7 +5,6 @@
  */
 
 #include <arpa/inet.h>
-#include "client.hpp"
 #include "clientSession.hpp"
 #include <ghoti.io/pool.hpp>
 #include <iostream>

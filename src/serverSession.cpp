@@ -13,7 +13,6 @@
 #include <sys/socket.h>
 #include <sstream>
 #include <set>
-#include "server.hpp"
 #include "serverSession.hpp"
 #include <string.h>
 #include <unistd.h>
@@ -21,6 +20,10 @@
 using namespace std;
 using namespace Ghoti::Pool;
 using namespace Ghoti::Wave;
+
+namespace Ghoti::Wave {
+  class Server;
+}
 
 ServerSession::ServerSession(int hClient, Server * server) :
   controlMutex{make_unique<mutex>()},

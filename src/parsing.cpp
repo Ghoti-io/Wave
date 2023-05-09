@@ -4,13 +4,14 @@
  * Define the text parsing functions.
  */
 
-#include "client.hpp"
 #include <cstdint>
 #include <ctype.h>
 #include <set>
 #include <string>
 
 using namespace std;
+
+namespace Ghoti::Wave {}
 using namespace Ghoti::Wave;
 
 namespace Ghoti::Wave {
