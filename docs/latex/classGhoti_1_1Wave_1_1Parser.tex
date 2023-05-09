@@ -1,0 +1,439 @@
+\hypertarget{classGhoti_1_1Wave_1_1Parser}{}\doxysection{Ghoti\+::Wave\+::Parser Class Reference}
+\label{classGhoti_1_1Wave_1_1Parser}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}
+
+
+Parses a HTTP/1.\+1 data stream into discrete messages.  
+
+
+
+
+{\ttfamily \#include $<$parser.\+hpp$>$}
+
+
+
+Collaboration diagram for Ghoti\+::Wave\+::Parser\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classGhoti_1_1Wave_1_1Parser__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2}{Type}} \{ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2a479aac429e788164885fd04ef9c1bbbe}{REQUEST}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2ac3fd6aa6426a633ff6a31d6c5275ac64}{RESPONSE}}
+ \}
+\begin{DoxyCompactList}\small\item\em Represents the type of parsing being performed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a651d50fdabf3f324177aea48be538780}{Parser}} (\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2}{Type}} \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a9784676f854e6c5712d38d4c23afc4fb}{type}})
+\begin{DoxyCompactList}\small\item\em The constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_afc4ff85b48ad66fa9e06e9f32e07981f}{process\+Chunk}} (const char $\ast$buffer, size\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Process a chunk of data. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a8974610782dd3c8ad4ca166ac8476012}\label{classGhoti_1_1Wave_1_1Parser_a8974610782dd3c8ad4ca166ac8476012}} 
+void {\bfseries parse\+Message\+Target} (const std\+::string \&target)
+\item 
+void \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ad30005371048deaf8771cf24de45c806}{register\+Message}} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} $>$ message)
+\begin{DoxyCompactList}\small\item\em Use the provided \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} as the recipient of parsing for the \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}}\textquotesingle{}s id. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::queue$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} $>$ $>$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a76864ce960ca253c1c9cfe18a4308f32}{messages}}
+\begin{DoxyCompactList}\small\item\em A queue of messages that have been parsed so far. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81c}{Read\+State\+Major}} \{ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81ca71dbaa1cf23f71660c16284587035b4c}{NEW\+\_\+\+HEADER}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81ca6e3e67dd01191e2e2bb6f030992c9e18}{FIELD\+\_\+\+LINE}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81cae762de0af9d4b03d7b7ceb78186d838a}{MESSAGE\+\_\+\+BODY}}
+ \}
+\begin{DoxyCompactList}\small\item\em Primary state tracking values. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842}{Read\+State\+Minor}} \{ \newline
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a422013d08ae8dd666834d280cd10e249}{BEGINNING\+\_\+\+OF\+\_\+\+REQUEST\+\_\+\+LINE}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0bffea917930949d2b414628d590b461}{BEGINNING\+\_\+\+OF\+\_\+\+STATUS\+\_\+\+LINE}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842ae5e1f65846b06df3f5daf4ee4620f0e3}{BEGINNING\+\_\+\+OF\+\_\+\+FIELD\+\_\+\+LINE}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aa2d360d8c7bf95fc5eceb540c6a9a5ea}{CRLF}}
+, \newline
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0ca6671d03eb24f20e51649c69dccf7f}{AFTER\+\_\+\+CRLF}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a36264949afdf2ebc95844bcd1376399a}{BEGINNING\+\_\+\+OF\+\_\+\+REQUEST}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842af4ae0172ede18febdf61c28a7c4648e7}{BEGINNING\+\_\+\+OF\+\_\+\+STATUS}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842ae45d6e1baf0aa5315e1a63a50a8b297b}{METHOD}}
+, \newline
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a595b10c8cae1a1b0d27a473014f4a5fd}{AFTER\+\_\+\+METHOD}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842acf6ca336f8b9139141a0018b5755f5cb}{REQUEST\+\_\+\+TARGET}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a52e7bd34721c8125f29a63e992449dba}{AFTER\+\_\+\+REQUEST\+\_\+\+TARGET}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0af826fbbd331f0925a7bb42200be446}{HTTP\+\_\+\+VERSION}}
+, \newline
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a9c56647dda4a1c5fc69c6aa30e720dfc}{AFTER\+\_\+\+HTTP\+\_\+\+VERSION}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aa048093247f2b666a7d2955a9d687665}{RESPONSE\+\_\+\+CODE}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a990f848ff507f2054e3b0391e298bdf4}{REASON\+\_\+\+PHRASE}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842acd4b5b3396d8f5732dbada678e0e8712}{FIELD\+\_\+\+NAME}}
+, \newline
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a114d8001e3137e062e062b4e1d5a81b7}{AFTER\+\_\+\+FIELD\+\_\+\+NAME}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0c53b7dc2bed937396996f23a266107b}{BEFORE\+\_\+\+FIELD\+\_\+\+VALUE}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0156329866a2dfa7aa6a47df529cfc2d}{FIELD\+\_\+\+VALUE}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a12936d97efebdb072640dd9692876450}{SINGLETON\+\_\+\+FIELD\+\_\+\+VALUE}}
+, \newline
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aa51d92d1cfbd57dcb59577f003aa5e4a}{LIST\+\_\+\+FIELD\+\_\+\+VALUE}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a174eec66ec53ea47a5251a11ed884117}{UNQUOTED\+\_\+\+FIELD\+\_\+\+VALUE}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aefb80d80d06f46f5180fda74141ab7d9}{QUOTED\+\_\+\+FIELD\+\_\+\+VALUE\+\_\+\+OPEN}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842adbaeb4ec6f59ae23003bb96ef04ee802}{QUOTED\+\_\+\+FIELD\+\_\+\+VALUE\+\_\+\+PROCESS}}
+, \newline
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842ab76aff407e6dc0244182fa83dfe36426}{QUOTED\+\_\+\+FIELD\+\_\+\+VALUE\+\_\+\+ESCAPE}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842ac01551578b1464e70cdb5396f2036c30}{QUOTED\+\_\+\+FIELD\+\_\+\+VALUE\+\_\+\+CLOSE}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aaa78bed7c87c37501e85c2262bb7a399}{AFTER\+\_\+\+FIELD\+\_\+\+VALUE}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a92fa3288a19a0885209ef85373ea057c}{FIELD\+\_\+\+VALUE\+\_\+\+COMMA}}
+, \newline
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a60e3b24079adec460b54043e982d5bbe}{AFTER\+\_\+\+FIELD\+\_\+\+VALUE\+\_\+\+COMMA}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a1019f4c4c24023adcab882d793afcabc}{AFTER\+\_\+\+HEADER\+\_\+\+FIELDS}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a329c15d656035a80466fea20726a81a1}{MESSAGE\+\_\+\+START}}
+, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a3a6f1387e5650d01cb6481e18a8d0df5}{MESSAGE\+\_\+\+READ}}
+ \}
+\begin{DoxyCompactList}\small\item\em Secondary state tracking values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} $>$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a2ff414c5948042e505cc4d84240329dd}{create\+New\+Message}} () const
+\begin{DoxyCompactList}\small\item\em Create a new message whose \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message_a7778a82d1bd66554e6184b79f0626c84}{Message\+::\+Type}} matches the \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2}{Parser\+::\+Type}} of this parser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a9784676f854e6c5712d38d4c23afc4fb}\label{classGhoti_1_1Wave_1_1Parser_a9784676f854e6c5712d38d4c23afc4fb}} 
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2}{Type}} \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a9784676f854e6c5712d38d4c23afc4fb}{type}}
+\begin{DoxyCompactList}\small\item\em The \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2}{Parser\+::\+Type}} of HTTP/1.\+1 stream that will be processed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a6fb8958f9c2943ba73cc453ff9b0f9a9}\label{classGhoti_1_1Wave_1_1Parser_a6fb8958f9c2943ba73cc453ff9b0f9a9}} 
+size\+\_\+t \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a6fb8958f9c2943ba73cc453ff9b0f9a9}{cursor}}
+\begin{DoxyCompactList}\small\item\em An internal counter that indicates the character currently being processed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_ad27d9a9cc0d572b6b3e9e428b26d7e60}\label{classGhoti_1_1Wave_1_1Parser_ad27d9a9cc0d572b6b3e9e428b26d7e60}} 
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81c}{Read\+State\+Major}} \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ad27d9a9cc0d572b6b3e9e428b26d7e60}{read\+State\+Major}}
+\begin{DoxyCompactList}\small\item\em Tracks the primary state for the parsing state machine. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_ad81a93182e088d403dc15b77b073a4fc}\label{classGhoti_1_1Wave_1_1Parser_ad81a93182e088d403dc15b77b073a4fc}} 
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842}{Read\+State\+Minor}} \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ad81a93182e088d403dc15b77b073a4fc}{read\+State\+Minor}}
+\begin{DoxyCompactList}\small\item\em Tracks the secondary state for the parsing state machine. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_adac0e74b222769fcd967f6e658f4164e}\label{classGhoti_1_1Wave_1_1Parser_adac0e74b222769fcd967f6e658f4164e}} 
+size\+\_\+t \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_adac0e74b222769fcd967f6e658f4164e}{major\+Start}}
+\begin{DoxyCompactList}\small\item\em Indicates the cursor position at which the major state was last updated. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a80067175174f7ceddbb80460808a3e87}\label{classGhoti_1_1Wave_1_1Parser_a80067175174f7ceddbb80460808a3e87}} 
+size\+\_\+t \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a80067175174f7ceddbb80460808a3e87}{minor\+Start}}
+\begin{DoxyCompactList}\small\item\em Indicates the cursor position at which the minor state was last updated. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_af4070d360f65439a53e987455d1e80a8}\label{classGhoti_1_1Wave_1_1Parser_af4070d360f65439a53e987455d1e80a8}} 
+std\+::string \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_af4070d360f65439a53e987455d1e80a8}{input}}
+\begin{DoxyCompactList}\small\item\em The input string, stored internally so that the stream will be processed correctly, even if it is split across multiple buffered reads. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a1d334623ff4e022ecda2301dfa5b0294}\label{classGhoti_1_1Wave_1_1Parser_a1d334623ff4e022ecda2301dfa5b0294}} 
+std\+::string \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a1d334623ff4e022ecda2301dfa5b0294}{error\+Message}}
+\begin{DoxyCompactList}\small\item\em An error message to communicate a parsing issue. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a0d6f0247321a4bfbda5b332ac9767446}\label{classGhoti_1_1Wave_1_1Parser_a0d6f0247321a4bfbda5b332ac9767446}} 
+std\+::string \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a0d6f0247321a4bfbda5b332ac9767446}{temp\+Field\+Name}}
+\begin{DoxyCompactList}\small\item\em The field name currently being processed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a900146bf374c5603d2a9b5a23b70d37b}\label{classGhoti_1_1Wave_1_1Parser_a900146bf374c5603d2a9b5a23b70d37b}} 
+std\+::string \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a900146bf374c5603d2a9b5a23b70d37b}{temp\+Field\+Value}}
+\begin{DoxyCompactList}\small\item\em The field value currently being processed. \end{DoxyCompactList}\item 
+std\+::unordered\+\_\+map$<$ uint32\+\_\+t, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} $>$ $>$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a9d59720a74f5107dc8e02de256d47c70}{message\+Register}}
+\begin{DoxyCompactList}\small\item\em A map to store a \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} associated with a sequence. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a41e1fe132ca2c84d6b468680140ed326}\label{classGhoti_1_1Wave_1_1Parser_a41e1fe132ca2c84d6b468680140ed326}} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} $>$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a41e1fe132ca2c84d6b468680140ed326}{current\+Message}}
+\begin{DoxyCompactList}\small\item\em The current message being parsed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_add469074b29f3d4c88176e119cff40ae}\label{classGhoti_1_1Wave_1_1Parser_add469074b29f3d4c88176e119cff40ae}} 
+size\+\_\+t \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_add469074b29f3d4c88176e119cff40ae}{content\+Length}}
+\begin{DoxyCompactList}\small\item\em The content length that was encountered when parsing the header. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Parses a HTTP/1.\+1 data stream into discrete messages. 
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81c}\label{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81c}} 
+\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!ReadStateMajor@{ReadStateMajor}}
+\index{ReadStateMajor@{ReadStateMajor}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}
+\doxysubsubsection{\texorpdfstring{ReadStateMajor}{ReadStateMajor}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81c}{Ghoti\+::\+Wave\+::\+Parser\+::\+Read\+State\+Major}}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Primary state tracking values. 
+
+These values are used to indicate which major stage the parser is in while parsing the message stream.
+
+The parser uses two stages, to make the parser switch cases easier to follow and to reuse common stages in different contexts (e.\+g., CRLF). \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NEW\_HEADER@{NEW\_HEADER}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!NEW\_HEADER@{NEW\_HEADER}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81ca71dbaa1cf23f71660c16284587035b4c}\label{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81ca71dbaa1cf23f71660c16284587035b4c}} 
+NEW\+\_\+\+HEADER&Expect a new message header. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FIELD\_LINE@{FIELD\_LINE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!FIELD\_LINE@{FIELD\_LINE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81ca6e3e67dd01191e2e2bb6f030992c9e18}\label{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81ca6e3e67dd01191e2e2bb6f030992c9e18}} 
+FIELD\+\_\+\+LINE&Expect a new header field. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MESSAGE\_BODY@{MESSAGE\_BODY}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!MESSAGE\_BODY@{MESSAGE\_BODY}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81cae762de0af9d4b03d7b7ceb78186d838a}\label{classGhoti_1_1Wave_1_1Parser_a1c4b57dcc7a43dd1b9c65d39a75ba81cae762de0af9d4b03d7b7ceb78186d838a}} 
+MESSAGE\+\_\+\+BODY&Expect the message body. \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842}} 
+\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!ReadStateMinor@{ReadStateMinor}}
+\index{ReadStateMinor@{ReadStateMinor}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}
+\doxysubsubsection{\texorpdfstring{ReadStateMinor}{ReadStateMinor}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842}{Ghoti\+::\+Wave\+::\+Parser\+::\+Read\+State\+Minor}}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Secondary state tracking values. 
+
+These values are used to indicate which \char`\"{}part\char`\"{} of the primary state is being tracked. \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BEGINNING\_OF\_REQUEST\_LINE@{BEGINNING\_OF\_REQUEST\_LINE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!BEGINNING\_OF\_REQUEST\_LINE@{BEGINNING\_OF\_REQUEST\_LINE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a422013d08ae8dd666834d280cd10e249}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a422013d08ae8dd666834d280cd10e249}} 
+BEGINNING\+\_\+\+OF\+\_\+\+REQUEST\+\_\+\+LINE&A request line is starting. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BEGINNING\_OF\_STATUS\_LINE@{BEGINNING\_OF\_STATUS\_LINE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!BEGINNING\_OF\_STATUS\_LINE@{BEGINNING\_OF\_STATUS\_LINE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0bffea917930949d2b414628d590b461}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0bffea917930949d2b414628d590b461}} 
+BEGINNING\+\_\+\+OF\+\_\+\+STATUS\+\_\+\+LINE&A status line is starting. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BEGINNING\_OF\_FIELD\_LINE@{BEGINNING\_OF\_FIELD\_LINE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!BEGINNING\_OF\_FIELD\_LINE@{BEGINNING\_OF\_FIELD\_LINE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842ae5e1f65846b06df3f5daf4ee4620f0e3}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842ae5e1f65846b06df3f5daf4ee4620f0e3}} 
+BEGINNING\+\_\+\+OF\+\_\+\+FIELD\+\_\+\+LINE&A header field line is starting. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CRLF@{CRLF}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!CRLF@{CRLF}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aa2d360d8c7bf95fc5eceb540c6a9a5ea}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aa2d360d8c7bf95fc5eceb540c6a9a5ea}} 
+CRLF&Expect a CRLF. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AFTER\_CRLF@{AFTER\_CRLF}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!AFTER\_CRLF@{AFTER\_CRLF}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0ca6671d03eb24f20e51649c69dccf7f}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0ca6671d03eb24f20e51649c69dccf7f}} 
+AFTER\+\_\+\+CRLF&A CRLF has been identified. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BEGINNING\_OF\_REQUEST@{BEGINNING\_OF\_REQUEST}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!BEGINNING\_OF\_REQUEST@{BEGINNING\_OF\_REQUEST}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a36264949afdf2ebc95844bcd1376399a}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a36264949afdf2ebc95844bcd1376399a}} 
+BEGINNING\+\_\+\+OF\+\_\+\+REQUEST&Optional whitespace parsed, request line is now starting. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BEGINNING\_OF\_STATUS@{BEGINNING\_OF\_STATUS}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!BEGINNING\_OF\_STATUS@{BEGINNING\_OF\_STATUS}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842af4ae0172ede18febdf61c28a7c4648e7}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842af4ae0172ede18febdf61c28a7c4648e7}} 
+BEGINNING\+\_\+\+OF\+\_\+\+STATUS&Optional whitespace parsed, status line is now starting. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{METHOD@{METHOD}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!METHOD@{METHOD}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842ae45d6e1baf0aa5315e1a63a50a8b297b}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842ae45d6e1baf0aa5315e1a63a50a8b297b}} 
+METHOD&Method expected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AFTER\_METHOD@{AFTER\_METHOD}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!AFTER\_METHOD@{AFTER\_METHOD}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a595b10c8cae1a1b0d27a473014f4a5fd}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a595b10c8cae1a1b0d27a473014f4a5fd}} 
+AFTER\+\_\+\+METHOD&Method successfully parsed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REQUEST\_TARGET@{REQUEST\_TARGET}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!REQUEST\_TARGET@{REQUEST\_TARGET}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842acf6ca336f8b9139141a0018b5755f5cb}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842acf6ca336f8b9139141a0018b5755f5cb}} 
+REQUEST\+\_\+\+TARGET&Expect request target. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AFTER\_REQUEST\_TARGET@{AFTER\_REQUEST\_TARGET}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!AFTER\_REQUEST\_TARGET@{AFTER\_REQUEST\_TARGET}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a52e7bd34721c8125f29a63e992449dba}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a52e7bd34721c8125f29a63e992449dba}} 
+AFTER\+\_\+\+REQUEST\+\_\+\+TARGET&Request target successfully parsed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HTTP\_VERSION@{HTTP\_VERSION}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!HTTP\_VERSION@{HTTP\_VERSION}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0af826fbbd331f0925a7bb42200be446}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0af826fbbd331f0925a7bb42200be446}} 
+HTTP\+\_\+\+VERSION&HTTP version expected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AFTER\_HTTP\_VERSION@{AFTER\_HTTP\_VERSION}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!AFTER\_HTTP\_VERSION@{AFTER\_HTTP\_VERSION}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a9c56647dda4a1c5fc69c6aa30e720dfc}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a9c56647dda4a1c5fc69c6aa30e720dfc}} 
+AFTER\+\_\+\+HTTP\+\_\+\+VERSION&HTTP version successfully parsed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RESPONSE\_CODE@{RESPONSE\_CODE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!RESPONSE\_CODE@{RESPONSE\_CODE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aa048093247f2b666a7d2955a9d687665}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aa048093247f2b666a7d2955a9d687665}} 
+RESPONSE\+\_\+\+CODE&Response Code Expected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REASON\_PHRASE@{REASON\_PHRASE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!REASON\_PHRASE@{REASON\_PHRASE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a990f848ff507f2054e3b0391e298bdf4}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a990f848ff507f2054e3b0391e298bdf4}} 
+REASON\+\_\+\+PHRASE&Reason Phrase Expected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FIELD\_NAME@{FIELD\_NAME}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!FIELD\_NAME@{FIELD\_NAME}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842acd4b5b3396d8f5732dbada678e0e8712}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842acd4b5b3396d8f5732dbada678e0e8712}} 
+FIELD\+\_\+\+NAME&Header field name expected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AFTER\_FIELD\_NAME@{AFTER\_FIELD\_NAME}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!AFTER\_FIELD\_NAME@{AFTER\_FIELD\_NAME}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a114d8001e3137e062e062b4e1d5a81b7}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a114d8001e3137e062e062b4e1d5a81b7}} 
+AFTER\+\_\+\+FIELD\+\_\+\+NAME&Header field name successfully parsed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BEFORE\_FIELD\_VALUE@{BEFORE\_FIELD\_VALUE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!BEFORE\_FIELD\_VALUE@{BEFORE\_FIELD\_VALUE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0c53b7dc2bed937396996f23a266107b}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0c53b7dc2bed937396996f23a266107b}} 
+BEFORE\+\_\+\+FIELD\+\_\+\+VALUE&Header field value about to be processed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FIELD\_VALUE@{FIELD\_VALUE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!FIELD\_VALUE@{FIELD\_VALUE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0156329866a2dfa7aa6a47df529cfc2d}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a0156329866a2dfa7aa6a47df529cfc2d}} 
+FIELD\+\_\+\+VALUE&Header field value expected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SINGLETON\_FIELD\_VALUE@{SINGLETON\_FIELD\_VALUE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!SINGLETON\_FIELD\_VALUE@{SINGLETON\_FIELD\_VALUE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a12936d97efebdb072640dd9692876450}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a12936d97efebdb072640dd9692876450}} 
+SINGLETON\+\_\+\+FIELD\+\_\+\+VALUE&Singleton header field value expected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LIST\_FIELD\_VALUE@{LIST\_FIELD\_VALUE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!LIST\_FIELD\_VALUE@{LIST\_FIELD\_VALUE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aa51d92d1cfbd57dcb59577f003aa5e4a}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aa51d92d1cfbd57dcb59577f003aa5e4a}} 
+LIST\+\_\+\+FIELD\+\_\+\+VALUE&List of header fields expected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UNQUOTED\_FIELD\_VALUE@{UNQUOTED\_FIELD\_VALUE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!UNQUOTED\_FIELD\_VALUE@{UNQUOTED\_FIELD\_VALUE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a174eec66ec53ea47a5251a11ed884117}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a174eec66ec53ea47a5251a11ed884117}} 
+UNQUOTED\+\_\+\+FIELD\+\_\+\+VALUE&Unquoted field value expected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QUOTED\_FIELD\_VALUE\_OPEN@{QUOTED\_FIELD\_VALUE\_OPEN}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!QUOTED\_FIELD\_VALUE\_OPEN@{QUOTED\_FIELD\_VALUE\_OPEN}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aefb80d80d06f46f5180fda74141ab7d9}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aefb80d80d06f46f5180fda74141ab7d9}} 
+QUOTED\+\_\+\+FIELD\+\_\+\+VALUE\+\_\+\+OPEN&Quoted field value begin. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QUOTED\_FIELD\_VALUE\_PROCESS@{QUOTED\_FIELD\_VALUE\_PROCESS}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!QUOTED\_FIELD\_VALUE\_PROCESS@{QUOTED\_FIELD\_VALUE\_PROCESS}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842adbaeb4ec6f59ae23003bb96ef04ee802}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842adbaeb4ec6f59ae23003bb96ef04ee802}} 
+QUOTED\+\_\+\+FIELD\+\_\+\+VALUE\+\_\+\+PROCESS&Quoted field value is being processed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QUOTED\_FIELD\_VALUE\_ESCAPE@{QUOTED\_FIELD\_VALUE\_ESCAPE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!QUOTED\_FIELD\_VALUE\_ESCAPE@{QUOTED\_FIELD\_VALUE\_ESCAPE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842ab76aff407e6dc0244182fa83dfe36426}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842ab76aff407e6dc0244182fa83dfe36426}} 
+QUOTED\+\_\+\+FIELD\+\_\+\+VALUE\+\_\+\+ESCAPE&Quoted field value char is being escaped. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QUOTED\_FIELD\_VALUE\_CLOSE@{QUOTED\_FIELD\_VALUE\_CLOSE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!QUOTED\_FIELD\_VALUE\_CLOSE@{QUOTED\_FIELD\_VALUE\_CLOSE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842ac01551578b1464e70cdb5396f2036c30}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842ac01551578b1464e70cdb5396f2036c30}} 
+QUOTED\+\_\+\+FIELD\+\_\+\+VALUE\+\_\+\+CLOSE&Quoted field value is being closed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AFTER\_FIELD\_VALUE@{AFTER\_FIELD\_VALUE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!AFTER\_FIELD\_VALUE@{AFTER\_FIELD\_VALUE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aaa78bed7c87c37501e85c2262bb7a399}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842aaa78bed7c87c37501e85c2262bb7a399}} 
+AFTER\+\_\+\+FIELD\+\_\+\+VALUE&Field value processed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FIELD\_VALUE\_COMMA@{FIELD\_VALUE\_COMMA}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!FIELD\_VALUE\_COMMA@{FIELD\_VALUE\_COMMA}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a92fa3288a19a0885209ef85373ea057c}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a92fa3288a19a0885209ef85373ea057c}} 
+FIELD\+\_\+\+VALUE\+\_\+\+COMMA&Field value comma expected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AFTER\_FIELD\_VALUE\_COMMA@{AFTER\_FIELD\_VALUE\_COMMA}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!AFTER\_FIELD\_VALUE\_COMMA@{AFTER\_FIELD\_VALUE\_COMMA}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a60e3b24079adec460b54043e982d5bbe}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a60e3b24079adec460b54043e982d5bbe}} 
+AFTER\+\_\+\+FIELD\+\_\+\+VALUE\+\_\+\+COMMA&Field value comma processed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AFTER\_HEADER\_FIELDS@{AFTER\_HEADER\_FIELDS}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!AFTER\_HEADER\_FIELDS@{AFTER\_HEADER\_FIELDS}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a1019f4c4c24023adcab882d793afcabc}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a1019f4c4c24023adcab882d793afcabc}} 
+AFTER\+\_\+\+HEADER\+\_\+\+FIELDS&Header fields processed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MESSAGE\_START@{MESSAGE\_START}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!MESSAGE\_START@{MESSAGE\_START}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a329c15d656035a80466fea20726a81a1}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a329c15d656035a80466fea20726a81a1}} 
+MESSAGE\+\_\+\+START&\mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} started. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MESSAGE\_READ@{MESSAGE\_READ}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!MESSAGE\_READ@{MESSAGE\_READ}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a3a6f1387e5650d01cb6481e18a8d0df5}\label{classGhoti_1_1Wave_1_1Parser_aef0f3e994a186d80acd43edcc220c842a3a6f1387e5650d01cb6481e18a8d0df5}} 
+MESSAGE\+\_\+\+READ&\mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} being read. \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2}\label{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2}} 
+\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!Type@{Type}}
+\index{Type@{Type}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}
+\doxysubsubsection{\texorpdfstring{Type}{Type}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2}{Ghoti\+::\+Wave\+::\+Parser\+::\+Type}}}
+
+
+
+Represents the type of parsing being performed. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REQUEST@{REQUEST}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!REQUEST@{REQUEST}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2a479aac429e788164885fd04ef9c1bbbe}\label{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2a479aac429e788164885fd04ef9c1bbbe}} 
+REQUEST&This is a Request stream. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RESPONSE@{RESPONSE}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!RESPONSE@{RESPONSE}}}\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2ac3fd6aa6426a633ff6a31d6c5275ac64}\label{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2ac3fd6aa6426a633ff6a31d6c5275ac64}} 
+RESPONSE&This is a Response stream. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a651d50fdabf3f324177aea48be538780}\label{classGhoti_1_1Wave_1_1Parser_a651d50fdabf3f324177aea48be538780}} 
+\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!Parser@{Parser}}
+\index{Parser@{Parser}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}
+\doxysubsubsection{\texorpdfstring{Parser()}{Parser()}}
+{\footnotesize\ttfamily Parser\+::\+Parser (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2}{Type}}}]{type }\end{DoxyParamCaption})}
+
+
+
+The constructor. 
+
+HTTP/1.\+1 streams do not have an interchangeable syntax, so the stream type must be declared.
+
+The stream will accept an array of bytes, and it will remember its previous parsing position.
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & The \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2}{Parser\+::\+Type}} of the message stream. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a2ff414c5948042e505cc4d84240329dd}\label{classGhoti_1_1Wave_1_1Parser_a2ff414c5948042e505cc4d84240329dd}} 
+\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!createNewMessage@{createNewMessage}}
+\index{createNewMessage@{createNewMessage}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}
+\doxysubsubsection{\texorpdfstring{createNewMessage()}{createNewMessage()}}
+{\footnotesize\ttfamily shared\+\_\+ptr$<$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} $>$ Parser\+::create\+New\+Message (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Create a new message whose \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message_a7778a82d1bd66554e6184b79f0626c84}{Message\+::\+Type}} matches the \mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser_ab36eff066f6206f8e5b71073bc45a1e2}{Parser\+::\+Type}} of this parser. 
+
+This function should really only be used by Parser\+::\+Type\+::\+Request parsing, since all Parser\+::\+Type\+::\+Response streams should have already registered a \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} object to receive the parsed message.
+
+\begin{DoxyReturn}{Returns}
+A properly typed message. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_afc4ff85b48ad66fa9e06e9f32e07981f}\label{classGhoti_1_1Wave_1_1Parser_afc4ff85b48ad66fa9e06e9f32e07981f}} 
+\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!processChunk@{processChunk}}
+\index{processChunk@{processChunk}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}
+\doxysubsubsection{\texorpdfstring{processChunk()}{processChunk()}}
+{\footnotesize\ttfamily void Parser\+::process\+Chunk (\begin{DoxyParamCaption}\item[{const char $\ast$}]{buffer,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+
+
+Process a chunk of data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & The buffer to be processed. \\
+\hline
+{\em len} & The length of the buffer in bytes. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_ad30005371048deaf8771cf24de45c806}\label{classGhoti_1_1Wave_1_1Parser_ad30005371048deaf8771cf24de45c806}} 
+\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!registerMessage@{registerMessage}}
+\index{registerMessage@{registerMessage}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}
+\doxysubsubsection{\texorpdfstring{registerMessage()}{registerMessage()}}
+{\footnotesize\ttfamily void Parser\+::register\+Message (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} $>$}]{message }\end{DoxyParamCaption})}
+
+
+
+Use the provided \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} as the recipient of parsing for the \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}}\textquotesingle{}s id. 
+
+If a \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} with the target ID already exists, then the provided message will adopt the contents of the existing data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The object that should receive the desired messages. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a9d59720a74f5107dc8e02de256d47c70}\label{classGhoti_1_1Wave_1_1Parser_a9d59720a74f5107dc8e02de256d47c70}} 
+\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!messageRegister@{messageRegister}}
+\index{messageRegister@{messageRegister}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}
+\doxysubsubsection{\texorpdfstring{messageRegister}{messageRegister}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$uint32\+\_\+t, std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}}$>$ $>$ Ghoti\+::\+Wave\+::\+Parser\+::message\+Register\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A map to store a \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} associated with a sequence. 
+
+This approach is used so that the parser can be informed of the existence of an expected message. This way, the supplied \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} object can act as the recipient of the message as it is parsed.
+
+The registered message should be the same message that was provided to the caller of the \mbox{\hyperlink{classGhoti_1_1Wave_1_1Client_a4c7f5a65c02c9b1ea261bc080e07bf6e}{Client\+::send\+Request()}} function.
+
+{\ttfamily message\+Register\mbox{[}ID\mbox{]} = message} \mbox{\Hypertarget{classGhoti_1_1Wave_1_1Parser_a76864ce960ca253c1c9cfe18a4308f32}\label{classGhoti_1_1Wave_1_1Parser_a76864ce960ca253c1c9cfe18a4308f32}} 
+\index{Ghoti::Wave::Parser@{Ghoti::Wave::Parser}!messages@{messages}}
+\index{messages@{messages}!Ghoti::Wave::Parser@{Ghoti::Wave::Parser}}
+\doxysubsubsection{\texorpdfstring{messages}{messages}}
+{\footnotesize\ttfamily std\+::queue$<$std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}}$>$ $>$ Ghoti\+::\+Wave\+::\+Parser\+::messages}
+
+
+
+A queue of messages that have been parsed so far. 
+
+The calling session manager may pop messages from the queue as needed. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/wave/\mbox{\hyperlink{parser_8hpp}{parser.\+hpp}}\item 
+src/\mbox{\hyperlink{parser_8cpp}{parser.\+cpp}}\end{DoxyCompactItemize}

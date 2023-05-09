@@ -1,0 +1,7 @@
+<map id="include/wave/serverSession.hpp" name="include/wave/serverSession.hpp">
+<area shape="rect" id="node1" title="Header file for declaring the ServerSession class." alt="" coords="106,5,337,32"/>
+<area shape="rect" id="node2" href="$wave_8hpp.html" title="Header file supplied for use by 3rd party code so that they can easily include all necessary headers ..." alt="" coords="5,80,141,107"/>
+<area shape="rect" id="node4" href="$server_8cpp.html" title="Define the Ghoti::Wave::Server class." alt="" coords="165,80,277,107"/>
+<area shape="rect" id="node5" href="$serverSession_8cpp.html" title="Define the Ghoti::Wave::ServerSession class." alt="" coords="301,80,464,107"/>
+<area shape="rect" id="node3" href="$test_8cpp.html" title="Test the general Wave server behavior." alt="" coords="22,155,125,181"/>
+</map>

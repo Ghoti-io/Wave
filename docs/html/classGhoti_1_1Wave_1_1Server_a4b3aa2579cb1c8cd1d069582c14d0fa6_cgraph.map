@@ -1,0 +1,4 @@
+<map id="Ghoti::Wave::Server::~Server" name="Ghoti::Wave::Server::~Server">
+<area shape="rect" id="node1" title="The destructor." alt="" coords="5,5,156,47"/>
+<area shape="rect" id="node2" href="$classGhoti_1_1Wave_1_1Server.html#a7d7827a4ea2951a10a624390689848a0" title="Signal the server to stop listening and terminate its thread pool." alt="" coords="204,5,355,47"/>
+</map>

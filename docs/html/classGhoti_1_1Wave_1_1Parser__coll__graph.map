@@ -1,0 +1,8 @@
+<map id="Ghoti::Wave::Parser" name="Ghoti::Wave::Parser">
+<area shape="rect" id="node1" title="Parses a HTTP/1.1 data stream into discrete messages." alt="" coords="691,94,840,121"/>
+<area shape="rect" id="node2" title=" " alt="" coords="288,5,525,47"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,85,175,127"/>
+<area shape="rect" id="node6" title=" " alt="" coords="288,134,525,190"/>
+<area shape="rect" id="node4" title=" " alt="" coords="363,214,450,241"/>
+<area shape="rect" id="node5" title=" " alt="" coords="21,207,159,248"/>
+</map>

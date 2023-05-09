@@ -1,0 +1,237 @@
+\hypertarget{classGhoti_1_1Wave_1_1ClientSession}{}\doxysection{Ghoti\+::Wave\+::Client\+Session Class Reference}
+\label{classGhoti_1_1Wave_1_1ClientSession}\index{Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}}
+
+
+Represents a connection to a particular domain/port pair.  
+
+
+
+
+{\ttfamily \#include $<$client\+Session.\+hpp$>$}
+
+
+
+Collaboration diagram for Ghoti\+::Wave\+::Client\+Session\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classGhoti_1_1Wave_1_1ClientSession__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a5d2de1fdf67002a3f0a1fe99e576b4f3}{Client\+Session}} (int \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a3830ef41b93be6beb1226037871d8088}{h\+Server}}, \mbox{\hyperlink{classGhoti_1_1Wave_1_1Client}{Client}} $\ast$\mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a487eab307f9c4eb1d1c51b5905f7614e}{client}})
+\begin{DoxyCompactList}\small\item\em The constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a79235eb6d8ce509da6bc1619a750bba6}\label{classGhoti_1_1Wave_1_1ClientSession_a79235eb6d8ce509da6bc1619a750bba6}} 
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a79235eb6d8ce509da6bc1619a750bba6}{$\sim$\+Client\+Session}} ()
+\begin{DoxyCompactList}\small\item\em The destructor. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a9135bb5f643a7e3cf87ed0a94a762b08}{has\+Read\+Data\+Waiting}} ()
+\begin{DoxyCompactList}\small\item\em Checks to see whether or not the session has data waiting to be read from the socket. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_ae2401ddf0494e42b56d162e12f96e33c}{has\+Write\+Data\+Waiting}} ()
+\begin{DoxyCompactList}\small\item\em Checks to see whether or not the session has data waiting to be written to the socket. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a03ffacad74337c623f334c8f38ddc800}{is\+Finished}} ()
+\begin{DoxyCompactList}\small\item\em Indicates whether or not the session has completed all communications and may be terminated. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a44c5552661bf45641abc61b97f831e53}{read}} ()
+\begin{DoxyCompactList}\small\item\em Performs a read from the session. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a78aab4cb5aad589e3d41d1b49f546af3}{write}} ()
+\begin{DoxyCompactList}\small\item\em Performs a write to the session. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a801f653acda0a51134428e4e75d94175}{enqueue}} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} $>$ request, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} $>$ response)
+\begin{DoxyCompactList}\small\item\em Add a request/response pair to the session\textquotesingle{}s queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a74133b9e9df8edb9b832e9764b9a6f1b}\label{classGhoti_1_1Wave_1_1ClientSession_a74133b9e9df8edb9b832e9764b9a6f1b}} 
+std\+::unique\+\_\+ptr$<$ std\+::mutex $>$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a74133b9e9df8edb9b832e9764b9a6f1b}{control\+Mutex}}
+\begin{DoxyCompactList}\small\item\em Used to synchronize access to the session to make it thread safe. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a5a11fe2b0f5913bd322daf4e7d207c9b}\label{classGhoti_1_1Wave_1_1ClientSession_a5a11fe2b0f5913bd322daf4e7d207c9b}} 
+std\+::unique\+\_\+ptr$<$ std\+::condition\+\_\+variable $>$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a5a11fe2b0f5913bd322daf4e7d207c9b}{control\+Condition\+Variable}}
+\begin{DoxyCompactList}\small\item\em Used to synchronize access to the session to make it thread safe. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a3830ef41b93be6beb1226037871d8088}\label{classGhoti_1_1Wave_1_1ClientSession_a3830ef41b93be6beb1226037871d8088}} 
+int \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a3830ef41b93be6beb1226037871d8088}{h\+Server}}
+\begin{DoxyCompactList}\small\item\em The socket handle to the server. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a4f61f338d8fb0c33daaba93c201cdb12}{request\+Sequence}}
+\begin{DoxyCompactList}\small\item\em The index number of the next request to be enqueued. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a3597fc35250dc9c77e634a472cdb7446}{write\+Sequence}}
+\begin{DoxyCompactList}\small\item\em The index number of the current request being written. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_aac4902746f42aa8906bf14f10c66bfb5}\label{classGhoti_1_1Wave_1_1ClientSession_aac4902746f42aa8906bf14f10c66bfb5}} 
+size\+\_\+t \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_aac4902746f42aa8906bf14f10c66bfb5}{write\+Offset}}
+\begin{DoxyCompactList}\small\item\em A byte offset, used to track how many bytes of a message have been written, so that individual write attempts do not duplicate data. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_ab73af5d129df2f704d46317c8a85f3c3}{read\+Sequence}}
+\begin{DoxyCompactList}\small\item\em The index number of the current request being received. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a3985a621b90fd3dd84f526742c0396f1}\label{classGhoti_1_1Wave_1_1ClientSession_a3985a621b90fd3dd84f526742c0396f1}} 
+bool \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a3985a621b90fd3dd84f526742c0396f1}{working}}
+\begin{DoxyCompactList}\small\item\em Tracks whether or not the session has work queued. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_aa48a01937d99d516ad6675ca2dfefe51}\label{classGhoti_1_1Wave_1_1ClientSession_aa48a01937d99d516ad6675ca2dfefe51}} 
+bool \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_aa48a01937d99d516ad6675ca2dfefe51}{finished}}
+\begin{DoxyCompactList}\small\item\em Tracks whether or not the session has completed all pending communications. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a63c6ae47c6a049d3207b72624ad3b843}\label{classGhoti_1_1Wave_1_1ClientSession_a63c6ae47c6a049d3207b72624ad3b843}} 
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Parser}{Parser}} \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a63c6ae47c6a049d3207b72624ad3b843}{parser}}
+\begin{DoxyCompactList}\small\item\em The parser object used to parse the raw HTTP stream. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a487eab307f9c4eb1d1c51b5905f7614e}\label{classGhoti_1_1Wave_1_1ClientSession_a487eab307f9c4eb1d1c51b5905f7614e}} 
+\mbox{\hyperlink{classGhoti_1_1Wave_1_1Client}{Client}} $\ast$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a487eab307f9c4eb1d1c51b5905f7614e}{client}}
+\begin{DoxyCompactList}\small\item\em A pointer to the client object. \end{DoxyCompactList}\item 
+std\+::map$<$ uint64\+\_\+t, std\+::pair$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} $>$, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} $>$ $>$ $>$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1ClientSession_a0266e2cc0aeef34de4afb85bcd29f591}{messages}}
+\begin{DoxyCompactList}\small\item\em Tracks message/response pairs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a connection to a particular domain/port pair. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a5d2de1fdf67002a3f0a1fe99e576b4f3}\label{classGhoti_1_1Wave_1_1ClientSession_a5d2de1fdf67002a3f0a1fe99e576b4f3}} 
+\index{Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}!ClientSession@{ClientSession}}
+\index{ClientSession@{ClientSession}!Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}}
+\doxysubsubsection{\texorpdfstring{ClientSession()}{ClientSession()}}
+{\footnotesize\ttfamily Client\+Session\+::\+Client\+Session (\begin{DoxyParamCaption}\item[{int}]{h\+Server,  }\item[{\mbox{\hyperlink{classGhoti_1_1Wave_1_1Client}{Client}} $\ast$}]{client }\end{DoxyParamCaption})}
+
+
+
+The constructor. 
+
+The parent \mbox{\hyperlink{classGhoti_1_1Wave_1_1Client}{Client}} object will do the work of establishing the socket connection. Once the connection is established, then this class takes over the communication.
+
+
+\begin{DoxyParams}{Parameters}
+{\em h\+Server} & The socket handle to the \mbox{\hyperlink{classGhoti_1_1Wave_1_1Server}{Server}} to which this session will communicate. \\
+\hline
+{\em client} & A pointer to the parent \mbox{\hyperlink{classGhoti_1_1Wave_1_1Client}{Client}} object. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a801f653acda0a51134428e4e75d94175}\label{classGhoti_1_1Wave_1_1ClientSession_a801f653acda0a51134428e4e75d94175}} 
+\index{Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}!enqueue@{enqueue}}
+\index{enqueue@{enqueue}!Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}}
+\doxysubsubsection{\texorpdfstring{enqueue()}{enqueue()}}
+{\footnotesize\ttfamily void Client\+Session\+::enqueue (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} $>$}]{request,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}} $>$}]{response }\end{DoxyParamCaption})}
+
+
+
+Add a request/response pair to the session\textquotesingle{}s queue. 
+
+The response object was created by the \mbox{\hyperlink{classGhoti_1_1Wave_1_1Client}{Client}}, and we will write our results into it as the request is processed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & The HTTP request \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}}. \\
+\hline
+{\em response} & The HTTP response \mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a9135bb5f643a7e3cf87ed0a94a762b08}\label{classGhoti_1_1Wave_1_1ClientSession_a9135bb5f643a7e3cf87ed0a94a762b08}} 
+\index{Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}!hasReadDataWaiting@{hasReadDataWaiting}}
+\index{hasReadDataWaiting@{hasReadDataWaiting}!Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}}
+\doxysubsubsection{\texorpdfstring{hasReadDataWaiting()}{hasReadDataWaiting()}}
+{\footnotesize\ttfamily bool Client\+Session\+::has\+Read\+Data\+Waiting (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Checks to see whether or not the session has data waiting to be read from the socket. 
+
+This is non-\/blocking mutex controlled. If the session is currently working, then this function will return false.
+
+\begin{DoxyReturn}{Returns}
+Whether or not the session has data waiting to be read from the socket. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_ae2401ddf0494e42b56d162e12f96e33c}\label{classGhoti_1_1Wave_1_1ClientSession_ae2401ddf0494e42b56d162e12f96e33c}} 
+\index{Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}!hasWriteDataWaiting@{hasWriteDataWaiting}}
+\index{hasWriteDataWaiting@{hasWriteDataWaiting}!Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}}
+\doxysubsubsection{\texorpdfstring{hasWriteDataWaiting()}{hasWriteDataWaiting()}}
+{\footnotesize\ttfamily bool Client\+Session\+::has\+Write\+Data\+Waiting (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Checks to see whether or not the session has data waiting to be written to the socket. 
+
+This is non-\/blocking mutex controlled. If the session is currently working, then this function will return false.
+
+\begin{DoxyReturn}{Returns}
+Whether or not the session has data waiting to be written to the socket. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a03ffacad74337c623f334c8f38ddc800}\label{classGhoti_1_1Wave_1_1ClientSession_a03ffacad74337c623f334c8f38ddc800}} 
+\index{Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}!isFinished@{isFinished}}
+\index{isFinished@{isFinished}!Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}}
+\doxysubsubsection{\texorpdfstring{isFinished()}{isFinished()}}
+{\footnotesize\ttfamily bool Client\+Session\+::is\+Finished (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Indicates whether or not the session has completed all communications and may be terminated. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if all communications have completed, {\ttfamily false} otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a44c5552661bf45641abc61b97f831e53}\label{classGhoti_1_1Wave_1_1ClientSession_a44c5552661bf45641abc61b97f831e53}} 
+\index{Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}!read@{read}}
+\index{read@{read}!Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily void Client\+Session\+::read (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Performs a read from the session. 
+
+This function is intended to be called by the client session\textquotesingle{}s dispatch thread. \mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a78aab4cb5aad589e3d41d1b49f546af3}\label{classGhoti_1_1Wave_1_1ClientSession_a78aab4cb5aad589e3d41d1b49f546af3}} 
+\index{Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}!write@{write}}
+\index{write@{write}!Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void Client\+Session\+::write (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Performs a write to the session. 
+
+This function is intended to be called by the client session\textquotesingle{}s dispatch thread. 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a0266e2cc0aeef34de4afb85bcd29f591}\label{classGhoti_1_1Wave_1_1ClientSession_a0266e2cc0aeef34de4afb85bcd29f591}} 
+\index{Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}!messages@{messages}}
+\index{messages@{messages}!Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}}
+\doxysubsubsection{\texorpdfstring{messages}{messages}}
+{\footnotesize\ttfamily std\+::map$<$uint64\+\_\+t, std\+::pair$<$std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}}$>$, std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classGhoti_1_1Wave_1_1Message}{Message}}$>$ $>$ $>$ Ghoti\+::\+Wave\+::\+Client\+Session\+::messages\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Tracks message/response pairs. 
+
+messages\mbox{[}request sequence \#\mbox{]} = $<$request, response$>$ \mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_ab73af5d129df2f704d46317c8a85f3c3}\label{classGhoti_1_1Wave_1_1ClientSession_ab73af5d129df2f704d46317c8a85f3c3}} 
+\index{Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}!readSequence@{readSequence}}
+\index{readSequence@{readSequence}!Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}}
+\doxysubsubsection{\texorpdfstring{readSequence}{readSequence}}
+{\footnotesize\ttfamily size\+\_\+t Ghoti\+::\+Wave\+::\+Client\+Session\+::read\+Sequence\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The index number of the current request being received. 
+
+A session may send many requests before a single response is completely received. This variable tracks the reponse order so that it can be paired to the correct request. \mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a4f61f338d8fb0c33daaba93c201cdb12}\label{classGhoti_1_1Wave_1_1ClientSession_a4f61f338d8fb0c33daaba93c201cdb12}} 
+\index{Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}!requestSequence@{requestSequence}}
+\index{requestSequence@{requestSequence}!Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}}
+\doxysubsubsection{\texorpdfstring{requestSequence}{requestSequence}}
+{\footnotesize\ttfamily size\+\_\+t Ghoti\+::\+Wave\+::\+Client\+Session\+::request\+Sequence\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The index number of the next request to be enqueued. 
+
+A session may have multiple messages enqueued before the connection has been established. This variable ensures that messages are handled in the order requested. \mbox{\Hypertarget{classGhoti_1_1Wave_1_1ClientSession_a3597fc35250dc9c77e634a472cdb7446}\label{classGhoti_1_1Wave_1_1ClientSession_a3597fc35250dc9c77e634a472cdb7446}} 
+\index{Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}!writeSequence@{writeSequence}}
+\index{writeSequence@{writeSequence}!Ghoti::Wave::ClientSession@{Ghoti::Wave::ClientSession}}
+\doxysubsubsection{\texorpdfstring{writeSequence}{writeSequence}}
+{\footnotesize\ttfamily size\+\_\+t Ghoti\+::\+Wave\+::\+Client\+Session\+::write\+Sequence\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The index number of the current request being written. 
+
+A session must send requests in the order that they were enqueued. This variable tracks which message will be sent next. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/wave/\mbox{\hyperlink{clientSession_8hpp}{client\+Session.\+hpp}}\item 
+src/\mbox{\hyperlink{clientSession_8cpp}{client\+Session.\+cpp}}\end{DoxyCompactItemize}

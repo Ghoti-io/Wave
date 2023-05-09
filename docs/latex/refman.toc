@@ -1,0 +1,192 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Class Index}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Class List}{1}{section.1.1}%
+\contentsline {chapter}{\numberline {2}File Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}File List}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Class Documentation}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Ghoti\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Wave\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Client Class Reference}{5}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Detailed Description}{6}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Member Function Documentation}{6}{subsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.2.1}dispatchLoop()}{6}{subsubsection.3.1.2.1}%
+\contentsline {subsubsection}{\numberline {3.1.2.2}isRunning()}{6}{subsubsection.3.1.2.2}%
+\contentsline {subsubsection}{\numberline {3.1.2.3}sendRequest()}{7}{subsubsection.3.1.2.3}%
+\contentsline {subsubsection}{\numberline {3.1.2.4}start()}{7}{subsubsection.3.1.2.4}%
+\contentsline {subsubsection}{\numberline {3.1.2.5}stop()}{7}{subsubsection.3.1.2.5}%
+\contentsline {subsection}{\numberline {3.1.3}Member Data Documentation}{8}{subsection.3.1.3}%
+\contentsline {subsubsection}{\numberline {3.1.3.1}domains}{8}{subsubsection.3.1.3.1}%
+\contentsline {section}{\numberline {3.2}Ghoti\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Wave\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Client\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Session Class Reference}{8}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Detailed Description}{9}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Constructor \& Destructor Documentation}{9}{subsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.2.1}ClientSession()}{9}{subsubsection.3.2.2.1}%
+\contentsline {subsection}{\numberline {3.2.3}Member Function Documentation}{10}{subsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.3.1}enqueue()}{10}{subsubsection.3.2.3.1}%
+\contentsline {subsubsection}{\numberline {3.2.3.2}hasReadDataWaiting()}{10}{subsubsection.3.2.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.3.3}hasWriteDataWaiting()}{10}{subsubsection.3.2.3.3}%
+\contentsline {subsubsection}{\numberline {3.2.3.4}isFinished()}{11}{subsubsection.3.2.3.4}%
+\contentsline {subsubsection}{\numberline {3.2.3.5}read()}{11}{subsubsection.3.2.3.5}%
+\contentsline {subsubsection}{\numberline {3.2.3.6}write()}{11}{subsubsection.3.2.3.6}%
+\contentsline {subsection}{\numberline {3.2.4}Member Data Documentation}{11}{subsection.3.2.4}%
+\contentsline {subsubsection}{\numberline {3.2.4.1}messages}{11}{subsubsection.3.2.4.1}%
+\contentsline {subsubsection}{\numberline {3.2.4.2}readSequence}{11}{subsubsection.3.2.4.2}%
+\contentsline {subsubsection}{\numberline {3.2.4.3}requestSequence}{12}{subsubsection.3.2.4.3}%
+\contentsline {subsubsection}{\numberline {3.2.4.4}writeSequence}{12}{subsubsection.3.2.4.4}%
+\contentsline {section}{\numberline {3.3}Ghoti\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Wave\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Message Class Reference}{12}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Detailed Description}{15}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Member Enumeration Documentation}{15}{subsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.2.1}Type}{15}{subsubsection.3.3.2.1}%
+\contentsline {subsection}{\numberline {3.3.3}Constructor \& Destructor Documentation}{16}{subsection.3.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.3.1}Message()}{16}{subsubsection.3.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.4}Member Function Documentation}{16}{subsection.3.3.4}%
+\contentsline {subsubsection}{\numberline {3.3.4.1}addFieldValue()}{16}{subsubsection.3.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.3.4.2}adoptContents()}{16}{subsubsection.3.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.3.4.3}getContentLength()}{17}{subsubsection.3.3.4.3}%
+\contentsline {subsubsection}{\numberline {3.3.4.4}getDomain()}{17}{subsubsection.3.3.4.4}%
+\contentsline {subsubsection}{\numberline {3.3.4.5}getFields()}{17}{subsubsection.3.3.4.5}%
+\contentsline {subsubsection}{\numberline {3.3.4.6}getId()}{18}{subsubsection.3.3.4.6}%
+\contentsline {subsubsection}{\numberline {3.3.4.7}getMessage()}{18}{subsubsection.3.3.4.7}%
+\contentsline {subsubsection}{\numberline {3.3.4.8}getMessageBody()}{18}{subsubsection.3.3.4.8}%
+\contentsline {subsubsection}{\numberline {3.3.4.9}getMethod()}{18}{subsubsection.3.3.4.9}%
+\contentsline {subsubsection}{\numberline {3.3.4.10}getPort()}{19}{subsubsection.3.3.4.10}%
+\contentsline {subsubsection}{\numberline {3.3.4.11}getReadyFuture()}{19}{subsubsection.3.3.4.11}%
+\contentsline {subsubsection}{\numberline {3.3.4.12}getRenderedHeader1()}{19}{subsubsection.3.3.4.12}%
+\contentsline {subsubsection}{\numberline {3.3.4.13}getStatusCode()}{20}{subsubsection.3.3.4.13}%
+\contentsline {subsubsection}{\numberline {3.3.4.14}getTarget()}{20}{subsubsection.3.3.4.14}%
+\contentsline {subsubsection}{\numberline {3.3.4.15}getType()}{20}{subsubsection.3.3.4.15}%
+\contentsline {subsubsection}{\numberline {3.3.4.16}getVersion()}{20}{subsubsection.3.3.4.16}%
+\contentsline {subsubsection}{\numberline {3.3.4.17}hasError()}{21}{subsubsection.3.3.4.17}%
+\contentsline {subsubsection}{\numberline {3.3.4.18}setDomain()}{21}{subsubsection.3.3.4.18}%
+\contentsline {subsubsection}{\numberline {3.3.4.19}setErrorMessage()}{21}{subsubsection.3.3.4.19}%
+\contentsline {subsubsection}{\numberline {3.3.4.20}setId()}{22}{subsubsection.3.3.4.20}%
+\contentsline {subsubsection}{\numberline {3.3.4.21}setMessage()}{22}{subsubsection.3.3.4.21}%
+\contentsline {subsubsection}{\numberline {3.3.4.22}setMessageBody()}{22}{subsubsection.3.3.4.22}%
+\contentsline {subsubsection}{\numberline {3.3.4.23}setMethod()}{23}{subsubsection.3.3.4.23}%
+\contentsline {subsubsection}{\numberline {3.3.4.24}setPort()}{23}{subsubsection.3.3.4.24}%
+\contentsline {subsubsection}{\numberline {3.3.4.25}setReady()}{23}{subsubsection.3.3.4.25}%
+\contentsline {subsubsection}{\numberline {3.3.4.26}setStatusCode()}{24}{subsubsection.3.3.4.26}%
+\contentsline {subsubsection}{\numberline {3.3.4.27}setTarget()}{24}{subsubsection.3.3.4.27}%
+\contentsline {subsubsection}{\numberline {3.3.4.28}setVersion()}{24}{subsubsection.3.3.4.28}%
+\contentsline {subsection}{\numberline {3.3.5}Member Data Documentation}{25}{subsection.3.3.5}%
+\contentsline {subsubsection}{\numberline {3.3.5.1}headers}{25}{subsubsection.3.3.5.1}%
+\contentsline {section}{\numberline {3.4}Ghoti\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Wave\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Parser Class Reference}{25}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Detailed Description}{27}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Member Enumeration Documentation}{27}{subsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.2.1}ReadStateMajor}{27}{subsubsection.3.4.2.1}%
+\contentsline {subsubsection}{\numberline {3.4.2.2}ReadStateMinor}{27}{subsubsection.3.4.2.2}%
+\contentsline {subsubsection}{\numberline {3.4.2.3}Type}{28}{subsubsection.3.4.2.3}%
+\contentsline {subsection}{\numberline {3.4.3}Constructor \& Destructor Documentation}{29}{subsection.3.4.3}%
+\contentsline {subsubsection}{\numberline {3.4.3.1}Parser()}{29}{subsubsection.3.4.3.1}%
+\contentsline {subsection}{\numberline {3.4.4}Member Function Documentation}{29}{subsection.3.4.4}%
+\contentsline {subsubsection}{\numberline {3.4.4.1}createNewMessage()}{29}{subsubsection.3.4.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.4.2}processChunk()}{29}{subsubsection.3.4.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.4.3}registerMessage()}{30}{subsubsection.3.4.4.3}%
+\contentsline {subsection}{\numberline {3.4.5}Member Data Documentation}{30}{subsection.3.4.5}%
+\contentsline {subsubsection}{\numberline {3.4.5.1}messageRegister}{30}{subsubsection.3.4.5.1}%
+\contentsline {subsubsection}{\numberline {3.4.5.2}messages}{30}{subsubsection.3.4.5.2}%
+\contentsline {section}{\numberline {3.5}Ghoti\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Wave\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Server Class Reference}{31}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Detailed Description}{32}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Member Enumeration Documentation}{32}{subsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.2.1}ErrorCode}{32}{subsubsection.3.5.2.1}%
+\contentsline {subsection}{\numberline {3.5.3}Constructor \& Destructor Documentation}{32}{subsection.3.5.3}%
+\contentsline {subsubsection}{\numberline {3.5.3.1}Server()}{33}{subsubsection.3.5.3.1}%
+\contentsline {subsubsection}{\numberline {3.5.3.2}$\sim $Server()}{33}{subsubsection.3.5.3.2}%
+\contentsline {subsection}{\numberline {3.5.4}Member Function Documentation}{33}{subsection.3.5.4}%
+\contentsline {subsubsection}{\numberline {3.5.4.1}clearError()}{33}{subsubsection.3.5.4.1}%
+\contentsline {subsubsection}{\numberline {3.5.4.2}dispatchLoop()}{33}{subsubsection.3.5.4.2}%
+\contentsline {subsubsection}{\numberline {3.5.4.3}getAddress()}{34}{subsubsection.3.5.4.3}%
+\contentsline {subsubsection}{\numberline {3.5.4.4}getErrorCode()}{34}{subsubsection.3.5.4.4}%
+\contentsline {subsubsection}{\numberline {3.5.4.5}getErrorMessage()}{34}{subsubsection.3.5.4.5}%
+\contentsline {subsubsection}{\numberline {3.5.4.6}getPort()}{35}{subsubsection.3.5.4.6}%
+\contentsline {subsubsection}{\numberline {3.5.4.7}getSocketHandle()}{35}{subsubsection.3.5.4.7}%
+\contentsline {subsubsection}{\numberline {3.5.4.8}isRunning()}{35}{subsubsection.3.5.4.8}%
+\contentsline {subsubsection}{\numberline {3.5.4.9}setAddress()}{35}{subsubsection.3.5.4.9}%
+\contentsline {subsubsection}{\numberline {3.5.4.10}setPort()}{36}{subsubsection.3.5.4.10}%
+\contentsline {subsubsection}{\numberline {3.5.4.11}start()}{36}{subsubsection.3.5.4.11}%
+\contentsline {subsubsection}{\numberline {3.5.4.12}stop()}{37}{subsubsection.3.5.4.12}%
+\contentsline {subsection}{\numberline {3.5.5}Member Data Documentation}{37}{subsection.3.5.5}%
+\contentsline {subsubsection}{\numberline {3.5.5.1}sessions}{37}{subsubsection.3.5.5.1}%
+\contentsline {section}{\numberline {3.6}Ghoti\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Wave\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Server\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Session Class Reference}{37}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Detailed Description}{38}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Constructor \& Destructor Documentation}{39}{subsection.3.6.2}%
+\contentsline {subsubsection}{\numberline {3.6.2.1}ServerSession()}{39}{subsubsection.3.6.2.1}%
+\contentsline {subsection}{\numberline {3.6.3}Member Function Documentation}{39}{subsection.3.6.3}%
+\contentsline {subsubsection}{\numberline {3.6.3.1}hasReadDataWaiting()}{39}{subsubsection.3.6.3.1}%
+\contentsline {subsubsection}{\numberline {3.6.3.2}hasWriteDataWaiting()}{39}{subsubsection.3.6.3.2}%
+\contentsline {subsubsection}{\numberline {3.6.3.3}isFinished()}{40}{subsubsection.3.6.3.3}%
+\contentsline {subsubsection}{\numberline {3.6.3.4}read()}{40}{subsubsection.3.6.3.4}%
+\contentsline {subsubsection}{\numberline {3.6.3.5}write()}{40}{subsubsection.3.6.3.5}%
+\contentsline {subsection}{\numberline {3.6.4}Member Data Documentation}{40}{subsection.3.6.4}%
+\contentsline {subsubsection}{\numberline {3.6.4.1}messages}{40}{subsubsection.3.6.4.1}%
+\contentsline {chapter}{\numberline {4}File Documentation}{41}{chapter.4}%
+\contentsline {section}{\numberline {4.1}include/wave.hpp File Reference}{41}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Detailed Description}{42}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}include/wave/client.hpp File Reference}{42}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{43}{subsection.4.2.1}%
+\contentsline {section}{\numberline {4.3}include/wave/client\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Session.hpp File Reference}{43}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{44}{subsection.4.3.1}%
+\contentsline {section}{\numberline {4.4}include/wave/macros.hpp File Reference}{44}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{44}{subsection.4.4.1}%
+\contentsline {section}{\numberline {4.5}include/wave/message.hpp File Reference}{44}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Detailed Description}{45}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Function Documentation}{45}{subsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.2.1}operator$<$$<$()}{46}{subsubsection.4.5.2.1}%
+\contentsline {section}{\numberline {4.6}include/wave/parser.hpp File Reference}{47}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Detailed Description}{48}{subsection.4.6.1}%
+\contentsline {section}{\numberline {4.7}include/wave/parsing.hpp File Reference}{49}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}Detailed Description}{50}{subsection.4.7.1}%
+\contentsline {subsection}{\numberline {4.7.2}Function Documentation}{50}{subsection.4.7.2}%
+\contentsline {subsubsection}{\numberline {4.7.2.1}fieldValueEscape()}{50}{subsubsection.4.7.2.1}%
+\contentsline {subsubsection}{\numberline {4.7.2.2}fieldValueQuotesNeeded()}{51}{subsubsection.4.7.2.2}%
+\contentsline {subsubsection}{\numberline {4.7.2.3}isCRLFChar()}{51}{subsubsection.4.7.2.3}%
+\contentsline {subsubsection}{\numberline {4.7.2.4}isFieldContentChar()}{52}{subsubsection.4.7.2.4}%
+\contentsline {subsubsection}{\numberline {4.7.2.5}isFieldNameChar()}{53}{subsubsection.4.7.2.5}%
+\contentsline {subsubsection}{\numberline {4.7.2.6}isListField()}{53}{subsubsection.4.7.2.6}%
+\contentsline {subsubsection}{\numberline {4.7.2.7}isObsoleteTextChar()}{54}{subsubsection.4.7.2.7}%
+\contentsline {subsubsection}{\numberline {4.7.2.8}isQuotedChar()}{55}{subsubsection.4.7.2.8}%
+\contentsline {subsubsection}{\numberline {4.7.2.9}isTokenChar()}{55}{subsubsection.4.7.2.9}%
+\contentsline {subsubsection}{\numberline {4.7.2.10}isVisibleChar()}{56}{subsubsection.4.7.2.10}%
+\contentsline {subsubsection}{\numberline {4.7.2.11}isWhitespaceChar()}{57}{subsubsection.4.7.2.11}%
+\contentsline {section}{\numberline {4.8}include/wave/response.hpp File Reference}{57}{section.4.8}%
+\contentsline {subsection}{\numberline {4.8.1}Detailed Description}{57}{subsection.4.8.1}%
+\contentsline {section}{\numberline {4.9}include/wave/server.hpp File Reference}{58}{section.4.9}%
+\contentsline {subsection}{\numberline {4.9.1}Detailed Description}{58}{subsection.4.9.1}%
+\contentsline {section}{\numberline {4.10}include/wave/server\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Session.hpp File Reference}{59}{section.4.10}%
+\contentsline {subsection}{\numberline {4.10.1}Detailed Description}{59}{subsection.4.10.1}%
+\contentsline {section}{\numberline {4.11}src/client.cpp File Reference}{60}{section.4.11}%
+\contentsline {subsection}{\numberline {4.11.1}Detailed Description}{60}{subsection.4.11.1}%
+\contentsline {section}{\numberline {4.12}src/client\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Session.cpp File Reference}{60}{section.4.12}%
+\contentsline {subsection}{\numberline {4.12.1}Detailed Description}{61}{subsection.4.12.1}%
+\contentsline {section}{\numberline {4.13}src/message.cpp File Reference}{61}{section.4.13}%
+\contentsline {subsection}{\numberline {4.13.1}Detailed Description}{61}{subsection.4.13.1}%
+\contentsline {section}{\numberline {4.14}src/parser.cpp File Reference}{61}{section.4.14}%
+\contentsline {subsection}{\numberline {4.14.1}Detailed Description}{62}{subsection.4.14.1}%
+\contentsline {subsection}{\numberline {4.14.2}Macro Definition Documentation}{62}{subsection.4.14.2}%
+\contentsline {subsubsection}{\numberline {4.14.2.1}READ\_CRLF\_OPTIONAL}{62}{subsubsection.4.14.2.1}%
+\contentsline {subsubsection}{\numberline {4.14.2.2}READ\_CRLF\_REQUIRED}{63}{subsubsection.4.14.2.2}%
+\contentsline {subsubsection}{\numberline {4.14.2.3}READ\_WHITESPACE\_OPTIONAL}{63}{subsubsection.4.14.2.3}%
+\contentsline {subsubsection}{\numberline {4.14.2.4}READ\_WHITESPACE\_REQUIRED}{63}{subsubsection.4.14.2.4}%
+\contentsline {subsubsection}{\numberline {4.14.2.5}SET\_MAJOR\_STATE}{64}{subsubsection.4.14.2.5}%
+\contentsline {subsubsection}{\numberline {4.14.2.6}SET\_MINOR\_STATE}{64}{subsubsection.4.14.2.6}%
+\contentsline {subsubsection}{\numberline {4.14.2.7}SET\_NEW\_HEADER}{64}{subsubsection.4.14.2.7}%
+\contentsline {section}{\numberline {4.15}src/parsing.cpp File Reference}{64}{section.4.15}%
+\contentsline {subsection}{\numberline {4.15.1}Detailed Description}{65}{subsection.4.15.1}%
+\contentsline {subsection}{\numberline {4.15.2}Function Documentation}{65}{subsection.4.15.2}%
+\contentsline {subsubsection}{\numberline {4.15.2.1}fieldValueEscape()}{65}{subsubsection.4.15.2.1}%
+\contentsline {subsubsection}{\numberline {4.15.2.2}fieldValueQuotesNeeded()}{66}{subsubsection.4.15.2.2}%
+\contentsline {subsubsection}{\numberline {4.15.2.3}isCRLFChar()}{66}{subsubsection.4.15.2.3}%
+\contentsline {subsubsection}{\numberline {4.15.2.4}isFieldContentChar()}{67}{subsubsection.4.15.2.4}%
+\contentsline {subsubsection}{\numberline {4.15.2.5}isFieldNameChar()}{68}{subsubsection.4.15.2.5}%
+\contentsline {subsubsection}{\numberline {4.15.2.6}isListField()}{68}{subsubsection.4.15.2.6}%
+\contentsline {subsubsection}{\numberline {4.15.2.7}isObsoleteTextChar()}{69}{subsubsection.4.15.2.7}%
+\contentsline {subsubsection}{\numberline {4.15.2.8}isQuotedChar()}{70}{subsubsection.4.15.2.8}%
+\contentsline {subsubsection}{\numberline {4.15.2.9}isTokenChar()}{70}{subsubsection.4.15.2.9}%
+\contentsline {subsubsection}{\numberline {4.15.2.10}isVisibleChar()}{71}{subsubsection.4.15.2.10}%
+\contentsline {subsubsection}{\numberline {4.15.2.11}isWhitespaceChar()}{72}{subsubsection.4.15.2.11}%
+\contentsline {section}{\numberline {4.16}src/response.cpp File Reference}{72}{section.4.16}%
+\contentsline {subsection}{\numberline {4.16.1}Detailed Description}{72}{subsection.4.16.1}%
+\contentsline {section}{\numberline {4.17}src/server.cpp File Reference}{73}{section.4.17}%
+\contentsline {subsection}{\numberline {4.17.1}Detailed Description}{73}{subsection.4.17.1}%
+\contentsline {section}{\numberline {4.18}src/server\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Session.cpp File Reference}{73}{section.4.18}%
+\contentsline {subsection}{\numberline {4.18.1}Detailed Description}{74}{subsection.4.18.1}%
+\contentsline {section}{\numberline {4.19}test/test.cpp File Reference}{74}{section.4.19}%
+\contentsline {subsection}{\numberline {4.19.1}Detailed Description}{74}{subsection.4.19.1}%
+\contentsline {chapter}{Index}{75}{section*.93}%

@@ -1,0 +1,17 @@
+<map id="Ghoti::Wave::ServerSession" name="Ghoti::Wave::ServerSession">
+<area shape="rect" id="node1" title="Represents a persistent connection with a client." alt="" coords="1123,196,1324,223"/>
+<area shape="rect" id="node2" title=" " alt="" coords="719,5,893,32"/>
+<area shape="rect" id="node3" title=" " alt="" coords="703,56,909,141"/>
+<area shape="rect" id="node4" title=" " alt="" coords="729,166,883,207"/>
+<area shape="rect" id="node5" href="$classGhoti_1_1Wave_1_1Parser.html" title="Parses a HTTP/1.1 data stream into discrete messages." alt="" coords="731,232,881,259"/>
+<area shape="rect" id="node6" title=" " alt="" coords="300,187,537,229"/>
+<area shape="rect" id="node7" title=" " alt="" coords="11,75,181,117"/>
+<area shape="rect" id="node10" title=" " alt="" coords="300,107,537,163"/>
+<area shape="rect" id="node8" title=" " alt="" coords="375,303,462,329"/>
+<area shape="rect" id="node11" href="$classGhoti_1_1Wave_1_1Server.html" title="The base Server class." alt="" coords="731,336,881,363"/>
+<area shape="rect" id="node9" title=" " alt="" coords="27,295,165,337"/>
+<area shape="rect" id="node12" title=" " alt="" coords="371,381,467,408"/>
+<area shape="rect" id="node13" title=" " alt="" coords="321,432,517,488"/>
+<area shape="rect" id="node14" title=" " alt="" coords="5,439,187,481"/>
+<area shape="rect" id="node15" title=" " alt="" coords="723,387,889,429"/>
+</map>
