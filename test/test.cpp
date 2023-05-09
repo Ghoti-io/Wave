@@ -14,8 +14,11 @@ using namespace Ghoti::Wave;
 Server s{};
 uint16_t serverPort = 0;
 
+constexpr auto quantum{10ms};
+
 TEST(Server, Startup){
   // Verify default state.
+  this_thread::sleep_for(quantum);
   ASSERT_EQ(s.getAddress(), "127.0.0.1");
   ASSERT_EQ(s.getPort(), serverPort);
   ASSERT_EQ(s.getErrorCode(), Server::ErrorCode::NO_ERROR);
@@ -25,10 +28,12 @@ TEST(Server, Startup){
   // Verify that "starting" and already running server does not cause an error.
   s.start();
   ASSERT_EQ(s.getErrorCode(), Server::ErrorCode::NO_ERROR);
+  this_thread::sleep_for(quantum);
 
   // Verify that stopping the server works.
   s.stop();
   ASSERT_EQ(s.isRunning(), false);
+  this_thread::sleep_for(quantum);
 
   // Verify that the address can be changed on a stopped server.
   s.setAddress("0.0.0.0");
