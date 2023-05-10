@@ -125,7 +125,9 @@ void Client::dispatchLoop(stop_token stopToken) {
           }
           workDone = true;
         }
-        for (auto & session : sessions) {
+        auto it = sessions.begin();
+        while (it != sessions.end()) {
+          auto session = *it;
           // Service existing requests.
           if (session->hasReadDataWaiting()) {
             pool.enqueue({[=](){
@@ -142,7 +144,10 @@ void Client::dispatchLoop(stop_token stopToken) {
 
           // Remove any requests that are dead.
           if (session->isFinished()) {
-            sessions.erase(session);
+            it = sessions.erase(it);
+          }
+          else {
+            ++it;
           }
         }
       }
