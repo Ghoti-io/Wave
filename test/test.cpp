@@ -75,9 +75,7 @@ int main(int argc, char** argv) {
   s.start();
   serverPort = s.getPort();
 
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-  while (0) {
+  //while (0) {
     cout << "listening on " << s.getAddress() << ":" << s.getPort() << endl;
 
     Client c{};
@@ -93,6 +91,9 @@ int main(int argc, char** argv) {
 
     cout << *response;
     //this_thread::sleep_for(10000ms);
-  }
+  //}
+
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
 
