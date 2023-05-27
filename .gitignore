@@ -2,3 +2,5 @@ build
 *.session
 *.swp
 submodule
+docs/latex
+

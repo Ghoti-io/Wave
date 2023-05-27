@@ -207,6 +207,7 @@ docs: ## Generate the documentation in the ./docs subdirectory
 
 docs-pdf: docs ## Generate the documentation as a pdf, in ./docs/latex/refman.pdf
 	cd ./docs/latex/ && make
+	mv -f ./docs/latex/refman.pdf ./docs/wave-docs.pdf
 
 cloc: ## Count the lines of code used in the project
 	cloc src include test Makefile
