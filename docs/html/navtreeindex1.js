@@ -14,9 +14,10 @@ var NAVTREEINDEX1 =
 "server_8hpp_source.html":[1,0,0,0,7],
 "test_8cpp.html":[1,0,2,0],
 "test_8cpp.html#a14e800b76cb82063f1088d82bac59639":[1,0,2,0,1],
-"test_8cpp.html#a2a203c24338fd333aa6f1efbee8ebe71":[1,0,2,0,2],
+"test_8cpp.html#a2a203c24338fd333aa6f1efbee8ebe71":[1,0,2,0,3],
 "test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627":[1,0,2,0,0],
-"test_8cpp.html#a86a9ffa2b5cba0e4f5f29b268fd732ac":[1,0,2,0,3],
+"test_8cpp.html#a86a9ffa2b5cba0e4f5f29b268fd732ac":[1,0,2,0,4],
+"test_8cpp.html#abaa4f6a2a48c22126cff4a58b803656b":[1,0,2,0,2],
 "wave_8hpp.html":[1,0,0,1],
 "wave_8hpp_source.html":[1,0,0,1]
 };
