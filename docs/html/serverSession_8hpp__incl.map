@@ -4,12 +4,13 @@
 <area shape="rect" id="node3" title=" " alt="" coords="173,80,303,107"/>
 <area shape="rect" id="node4" title=" " alt="" coords="327,80,405,107"/>
 <area shape="rect" id="node5" title=" " alt="" coords="429,80,493,107"/>
-<area shape="rect" id="node6" title=" " alt="" coords="460,229,536,256"/>
+<area shape="rect" id="node6" title=" " alt="" coords="417,237,493,263"/>
 <area shape="rect" id="node7" href="$parser_8hpp.html" title="Header file for declaring the Session class." alt="" coords="802,80,893,107"/>
 <area shape="rect" id="node9" href="$message_8hpp.html" title="Header file for declaring the Message class." alt="" coords="618,155,727,181"/>
-<area shape="rect" id="node11" title=" " alt="" coords="561,229,611,256"/>
-<area shape="rect" id="node12" title=" " alt="" coords="809,229,867,256"/>
-<area shape="rect" id="node8" title=" " alt="" coords="876,155,939,181"/>
-<area shape="rect" id="node10" title=" " alt="" coords="723,229,785,256"/>
-<area shape="rect" id="node13" title=" " alt="" coords="636,229,699,256"/>
+<area shape="rect" id="node11" title=" " alt="" coords="518,237,569,263"/>
+<area shape="rect" id="node12" title=" " alt="" coords="953,237,1011,263"/>
+<area shape="rect" id="node8" title=" " alt="" coords="885,155,948,181"/>
+<area shape="rect" id="node10" title=" " alt="" coords="593,237,654,263"/>
+<area shape="rect" id="node13" title=" " alt="" coords="679,237,741,263"/>
+<area shape="rect" id="node14" title=" " alt="" coords="766,229,929,271"/>
 </map>

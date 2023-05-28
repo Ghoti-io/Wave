@@ -1,7 +1,5 @@
 <map id="Ghoti::Wave::Client" name="Ghoti::Wave::Client">
-<area shape="rect" id="node1" title="Represents a client and all of its HTTP connections." alt="" coords="743,151,889,177"/>
-<area shape="rect" id="node2" title=" " alt="" coords="363,5,589,149"/>
-<area shape="rect" id="node3" title=" " alt="" coords="193,64,280,91"/>
-<area shape="rect" id="node4" title=" " alt="" coords="5,57,144,98"/>
-<area shape="rect" id="node5" title=" " alt="" coords="428,173,524,200"/>
+<area shape="rect" id="node1" title="Represents a client and all of its HTTP connections." alt="" coords="417,119,564,145"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,264,149"/>
+<area shape="rect" id="node3" title=" " alt="" coords="87,173,183,200"/>
 </map>

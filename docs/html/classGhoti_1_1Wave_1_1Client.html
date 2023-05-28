@@ -101,11 +101,9 @@ Collaboration diagram for Ghoti::Wave::Client:</div>
 <div class="dyncontent">
 <div class="center"><img src="classGhoti_1_1Wave_1_1Client__coll__graph.png" border="0" usemap="#aGhoti_1_1Wave_1_1Client_coll__map" alt="Collaboration graph"/></div>
 <map name="aGhoti_1_1Wave_1_1Client_coll__map" id="aGhoti_1_1Wave_1_1Client_coll__map">
-<area shape="rect" title="Represents a client and all of its HTTP connections." alt="" coords="743,151,889,177"/>
-<area shape="rect" title=" " alt="" coords="363,5,589,149"/>
-<area shape="rect" title=" " alt="" coords="193,64,280,91"/>
-<area shape="rect" title=" " alt="" coords="5,57,144,98"/>
-<area shape="rect" title=" " alt="" coords="428,173,524,200"/>
+<area shape="rect" title="Represents a client and all of its HTTP connections." alt="" coords="417,119,564,145"/>
+<area shape="rect" title=" " alt="" coords="5,5,264,149"/>
+<area shape="rect" title=" " alt="" coords="87,173,183,200"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -141,9 +139,9 @@ Private Attributes</h2></td></tr>
 Ghoti::Pool::Pool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Client.html#a6c6aee0d44e42f40cb94d3d1349b5797">workers</a></td></tr>
 <tr class="memdesc:a6c6aee0d44e42f40cb94d3d1349b5797"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread pool worker queue. <br /></td></tr>
 <tr class="separator:a6c6aee0d44e42f40cb94d3d1349b5797"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8233c6177f4670e36977b81b6ca983cc"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::map&lt; size_t, std::pair&lt; std::set&lt; std::shared_ptr&lt; <a class="el" href="classGhoti_1_1Wave_1_1ClientSession.html">Ghoti::Wave::ClientSession</a> &gt; &gt;, std::queue&lt; std::pair&lt; std::shared_ptr&lt; <a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &gt;, std::shared_ptr&lt; <a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &gt; &gt; &gt; &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Client.html#a8233c6177f4670e36977b81b6ca983cc">domains</a></td></tr>
-<tr class="memdesc:a8233c6177f4670e36977b81b6ca983cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores all connections and their request queues.  <a href="classGhoti_1_1Wave_1_1Client.html#a8233c6177f4670e36977b81b6ca983cc">More...</a><br /></td></tr>
-<tr class="separator:a8233c6177f4670e36977b81b6ca983cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeba6c0979e8d7289df068bfa946b7153"><td class="memItemLeft" align="right" valign="top">std::map&lt; Ghoti::shared_string_view, std::map&lt; size_t, std::pair&lt; std::set&lt; std::shared_ptr&lt; <a class="el" href="classGhoti_1_1Wave_1_1ClientSession.html">Ghoti::Wave::ClientSession</a> &gt; &gt;, std::queue&lt; std::pair&lt; std::shared_ptr&lt; <a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &gt;, std::shared_ptr&lt; <a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &gt; &gt; &gt; &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Client.html#aeba6c0979e8d7289df068bfa946b7153">domains</a></td></tr>
+<tr class="memdesc:aeba6c0979e8d7289df068bfa946b7153"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores all connections and their request queues.  <a href="classGhoti_1_1Wave_1_1Client.html#aeba6c0979e8d7289df068bfa946b7153">More...</a><br /></td></tr>
+<tr class="separator:aeba6c0979e8d7289df068bfa946b7153"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ed65120f7d84b7012749764492aabf6"><td class="memItemLeft" align="right" valign="top"><a id="a7ed65120f7d84b7012749764492aabf6"></a>
 std::jthread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Client.html#a7ed65120f7d84b7012749764492aabf6">dispatchThread</a></td></tr>
 <tr class="memdesc:a7ed65120f7d84b7012749764492aabf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread that runs the read/write processing queues. <br /></td></tr>
@@ -274,8 +272,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a8233c6177f4670e36977b81b6ca983cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8233c6177f4670e36977b81b6ca983cc">&#9670;&nbsp;</a></span>domains</h2>
+<a id="aeba6c0979e8d7289df068bfa946b7153"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeba6c0979e8d7289df068bfa946b7153">&#9670;&nbsp;</a></span>domains</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -284,7 +282,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::map&lt;std::string, std::map&lt;size_t, std::pair&lt;std::set&lt;std::shared_ptr&lt;<a class="el" href="classGhoti_1_1Wave_1_1ClientSession.html">Ghoti::Wave::ClientSession</a>&gt; &gt;, std::queue&lt;std::pair&lt;std::shared_ptr&lt;<a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a>&gt;, std::shared_ptr&lt;<a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a>&gt; &gt; &gt; &gt; &gt; &gt; Ghoti::Wave::Client::domains</td>
+          <td class="memname">std::map&lt;Ghoti::shared_string_view, std::map&lt;size_t, std::pair&lt;std::set&lt;std::shared_ptr&lt;<a class="el" href="classGhoti_1_1Wave_1_1ClientSession.html">Ghoti::Wave::ClientSession</a>&gt; &gt;, std::queue&lt;std::pair&lt;std::shared_ptr&lt;<a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a>&gt;, std::shared_ptr&lt;<a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a>&gt; &gt; &gt; &gt; &gt; &gt; Ghoti::Wave::Client::domains</td>
         </tr>
       </table>
   </td>

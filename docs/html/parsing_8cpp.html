@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('parsing_8cpp.html',''); initResizable(
 <div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;ctype.h&gt;</code><br />
 <code>#include &lt;set&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
+<code>#include &quot;<a class="el" href="parsing_8hpp_source.html">parsing.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for parsing.cpp:</div>
 <div class="dyncontent">
@@ -105,15 +105,17 @@ Include dependency graph for parsing.cpp:</div>
 <area shape="rect" title=" " alt="" coords="5,80,72,107"/>
 <area shape="rect" title=" " alt="" coords="97,80,167,107"/>
 <area shape="rect" title=" " alt="" coords="192,80,235,107"/>
-<area shape="rect" title=" " alt="" coords="259,80,317,107"/>
+<area shape="rect" href="parsing_8hpp.html" title="Header file for declaring text parsing functions." alt="" coords="259,80,357,107"/>
+<area shape="rect" title=" " alt="" coords="211,162,269,189"/>
+<area shape="rect" title=" " alt="" coords="293,155,456,196"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acc94c8df259c8ee77e8e979bd1ec73b2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parsing_8hpp.html#acc94c8df259c8ee77e8e979bd1ec73b2">Ghoti::Wave::isListField</a> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:acc94c8df259c8ee77e8e979bd1ec73b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identify a field name as accepting a list-based set of values.  <a href="parsing_8hpp.html#acc94c8df259c8ee77e8e979bd1ec73b2">More...</a><br /></td></tr>
-<tr class="separator:acc94c8df259c8ee77e8e979bd1ec73b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb7722da92c207d782c78a2c23f9016a"><td class="memItemLeft" align="right" valign="top"><a id="abb7722da92c207d782c78a2c23f9016a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Ghoti::Wave::isListField</b> (const shared_string_view &amp;name)</td></tr>
+<tr class="separator:abb7722da92c207d782c78a2c23f9016a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9f44084593f45f840e69de9563f4ff5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parsing_8hpp.html#ad9f44084593f45f840e69de9563f4ff5">Ghoti::Wave::isTokenChar</a> (uint8_t c)</td></tr>
 <tr class="memdesc:ad9f44084593f45f840e69de9563f4ff5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identify valid Token characters.  <a href="parsing_8hpp.html#ad9f44084593f45f840e69de9563f4ff5">More...</a><br /></td></tr>
 <tr class="separator:ad9f44084593f45f840e69de9563f4ff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,87 +140,16 @@ Functions</h2></td></tr>
 <tr class="memitem:a47a77678d5e4638680880b45ac1ac761"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parsing_8hpp.html#a47a77678d5e4638680880b45ac1ac761">Ghoti::Wave::isCRLFChar</a> (uint8_t c)</td></tr>
 <tr class="memdesc:a47a77678d5e4638680880b45ac1ac761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identify CRLF characters.  <a href="parsing_8hpp.html#a47a77678d5e4638680880b45ac1ac761">More...</a><br /></td></tr>
 <tr class="separator:a47a77678d5e4638680880b45ac1ac761"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0dca2fac994015abf4cfa7139415852d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parsing_8hpp.html#a0dca2fac994015abf4cfa7139415852d">Ghoti::Wave::fieldValueQuotesNeeded</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a0dca2fac994015abf4cfa7139415852d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate whether or not the string contains a character which makes it necessary to wrap the string in double quotes.  <a href="parsing_8hpp.html#a0dca2fac994015abf4cfa7139415852d">More...</a><br /></td></tr>
-<tr class="separator:a0dca2fac994015abf4cfa7139415852d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5504197555926a68e1f87690ba7ef69b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parsing_8hpp.html#a5504197555926a68e1f87690ba7ef69b">Ghoti::Wave::fieldValueEscape</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a5504197555926a68e1f87690ba7ef69b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Escape a field value.  <a href="parsing_8hpp.html#a5504197555926a68e1f87690ba7ef69b">More...</a><br /></td></tr>
-<tr class="separator:a5504197555926a68e1f87690ba7ef69b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3a8b380f007f51a076f7fbb322f27c6"><td class="memItemLeft" align="right" valign="top"><a id="ab3a8b380f007f51a076f7fbb322f27c6"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Ghoti::Wave::fieldValueQuotesNeeded</b> (const shared_string_view &amp;str)</td></tr>
+<tr class="separator:ab3a8b380f007f51a076f7fbb322f27c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaace4f574872d896d31f3f1806165936"><td class="memItemLeft" align="right" valign="top"><a id="aaace4f574872d896d31f3f1806165936"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>Ghoti::Wave::fieldValueEscape</b> (const shared_string_view &amp;str)</td></tr>
+<tr class="separator:aaace4f574872d896d31f3f1806165936"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Define the text parsing functions. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a5504197555926a68e1f87690ba7ef69b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5504197555926a68e1f87690ba7ef69b">&#9670;&nbsp;</a></span>fieldValueEscape()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">string Ghoti::Wave::fieldValueEscape </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>str</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Escape a field value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">str</td><td>The field value to be escaped. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The escaped field value. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="parsing_8hpp_a5504197555926a68e1f87690ba7ef69b_cgraph.png" border="0" usemap="#aparsing_8hpp_a5504197555926a68e1f87690ba7ef69b_cgraph" alt=""/></div>
-<map name="aparsing_8hpp_a5504197555926a68e1f87690ba7ef69b_cgraph" id="aparsing_8hpp_a5504197555926a68e1f87690ba7ef69b_cgraph">
-<area shape="rect" title="Escape a field value." alt="" coords="5,29,224,56"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a0dca2fac994015abf4cfa7139415852d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0dca2fac994015abf4cfa7139415852d">&#9670;&nbsp;</a></span>fieldValueQuotesNeeded()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Ghoti::Wave::fieldValueQuotesNeeded </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>str</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Indicate whether or not the string contains a character which makes it necessary to wrap the string in double quotes. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">str</td><td>The string in question. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Whether or not the string needs to be wrapped in double quotes. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="parsing_8hpp_a0dca2fac994015abf4cfa7139415852d_cgraph.png" border="0" usemap="#aparsing_8hpp_a0dca2fac994015abf4cfa7139415852d_cgraph" alt=""/></div>
-<map name="aparsing_8hpp_a0dca2fac994015abf4cfa7139415852d_cgraph" id="aparsing_8hpp_a0dca2fac994015abf4cfa7139415852d_cgraph">
-<area shape="rect" title="Indicate whether or not the string contains a character which makes it necessary to wrap the string i..." alt="" coords="5,29,224,71"/>
-<area shape="rect" href="parsing_8hpp.html#ad9f44084593f45f840e69de9563f4ff5" title="Identify valid Token characters." alt="" coords="272,37,459,63"/>
-</map>
-</div>
-
-</div>
-</div>
 <a id="a47a77678d5e4638680880b45ac1ac761"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a47a77678d5e4638680880b45ac1ac761">&#9670;&nbsp;</a></span>isCRLFChar()</h2>
 
@@ -319,41 +250,6 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="parsing_8hpp_aeb98ad8f7c5015924ee719b3808f0af3_cgraph.png" border="0" usemap="#aparsing_8hpp_aeb98ad8f7c5015924ee719b3808f0af3_cgraph" alt=""/></div>
 <map name="aparsing_8hpp_aeb98ad8f7c5015924ee719b3808f0af3_cgraph" id="aparsing_8hpp_aeb98ad8f7c5015924ee719b3808f0af3_cgraph">
 <area shape="rect" title="Identify valid field&#45;name characters." alt="" coords="5,29,225,56"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="acc94c8df259c8ee77e8e979bd1ec73b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc94c8df259c8ee77e8e979bd1ec73b2">&#9670;&nbsp;</a></span>isListField()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Ghoti::Wave::isListField </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Identify a field name as accepting a list-based set of values. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The field name. The field name must be uppercase. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Whether or not the field name is recognized as a list-based field. </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="parsing_8hpp_acc94c8df259c8ee77e8e979bd1ec73b2_cgraph.png" border="0" usemap="#aparsing_8hpp_acc94c8df259c8ee77e8e979bd1ec73b2_cgraph" alt=""/></div>
-<map name="aparsing_8hpp_acc94c8df259c8ee77e8e979bd1ec73b2_cgraph" id="aparsing_8hpp_acc94c8df259c8ee77e8e979bd1ec73b2_cgraph">
-<area shape="rect" title="Identify a field name as accepting a list&#45;based set of values." alt="" coords="5,29,180,56"/>
 </map>
 </div>
 

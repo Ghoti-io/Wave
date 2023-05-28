@@ -1,12 +1,12 @@
 <map id="Ghoti::Wave::operator&lt;&lt;" name="Ghoti::Wave::operator&lt;&lt;">
 <area shape="rect" id="node1" title="Helper function to output a Message to a stream." alt="" coords="5,274,192,301"/>
 <area shape="rect" id="node2" href="$classGhoti_1_1Wave_1_1Message.html#aa5f40c60f7bb77880e7e33e7179b2730" title="Get the content length of the message body." alt="" coords="240,5,407,47"/>
-<area shape="rect" id="node3" href="$classGhoti_1_1Wave_1_1Message.html#a2f3fd0a2d20068dabb1279c1cbf0b001" title="Get the domain to which the message is targeted." alt="" coords="240,71,407,112"/>
-<area shape="rect" id="node4" href="$classGhoti_1_1Wave_1_1Message.html#a3598312725b9a517dd3c4d7641207994" title="Get the map of all header field key/value pairs." alt="" coords="240,136,407,177"/>
-<area shape="rect" id="node5" href="$classGhoti_1_1Wave_1_1Message.html#a19b5e4b15ef2343871bcbbdcf271a003" title="Get the status message." alt="" coords="240,201,407,243"/>
-<area shape="rect" id="node6" href="$classGhoti_1_1Wave_1_1Message.html#a3d77ab7319d59314b33690c2b04ef1c4" title="Get the content body of the message." alt="" coords="240,267,407,308"/>
+<area shape="rect" id="node3" href="$classGhoti_1_1Wave_1_1Message.html#afadb119954460e121a699f3dbed4bd76" title="Get the domain to which the message is targeted." alt="" coords="240,71,407,112"/>
+<area shape="rect" id="node4" href="$classGhoti_1_1Wave_1_1Message.html#ab4d10daa3eb583c2a3b6393db8972995" title="Get the map of all header field key/value pairs." alt="" coords="240,136,407,177"/>
+<area shape="rect" id="node5" href="$classGhoti_1_1Wave_1_1Message.html#a5ff7b89c19c1d940c916de4ededf096a" title="Get the status message." alt="" coords="240,201,407,243"/>
+<area shape="rect" id="node6" href="$classGhoti_1_1Wave_1_1Message.html#aa5b9d0182c343967c0877f41d17e27b0" title="Get the content body of the message." alt="" coords="240,267,407,308"/>
 <area shape="rect" id="node7" href="$classGhoti_1_1Wave_1_1Message.html#ac80517eec2651791842526bd4ca29ea8" title="Get the port to which the message is targeted." alt="" coords="240,332,407,373"/>
 <area shape="rect" id="node8" href="$classGhoti_1_1Wave_1_1Message.html#a06e6a6dc0b915e8d19367fb6d7b76b53" title="Get the status code of the message." alt="" coords="240,397,407,439"/>
-<area shape="rect" id="node9" href="$classGhoti_1_1Wave_1_1Message.html#a95d8aefb8e3ab1cc067be4f4c5f7e61d" title="Get the URL target of the message." alt="" coords="240,463,407,504"/>
+<area shape="rect" id="node9" href="$classGhoti_1_1Wave_1_1Message.html#a60afe3b00769fe7036469f0094d454e7" title="Get the URL target of the message." alt="" coords="240,463,407,504"/>
 <area shape="rect" id="node10" href="$classGhoti_1_1Wave_1_1Message.html#a24e3e1e59ce3d07deea11e62d649b521" title="Get the Message::Type of the message." alt="" coords="240,528,407,569"/>
 </map>

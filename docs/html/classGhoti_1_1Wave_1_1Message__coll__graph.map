@@ -1,7 +1,5 @@
 <map id="Ghoti::Wave::Message" name="Ghoti::Wave::Message">
-<area shape="rect" id="node1" title="Represents a HTTP message." alt="" coords="5,467,172,493"/>
-<area shape="rect" id="node2" title=" " alt="" coords="105,363,310,404"/>
-<area shape="rect" id="node3" title=" " alt="" coords="149,96,236,123"/>
-<area shape="rect" id="node5" title=" " alt="" coords="251,185,438,212"/>
-<area shape="rect" id="node4" title=" " alt="" coords="123,5,262,47"/>
+<area shape="rect" id="node1" title="Represents a HTTP message." alt="" coords="40,228,207,255"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,109,241,165"/>
+<area shape="rect" id="node3" title=" " alt="" coords="38,5,209,47"/>
 </map>

@@ -8,7 +8,7 @@ var classGhoti_1_1Wave_1_1Client =
     [ "start", "classGhoti_1_1Wave_1_1Client.html#ae8d814233ca996438a0b65dc782dba10", null ],
     [ "stop", "classGhoti_1_1Wave_1_1Client.html#aca2c8694a7f5f17eea9d137c7c3bd1f6", null ],
     [ "dispatchThread", "classGhoti_1_1Wave_1_1Client.html#a7ed65120f7d84b7012749764492aabf6", null ],
-    [ "domains", "classGhoti_1_1Wave_1_1Client.html#a8233c6177f4670e36977b81b6ca983cc", null ],
+    [ "domains", "classGhoti_1_1Wave_1_1Client.html#aeba6c0979e8d7289df068bfa946b7153", null ],
     [ "running", "classGhoti_1_1Wave_1_1Client.html#a8aa339693e02bbe0bce461cffaadc291", null ],
     [ "workers", "classGhoti_1_1Wave_1_1Client.html#a6c6aee0d44e42f40cb94d3d1349b5797", null ]
 ];
