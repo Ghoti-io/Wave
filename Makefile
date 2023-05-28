@@ -25,7 +25,7 @@ LIBOBJECTS := $(OBJ_DIR)/client.o \
 TESTFLAGS := `pkg-config --libs --cflags gtest`
 
 
-WAVELIBRARY := -L $(APP_DIR) -lghoti.io-wave
+WAVELIBRARY := -L $(APP_DIR) -lghoti.io-wave `pkg-config --libs --cflags ghoti.io-shared_string_view`
 
 
 all: $(APP_DIR)/$(TARGET) ## Build the shared library
@@ -125,7 +125,7 @@ $(APP_DIR)/$(TARGET): \
 				$(LIBOBJECTS)
 	@echo "\n### Compiling Ghoti.io Wave Shared Library ###"
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -shared -o $@ $^ $(LDFLAGS) `pkg-config --libs --cflags ghoti.io-pool` -Wl,-soname,$(SO_NAME)
+	$(CXX) $(CXXFLAGS) -shared -o $@ $^ $(LDFLAGS) `pkg-config --libs --cflags ghoti.io-pool ghoti.io-shared_string_view` -Wl,-soname,$(SO_NAME)
 	@ln -f -s $(TARGET) $(APP_DIR)/$(SO_NAME)
 	@ln -f -s $(SO_NAME) $(APP_DIR)/$(BASE_NAME)
 

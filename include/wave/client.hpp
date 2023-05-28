@@ -9,6 +9,7 @@
 
 #include <future>
 #include <ghoti.io/pool.hpp>
+#include <ghoti.io/shared_string_view.hpp>
 #include <map>
 #include <memory>
 #include <queue>
@@ -101,7 +102,7 @@ class Client {
    *
    * domains[domain][port] = {set{ClientSession}, queue{{request, response}}}
    */
-  std::map<std::string, std::map<size_t, std::pair<std::set<std::shared_ptr<Ghoti::Wave::ClientSession>>, std::queue<std::pair<std::shared_ptr<Message>, std::shared_ptr<Message>>>>>> domains;
+  std::map<Ghoti::shared_string_view, std::map<size_t, std::pair<std::set<std::shared_ptr<Ghoti::Wave::ClientSession>>, std::queue<std::pair<std::shared_ptr<Message>, std::shared_ptr<Message>>>>>> domains;
 
   /**
    * The thread that runs the read/write processing queues.

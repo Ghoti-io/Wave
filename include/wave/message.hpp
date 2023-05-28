@@ -12,6 +12,7 @@
 #include <ostream>
 #include <string>
 #include <vector>
+#include <ghoti.io/shared_string_view.hpp>
 
 namespace Ghoti::Wave {
 
@@ -58,7 +59,7 @@ class Message {
    *
    * @return A string containing the HTTP/1.1 rendered header.
    */
-  const std::string & getRenderedHeader1();
+  const Ghoti::shared_string_view & getRenderedHeader1();
 
   /**
    * Indicates that the message has an error.
@@ -90,7 +91,7 @@ class Message {
    * @param message The error message description.
    * @return The Message object.
    */
-  Message & setErrorMessage(const std::string & message);
+  Message & setErrorMessage(const Ghoti::shared_string_view & message);
 
   /**
    * Set a status message.
@@ -98,14 +99,14 @@ class Message {
    * @param The status message description.
    * @return The Message object.
    */
-  Message & setMessage(const std::string & message);
+  Message & setMessage(const Ghoti::shared_string_view & message);
 
   /**
    * Get the status message.
    *
    * @return The status message.
    */
-  const std::string & getMessage() const;
+  const Ghoti::shared_string_view & getMessage() const;
 
   /**
    * Set the HTTP method of the message.
@@ -113,14 +114,14 @@ class Message {
    * @param method The HTTP method.
    * @return The Message object.
    */
-  Message & setMethod(const std::string & method);
+  Message & setMethod(const Ghoti::shared_string_view & method);
 
   /**
    * Get the HTTP method of the message.
    *
    * @return The HTTP method.
    */
-  const std::string & getMethod() const;
+  const Ghoti::shared_string_view & getMethod() const;
 
   /**
    * Set the URL target of the message.
@@ -128,14 +129,14 @@ class Message {
    * @param target The URL target.
    * @return The Message object.
    */
-  Message & setTarget(const std::string & target);
+  Message & setTarget(const Ghoti::shared_string_view & target);
 
   /**
    * Get the URL target of the message.
    *
    * @return The URL target.
    */
-  const std::string & getTarget() const;
+  const Ghoti::shared_string_view & getTarget() const;
 
   /**
    * Set the HTTP version of the message.
@@ -143,14 +144,14 @@ class Message {
    * @param version The HTTP version.
    * @return The Message object.
    */
-  Message & setVersion(const std::string & version);
+  Message & setVersion(const Ghoti::shared_string_view & version);
 
   /**
    * Get the HTTP version of the message.
    *
    * @return The HTTP version.
    */
-  const std::string & getVersion() const;
+  const Ghoti::shared_string_view & getVersion() const;
 
   /**
    * Add a header key/value pair.
@@ -158,14 +159,14 @@ class Message {
    * @param name The field name.
    * @param value The field value.
    */
-  void addFieldValue(const std::string & name, const std::string & value);
+  void addFieldValue(const Ghoti::shared_string_view & name, const Ghoti::shared_string_view & value);
 
   /**
    * Get the map of all header field key/value pairs.
    *
    * fields[field name] = [field value]
    */
-  const std::map<std::string, std::vector<std::string>> & getFields() const;
+  const std::map<Ghoti::shared_string_view, std::vector<Ghoti::shared_string_view>> & getFields() const;
 
   /**
    * Get the Message::Type of the message.
@@ -180,14 +181,14 @@ class Message {
    * @param body The content body.
    * @return The Message object.
    */
-  Message & setMessageBody(const std::string & body);
+  Message & setMessageBody(const Ghoti::shared_string_view & body);
 
   /**
    * Get the content body of the message.
    *
    * @return The content body.
    */
-  const std::string & getMessageBody() const;
+  const Ghoti::shared_string_view & getMessageBody() const;
 
   /**
    * Get the content length of the message body.
@@ -217,14 +218,14 @@ class Message {
    * @param domain The target domain.
    * @return The Message object.
    */
-  Message & setDomain(const std::string & domain);
+  Message & setDomain(const Ghoti::shared_string_view & domain);
 
   /**
    * Get the domain to which the message is targeted.
    *
    * @return The target domain.
    */
-  const std::string & getDomain() const;
+  const Ghoti::shared_string_view & getDomain() const;
 
   /**
    * Notify the associated promise/future that the message is completed.
@@ -304,44 +305,44 @@ class Message {
   /**
    * A cached version of the HTTP/1.1 header.
    */
-  std::string renderedHeader;
+  Ghoti::shared_string_view renderedHeader;
 
   /**
    * The status message.
    */
-  std::string message;
+  Ghoti::shared_string_view message;
 
   /**
    * The HTTP method.
    */
-  std::string method;
+  Ghoti::shared_string_view method;
 
   /**
    * The domain target of the message.
    */
-  std::string domain;
+  Ghoti::shared_string_view domain;
 
   /**
    * The URL target of the message.
    */
-  std::string target;
+  Ghoti::shared_string_view target;
 
   /**
    * The HTTP version of the message.
    */
-  std::string version;
+  Ghoti::shared_string_view version;
 
   /**
    * The content body of the message.
    */
-  std::string messageBody;
+  Ghoti::shared_string_view messageBody;
 
   /**
    * A collection of headers and their associated values.
    *
    * `headers[field name] = [field value]`
    */
-  std::map<std::string, std::vector<std::string>> headers;
+  std::map<Ghoti::shared_string_view, std::vector<Ghoti::shared_string_view>> headers;
 
   /**
    * The promise used for asynchronous notification of when the message has

@@ -162,7 +162,7 @@ void ServerSession::write() {
     }
 
     // Write out as much as possible.
-    auto bytesWritten = ::write(this->hClient, assembledMessage.c_str() + this->writeOffset, assembledMessage.length() - this->writeOffset);
+    auto bytesWritten = ::write(this->hClient, string{assembledMessage}.c_str() + this->writeOffset, assembledMessage.length() - this->writeOffset);
 
     // Detect any errors.
     if (bytesWritten == -1) {

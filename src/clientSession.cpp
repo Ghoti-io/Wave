@@ -186,13 +186,13 @@ void ClientSession::write() {
   if (this->writeSequence < this->requestSequence) {
     // Attempt to write out some of the response.
     auto & [request, response] = this->messages[this->writeSequence];
-    auto assembledMessage = request->getRenderedHeader1() + "Content-Length: " + to_string(request->getContentLength()) + "\r\n\r\n";
+    auto assembledMessage = request->getRenderedHeader1() + string{"Content-Length: "} + to_string(request->getContentLength()) + "\r\n\r\n";
     if (request->getContentLength()) {
       assembledMessage += request->getMessageBody();
     }
 
     // Write out as much as possible.
-    auto bytesWritten = ::write(this->hServer, assembledMessage.c_str() + this->writeOffset, assembledMessage.length() - this->writeOffset);
+    auto bytesWritten = ::write(this->hServer, string{assembledMessage}.c_str() + this->writeOffset, assembledMessage.length() - this->writeOffset);
 
     // Detect any errors.
     if (bytesWritten == -1) {

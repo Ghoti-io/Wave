@@ -7,6 +7,7 @@
 #include "parsing.hpp"
 
 using namespace std;
+using namespace Ghoti;
 using namespace Ghoti::Wave;
 
 Message::Message(Type type) :
@@ -36,11 +37,11 @@ void Message::adoptContents(Message & source) {
   this->readyFuture = move(tempFuture);
 }
 
-const string & Message::getRenderedHeader1() {
+const shared_string_view & Message::getRenderedHeader1() {
   if (!this->headerIsRendered) {
     this->renderedHeader = "HTTP/1.1 "
       + to_string(this->statusCode)
-      + " " + (this->message.length() ? this->message : "OK")
+      + " " + (this->message.length() ? string{this->message} : "OK")
       + "\r\n";
     for (auto & [field, values] : this->headers) {
       if (values.size()) {
@@ -48,7 +49,7 @@ const string & Message::getRenderedHeader1() {
         this->renderedHeader += field + ": ";
 
         // Convert the field name to uppercase for use by isListField().
-        auto temp = field;
+        auto temp = string{field};
         transform(temp.begin(), temp.end(), temp.begin(), ::toupper);
 
         // Wrap the field values with double quotes only when necessary.
@@ -93,7 +94,7 @@ size_t Message::getStatusCode() const {
   return this->statusCode;
 }
 
-Message & Message::setErrorMessage(const std::string & errorMessage) {
+Message & Message::setErrorMessage(const shared_string_view & errorMessage) {
   if (!this->headerIsRendered) {
     this->message = errorMessage;
     this->errorIsSet = true;
@@ -101,57 +102,57 @@ Message & Message::setErrorMessage(const std::string & errorMessage) {
   return *this;
 }
 
-Message & Message::setMessage(const std::string & message) {
+Message & Message::setMessage(const shared_string_view & message) {
   if (!this->headerIsRendered) {
     this->message = message;
   }
   return *this;
 }
 
-const std::string & Message::getMessage() const {
+const shared_string_view & Message::getMessage() const {
   return this->message;
 }
 
-Message & Message::setMethod(const std::string & method) {
+Message & Message::setMethod(const shared_string_view & method) {
   if (!this->headerIsRendered) {
     this->method = method;
   }
   return *this;
 }
 
-const std::string & Message::getMethod() const {
+const shared_string_view & Message::getMethod() const {
   return this->method;
 }
 
-Message & Message::setTarget(const std::string & target) {
+Message & Message::setTarget(const shared_string_view & target) {
   if (!this->headerIsRendered) {
     this->target = target;
   }
   return *this;
 }
 
-const std::string & Message::getTarget() const {
+const shared_string_view & Message::getTarget() const {
   return this->target;
 }
 
-Message & Message::setVersion(const std::string & version) {
+Message & Message::setVersion(const shared_string_view & version) {
   if (!this->headerIsRendered) {
     this->version = version;
   }
   return *this;
 }
 
-const std::string & Message::getVersion() const {
+const shared_string_view & Message::getVersion() const {
   return this->version;
 }
 
-void Message::addFieldValue(const std::string & name, const std::string & value) {
+void Message::addFieldValue(const shared_string_view & name, const shared_string_view & value) {
   if (!this->headerIsRendered) {
     this->headers[name].push_back(value);
   }
 }
 
-const map<string, vector<string>> & Message::getFields() const {
+const map<shared_string_view, vector<shared_string_view>> & Message::getFields() const {
   return this->headers;
 }
 
@@ -159,13 +160,13 @@ Message::Type Message::getType() const {
   return this->type;
 }
 
-Message & Message::setMessageBody(const std::string & messageBody) {
+Message & Message::setMessageBody(const shared_string_view & messageBody) {
   this->messageBody = messageBody;
   this->contentLength = messageBody.length();
   return *this;
 }
 
-const string & Message::getMessageBody() const {
+const shared_string_view & Message::getMessageBody() const {
   return this->messageBody;
 }
 
@@ -182,12 +183,12 @@ size_t Message::getPort() const {
   return this->port;
 }
 
-Message & Message::setDomain(const string & domain) {
+Message & Message::setDomain(const shared_string_view & domain) {
   this->domain = domain;
   return *this;
 }
 
-const string & Message::getDomain() const {
+const shared_string_view & Message::getDomain() const {
   return this->domain;
 }
 

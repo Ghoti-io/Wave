@@ -28,7 +28,7 @@ using namespace Ghoti::Wave;
  * @param response A response message which can hold an error message
  * @return A shared pointer to the client session (empty upon failure)
  */
-static std::shared_ptr<ClientSession> createClientSession(const std::string & domain, size_t port, Client * client, shared_ptr<Message> response) {
+static std::shared_ptr<ClientSession> createClientSession(const Ghoti::shared_string_view & domain, size_t port, Client * client, shared_ptr<Message> response) {
   int hSocket;
   // Open a new connection.
   sockaddr_in client_address;
@@ -39,9 +39,9 @@ static std::shared_ptr<ClientSession> createClientSession(const std::string & do
 
   // Verify that the address is valid.
   char processed_address[INET_ADDRSTRLEN];
-  auto isValid = inet_pton(AF_INET, domain.c_str(), &(client_address.sin_addr));
+  auto isValid = inet_pton(AF_INET, string{domain}.c_str(), &(client_address.sin_addr));
   if (isValid != 1) {
-    response->setMessage("Error parsing client listen address: `" + domain + "`");
+    response->setMessage("Error parsing client listen address: `" + string{domain} + "`");
     response->setReady(false);
     return {};
   }

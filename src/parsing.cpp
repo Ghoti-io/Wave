@@ -7,11 +7,10 @@
 #include <cstdint>
 #include <ctype.h>
 #include <set>
-#include <string>
+#include "parsing.hpp"
 
 using namespace std;
-
-namespace Ghoti::Wave {}
+using namespace Ghoti;
 using namespace Ghoti::Wave;
 
 namespace Ghoti::Wave {
@@ -20,7 +19,7 @@ namespace Ghoti::Wave {
  * Fields identified as having values that are expected to be a list.
  * https://datatracker.ietf.org/doc/html/rfc9110
  */
-static set<string> listFields{
+static set<shared_string_view> listFields{
   "ACCEPT",
   "ACCEPT-CHARSET",
   "ACCEPT-ENCODING",
@@ -44,7 +43,7 @@ static set<string> listFields{
   "WWW-AUTHENTICATE",
 };
 
-bool isListField(const string & name) {
+bool isListField(const shared_string_view & name) {
   return listFields.contains(name);
 }
 
@@ -251,7 +250,7 @@ bool isCRLFChar(uint8_t c) {
   return map[c];
 }
 
-bool fieldValueQuotesNeeded(const string & str) {
+bool fieldValueQuotesNeeded(const shared_string_view & str) {
   // The presence of any character that is not a token also requires the value
   // to be double-quoted.
   // https://www.rfc-editor.org/rfc/rfc9110.html#section-5.6.2
@@ -267,7 +266,7 @@ bool fieldValueQuotesNeeded(const string & str) {
   return false;
 }
 
-string fieldValueEscape(const string & str) {
+string fieldValueEscape(const shared_string_view & str) {
   // Safe characters, identified as "qdtext" in the spec.
   // https://www.rfc-editor.org/rfc/rfc9110.html#section-5.6.4-2
   static bool safe[] = {

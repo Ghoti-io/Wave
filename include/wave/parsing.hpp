@@ -7,6 +7,7 @@
 #define CLIENT_HPP
 
 #include <string>
+#include <ghoti.io/shared_string_view.hpp>
 
 namespace Ghoti::Wave {
 
@@ -16,7 +17,7 @@ namespace Ghoti::Wave {
  * @param name The field name.  The field name must be uppercase.
  * @result Whether or not the field name is recognized as a list-based field.
  */
-bool isListField(const std::string & name);
+bool isListField(const Ghoti::shared_string_view & name);
 
 /**
  * Identify valid Token characters.
@@ -89,7 +90,7 @@ bool isCRLFChar(uint8_t c);
  * @param str The string in question.
  * @result Whether or not the string needs to be wrapped in double quotes.
  */
-bool fieldValueQuotesNeeded(const std::string & str);
+bool fieldValueQuotesNeeded(const Ghoti::shared_string_view & str);
 
 /**
  * Escape a field value.
@@ -97,7 +98,7 @@ bool fieldValueQuotesNeeded(const std::string & str);
  * @param str The field value to be escaped.
  * @result The escaped field value.
  */
-std::string fieldValueEscape(const std::string & str);
+std::string fieldValueEscape(const Ghoti::shared_string_view & str);
 
 };
 
