@@ -13,6 +13,7 @@
 #include <string.h>
 
 using namespace std;
+using namespace Ghoti;
 using namespace Ghoti::Pool;
 using namespace Ghoti::Wave;
 
@@ -97,7 +98,7 @@ using namespace Ghoti::Wave;
 
 // https://www.rfc-editor.org/rfc/rfc9110#name-overview
 // PATCH - https://www.rfc-editor.org/rfc/rfc5789
-static set<string> messageMethods{"GET", "HEAD", "POST", "PUT", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH"};
+static set<shared_string_view> messageMethods{"GET", "HEAD", "POST", "PUT", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH"};
 
 Parser::Parser(Type type) :
   type{type},
@@ -108,7 +109,7 @@ Parser::Parser(Type type) :
     SET_NEW_HEADER;
   }
 
-void Parser::parseMessageTarget([[maybe_unused]]const std::string & target) {
+void Parser::parseMessageTarget([[maybe_unused]]const shared_string_view & target) {
   // Parse origin-form
   // https://datatracker.ietf.org/doc/html/rfc9112#name-origin-form
   //
@@ -156,7 +157,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             }
             if (this->cursor < input_length) {
               // Finished reading Method.
-              string method = this->input.substr(this->minorStart, this->cursor - this->minorStart);
+              shared_string_view method = this->input.substr(this->minorStart, this->cursor - this->minorStart);
               if (messageMethods.contains(method)) {
                 // Finished reading a valid method.
                 this->currentMessage->setMethod(method);
@@ -179,7 +180,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             }
             if (this->cursor < input_length) {
               // Finished reading request target.
-              string target = this->input.substr(this->minorStart, this->cursor - this->minorStart);
+              shared_string_view target = this->input.substr(this->minorStart, this->cursor - this->minorStart);
               this->parseMessageTarget(target);
               this->currentMessage->setTarget(target);
               SET_MINOR_STATE(AFTER_REQUEST_TARGET);
@@ -196,7 +197,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             }
             if (this->cursor < input_length) {
               // Finished reading message target.
-              string version = this->input.substr(this->minorStart, this->cursor - this->minorStart);
+              shared_string_view version = this->input.substr(this->minorStart, this->cursor - this->minorStart);
               this->currentMessage->setVersion(version);
               SET_MINOR_STATE(AFTER_HTTP_VERSION);
             }
@@ -277,7 +278,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             }
             if (this->cursor < input_length) {
               // Finished reading request target.
-              string name = this->input.substr(this->minorStart, this->cursor - this->minorStart);
+              auto name = string{this->input.substr(this->minorStart, this->cursor - this->minorStart)};
               transform(name.begin(), name.end(), name.begin(), ::toupper);
               this->tempFieldName = name;
               SET_MINOR_STATE(AFTER_FIELD_NAME);

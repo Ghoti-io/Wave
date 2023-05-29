@@ -9,7 +9,7 @@
 
 #include <queue>
 #include "message.hpp"
-#include <string>
+#include <ghoti.io/shared_string_view.hpp>
 
 namespace Ghoti::Wave {
 
@@ -46,7 +46,7 @@ class Parser {
    * @param len The length of the buffer in bytes.
    */
   void processChunk(const char * buffer, size_t len);
-  void parseMessageTarget(const std::string & target);
+  void parseMessageTarget(const Ghoti::shared_string_view & target);
 
   /**
    * Use the provided Message as the recipient of parsing for the Message's id.
@@ -160,22 +160,22 @@ class Parser {
    * The input string, stored internally so that the stream will be processed
    * correctly, even if it is split across multiple buffered reads.
    */
-  std::string input;
+  Ghoti::shared_string_view input;
 
   /**
    * An error message to communicate a parsing issue.
    */
-  std::string errorMessage;
+  Ghoti::shared_string_view errorMessage;
 
   /**
    * The field name currently being processed.
    */
-  std::string tempFieldName;
+  Ghoti::shared_string_view tempFieldName;
 
   /**
    * The field value currently being processed.
    */
-  std::string tempFieldValue;
+  Ghoti::shared_string_view tempFieldValue;
 
   /**
    * A map to store a Message associated with a sequence.
