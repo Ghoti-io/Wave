@@ -1,4 +1,0 @@
-<map id="Ghoti::Wave::Server::start" name="Ghoti::Wave::Server::start">
-<area shape="rect" id="node1" title="Start the server listening on the designated ip address and port." alt="" coords="5,5,156,47"/>
-<area shape="rect" id="node2" href="$classGhoti_1_1Wave_1_1Server.html#a7c9f0bda456b04571ab7abef19a0d3cc" title="The Dispatch loop used by the thread pool to handle asynchronous reading and writing of the server po..." alt="" coords="204,5,355,47"/>
-</map>

@@ -105,12 +105,10 @@ Collaboration diagram for Ghoti::Wave::Parser:</div>
 <div class="dyncontent">
 <div class="center"><img src="classGhoti_1_1Wave_1_1Parser__coll__graph.png" border="0" usemap="#aGhoti_1_1Wave_1_1Parser_coll__map" alt="Collaboration graph"/></div>
 <map name="aGhoti_1_1Wave_1_1Parser_coll__map" id="aGhoti_1_1Wave_1_1Parser_coll__map">
-<area shape="rect" title="Parses a HTTP/1.1 data stream into discrete messages." alt="" coords="691,94,840,121"/>
+<area shape="rect" title="Parses a HTTP/1.1 data stream into discrete messages." alt="" coords="691,73,840,99"/>
 <area shape="rect" title=" " alt="" coords="288,5,525,47"/>
-<area shape="rect" title=" " alt="" coords="5,85,175,127"/>
+<area shape="rect" title=" " alt="" coords="5,103,175,144"/>
 <area shape="rect" title=" " alt="" coords="288,134,525,190"/>
-<area shape="rect" title=" " alt="" coords="363,214,450,241"/>
-<area shape="rect" title=" " alt="" coords="21,207,159,248"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -130,9 +128,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afc4ff85b48ad66fa9e06e9f32e07981f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#afc4ff85b48ad66fa9e06e9f32e07981f">processChunk</a> (const char *buffer, size_t len)</td></tr>
 <tr class="memdesc:afc4ff85b48ad66fa9e06e9f32e07981f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process a chunk of data.  <a href="classGhoti_1_1Wave_1_1Parser.html#afc4ff85b48ad66fa9e06e9f32e07981f">More...</a><br /></td></tr>
 <tr class="separator:afc4ff85b48ad66fa9e06e9f32e07981f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8974610782dd3c8ad4ca166ac8476012"><td class="memItemLeft" align="right" valign="top"><a id="a8974610782dd3c8ad4ca166ac8476012"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parseMessageTarget</b> (const std::string &amp;target)</td></tr>
-<tr class="separator:a8974610782dd3c8ad4ca166ac8476012"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30e2feceabd18108c005fc4d38de7c46"><td class="memItemLeft" align="right" valign="top"><a id="a30e2feceabd18108c005fc4d38de7c46"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parseMessageTarget</b> (const Ghoti::shared_string_view &amp;target)</td></tr>
+<tr class="separator:a30e2feceabd18108c005fc4d38de7c46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad30005371048deaf8771cf24de45c806"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#ad30005371048deaf8771cf24de45c806">registerMessage</a> (std::shared_ptr&lt; <a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &gt; message)</td></tr>
 <tr class="memdesc:ad30005371048deaf8771cf24de45c806"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the provided <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a> as the recipient of parsing for the <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a>'s id.  <a href="classGhoti_1_1Wave_1_1Parser.html#ad30005371048deaf8771cf24de45c806">More...</a><br /></td></tr>
 <tr class="separator:ad30005371048deaf8771cf24de45c806"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -228,22 +226,22 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#a80067175174f7ceddbb80460808a3e87">minorStart</a></td></tr>
 <tr class="memdesc:a80067175174f7ceddbb80460808a3e87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates the cursor position at which the minor state was last updated. <br /></td></tr>
 <tr class="separator:a80067175174f7ceddbb80460808a3e87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4070d360f65439a53e987455d1e80a8"><td class="memItemLeft" align="right" valign="top"><a id="af4070d360f65439a53e987455d1e80a8"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#af4070d360f65439a53e987455d1e80a8">input</a></td></tr>
-<tr class="memdesc:af4070d360f65439a53e987455d1e80a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The input string, stored internally so that the stream will be processed correctly, even if it is split across multiple buffered reads. <br /></td></tr>
-<tr class="separator:af4070d360f65439a53e987455d1e80a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d334623ff4e022ecda2301dfa5b0294"><td class="memItemLeft" align="right" valign="top"><a id="a1d334623ff4e022ecda2301dfa5b0294"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#a1d334623ff4e022ecda2301dfa5b0294">errorMessage</a></td></tr>
-<tr class="memdesc:a1d334623ff4e022ecda2301dfa5b0294"><td class="mdescLeft">&#160;</td><td class="mdescRight">An error message to communicate a parsing issue. <br /></td></tr>
-<tr class="separator:a1d334623ff4e022ecda2301dfa5b0294"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d6f0247321a4bfbda5b332ac9767446"><td class="memItemLeft" align="right" valign="top"><a id="a0d6f0247321a4bfbda5b332ac9767446"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#a0d6f0247321a4bfbda5b332ac9767446">tempFieldName</a></td></tr>
-<tr class="memdesc:a0d6f0247321a4bfbda5b332ac9767446"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field name currently being processed. <br /></td></tr>
-<tr class="separator:a0d6f0247321a4bfbda5b332ac9767446"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a900146bf374c5603d2a9b5a23b70d37b"><td class="memItemLeft" align="right" valign="top"><a id="a900146bf374c5603d2a9b5a23b70d37b"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#a900146bf374c5603d2a9b5a23b70d37b">tempFieldValue</a></td></tr>
-<tr class="memdesc:a900146bf374c5603d2a9b5a23b70d37b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field value currently being processed. <br /></td></tr>
-<tr class="separator:a900146bf374c5603d2a9b5a23b70d37b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad2e7a838d4ea0f166eae3554cb5d6b6"><td class="memItemLeft" align="right" valign="top"><a id="aad2e7a838d4ea0f166eae3554cb5d6b6"></a>
+Ghoti::shared_string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#aad2e7a838d4ea0f166eae3554cb5d6b6">input</a></td></tr>
+<tr class="memdesc:aad2e7a838d4ea0f166eae3554cb5d6b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The input string, stored internally so that the stream will be processed correctly, even if it is split across multiple buffered reads. <br /></td></tr>
+<tr class="separator:aad2e7a838d4ea0f166eae3554cb5d6b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46a4c95c4c7b5fb8006ae7ca027ece89"><td class="memItemLeft" align="right" valign="top"><a id="a46a4c95c4c7b5fb8006ae7ca027ece89"></a>
+Ghoti::shared_string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#a46a4c95c4c7b5fb8006ae7ca027ece89">errorMessage</a></td></tr>
+<tr class="memdesc:a46a4c95c4c7b5fb8006ae7ca027ece89"><td class="mdescLeft">&#160;</td><td class="mdescRight">An error message to communicate a parsing issue. <br /></td></tr>
+<tr class="separator:a46a4c95c4c7b5fb8006ae7ca027ece89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a947c7a8037bd2330e249bd8468b0633c"><td class="memItemLeft" align="right" valign="top"><a id="a947c7a8037bd2330e249bd8468b0633c"></a>
+Ghoti::shared_string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#a947c7a8037bd2330e249bd8468b0633c">tempFieldName</a></td></tr>
+<tr class="memdesc:a947c7a8037bd2330e249bd8468b0633c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field name currently being processed. <br /></td></tr>
+<tr class="separator:a947c7a8037bd2330e249bd8468b0633c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2082d375acb604ef42d7646d69625726"><td class="memItemLeft" align="right" valign="top"><a id="a2082d375acb604ef42d7646d69625726"></a>
+Ghoti::shared_string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#a2082d375acb604ef42d7646d69625726">tempFieldValue</a></td></tr>
+<tr class="memdesc:a2082d375acb604ef42d7646d69625726"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field value currently being processed. <br /></td></tr>
+<tr class="separator:a2082d375acb604ef42d7646d69625726"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d59720a74f5107dc8e02de256d47c70"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; uint32_t, std::shared_ptr&lt; <a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#a9d59720a74f5107dc8e02de256d47c70">messageRegister</a></td></tr>
 <tr class="memdesc:a9d59720a74f5107dc8e02de256d47c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">A map to store a <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a> associated with a sequence.  <a href="classGhoti_1_1Wave_1_1Parser.html#a9d59720a74f5107dc8e02de256d47c70">More...</a><br /></td></tr>
 <tr class="separator:a9d59720a74f5107dc8e02de256d47c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
