@@ -17,6 +17,11 @@ using namespace Ghoti;
 using namespace Ghoti::Pool;
 using namespace Ghoti::Wave;
 
+#define START_NEW_INPUT \
+  this->input = string{this->input.substr(this->cursor, this->input.length())}; \
+  this->cursor = 0; \
+  input_length = this->input.length();
+
 #define SET_NEW_HEADER \
   this->readStateMajor = NEW_HEADER; \
   this->readStateMinor = this->type == REQUEST \
@@ -550,6 +555,10 @@ void Parser::processChunk(const char * buffer, size_t len) {
               // This is the end of the message.
               this->messages.emplace(move(this->currentMessage));
               this->currentMessage = this->createNewMessage();
+
+              // Break the input so that each message has its own shared_string_view.
+              START_NEW_INPUT;
+
               SET_NEW_HEADER;
             }
             break;

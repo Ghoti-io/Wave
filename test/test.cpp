@@ -90,7 +90,6 @@ int main(int argc, char** argv) {
     cout << "After wait" << endl;
 
     cout << *response;
-    //this_thread::sleep_for(10000ms);
   //}
 
   testing::InitGoogleTest(&argc, argv);
