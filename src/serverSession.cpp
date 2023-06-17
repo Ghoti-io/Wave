@@ -74,9 +74,24 @@ bool ServerSession::hasWriteDataWaiting() {
     if (this->pipeline.size()) {
       auto currentRequest = this->pipeline.front();
       auto [request, response] = this->messages[currentRequest];
-      if (response->getTransport() == Message::Transport::FIXED) {
-        // A fixed message is waiting to be written.
-        dataIsWaiting = true;
+      switch (response->getTransport()) {
+        case Message::Transport::UNDECLARED: {
+          break;
+        }
+        case Message::Transport::FIXED : {
+          // A fixed message is waiting to be written.
+          dataIsWaiting = true;
+          break;
+        }
+        case Message::Transport::MULTIPART : {
+          break;
+        }
+        case Message::Transport::CHUNKED : {
+          break;
+        }
+        case Message::Transport::STREAM : {
+          break;
+        }
       }
     }
     this->controlMutex->unlock();
@@ -162,32 +177,47 @@ void ServerSession::write() {
     // Attempt to write out some of the response.
     auto currentRequest = this->pipeline.front();
     auto [request, response] = this->messages[currentRequest];
-    if (response->getTransport() == Message::Transport::FIXED) {
-      auto assembledMessage = response->getRenderedHeader1() + "Content-Length: " + to_string(response->getContentLength()) + "\r\n\r\n";
-      if (response->getContentLength()) {
-        assembledMessage += response->getMessageBody();
+    switch (response->getTransport()) {
+      case Message::Transport::UNDECLARED: {
+        break;
       }
+      case Message::Transport::FIXED : {
+        auto assembledMessage = response->getRenderedHeader1() + "Content-Length: " + to_string(response->getContentLength()) + "\r\n\r\n";
+        if (response->getContentLength()) {
+          assembledMessage += response->getMessageBody();
+        }
 
-      // Write out as much as possible.
-      auto bytesWritten = ::write(this->hClient, string{assembledMessage}.c_str() + this->writeOffset, assembledMessage.length() - this->writeOffset);
+        // Write out as much as possible.
+        auto bytesWritten = ::write(this->hClient, string{assembledMessage}.c_str() + this->writeOffset, assembledMessage.length() - this->writeOffset);
 
-      // Detect any errors.
-      if (bytesWritten == -1) {
-        cout << "Error writing response: " << strerror(errno) << endl;
-        this->finished = true;
-        close(this->hClient);
-        return;
+        // Detect any errors.
+        if (bytesWritten == -1) {
+          cout << "Error writing response: " << strerror(errno) << endl;
+          this->finished = true;
+          close(this->hClient);
+          return;
+        }
+
+        // Advance the internal pointer.
+        this->writeOffset += bytesWritten;
+
+        // If everything has been written, then remove this message from the
+        // pipeline queue.
+        if (this->writeOffset == assembledMessage.length()) {
+          this->messages.erase(currentRequest);
+          this->pipeline.pop();
+          this->writeOffset = 0;
+        }
+        break;
       }
-
-      // Advance the internal pointer.
-      this->writeOffset += bytesWritten;
-
-      // If everything has been written, then remove this message from the
-      // pipeline queue.
-      if (this->writeOffset == assembledMessage.length()) {
-        this->messages.erase(currentRequest);
-        this->pipeline.pop();
-        this->writeOffset = 0;
+      case Message::Transport::MULTIPART : {
+        break;
+      }
+      case Message::Transport::CHUNKED : {
+        break;
+      }
+      case Message::Transport::STREAM : {
+        break;
       }
     }
   }
