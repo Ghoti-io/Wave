@@ -71,6 +71,43 @@ TEST(Server, Startup){
 
 }
 
+TEST(Message, Defaults) {
+  {
+    Message m{Message::Type::REQUEST};
+    ASSERT_EQ(m.getType(), Message::Type::REQUEST);
+    ASSERT_EQ(m.getTarget(), "");
+    ASSERT_EQ(m.getDomain(), "");
+    ASSERT_EQ(m.getPort(), 0);
+    ASSERT_FALSE(m.hasError());
+    ASSERT_EQ(m.getStatusCode(), 0);
+    ASSERT_EQ(m.getMessage(), "");
+    ASSERT_EQ(m.getMethod(), "GET");
+    ASSERT_EQ(m.getVersion(), "");
+    ASSERT_EQ(m.getTarget(), "");
+    ASSERT_EQ(m.getMessageBody(), "");
+    ASSERT_EQ(m.getFields().size(), 0);
+    ASSERT_EQ(m.getContentLength(), 0);
+    ASSERT_EQ(m.getId(), 0);
+  }
+  {
+    Message m{Message::Type::RESPONSE};
+    ASSERT_EQ(m.getType(), Message::Type::RESPONSE);
+    ASSERT_EQ(m.getTarget(), "");
+    ASSERT_EQ(m.getDomain(), "");
+    ASSERT_EQ(m.getPort(), 0);
+    ASSERT_FALSE(m.hasError());
+    ASSERT_EQ(m.getStatusCode(), 0);
+    ASSERT_EQ(m.getMessage(), "");
+    ASSERT_EQ(m.getMethod(), "GET");
+    ASSERT_EQ(m.getVersion(), "");
+    ASSERT_EQ(m.getTarget(), "");
+    ASSERT_EQ(m.getMessageBody(), "");
+    ASSERT_EQ(m.getFields().size(), 0);
+    ASSERT_EQ(m.getContentLength(), 0);
+    ASSERT_EQ(m.getId(), 0);
+  }
+}
+
 int main(int argc, char** argv) {
   s.start();
   serverPort = s.getPort();
