@@ -4,17 +4,55 @@
  * Test the general Wave server behavior.
  */
 
-#include<string>
-#include<gtest/gtest.h>
+#include <string>
+#include <gtest/gtest.h>
+#include <ghoti.io/os/file.hpp>
 #include "wave.hpp"
 
 using namespace std;
+using namespace Ghoti;
 using namespace Ghoti::Wave;
 
-Server s{};
-uint16_t serverPort = 0;
+static Server s{};
+static uint16_t serverPort = 0;
+static string tempName{"waveTest"};
 
 constexpr auto quantum{10ms};
+
+TEST(Blob, General) {
+  {
+    Blob b{};
+    ASSERT_EQ(b.getType(), Blob::Type::TEXT);
+    ASSERT_EQ(b.getText(), "");
+    ASSERT_EQ(string{b.getFile()}, "");
+  }
+  {
+    Blob b{"a"};
+    ASSERT_EQ(b.getType(), Blob::Type::TEXT);
+    ASSERT_EQ(b.getText(), "a");
+    ASSERT_EQ(string{b.getFile()}, "");
+  }
+  {
+    // Set up a temporary file and write something to it.
+    auto f{OS::File::createTemp(tempName)};
+    ASSERT_FALSE(f.append("a"));
+
+    // Verify that the file is succesfully moved into the blob object.
+    Blob b{move(f)};
+    ASSERT_EQ(b.getType(), Blob::Type::FILE);
+    ASSERT_EQ(b.getText(), "");
+    ASSERT_EQ(string{b.getFile()}, "a");
+
+    // Verify that the append works.
+  }
+  {
+    // Create a Blob with text.
+    Blob b{"a"};
+    // Convert it to a file.
+    // Verify that the file contains the text.
+    // Write to the file and verify.
+  }
+}
 
 TEST(Server, Startup){
   // Verify default state.
