@@ -48,9 +48,16 @@ TEST(Blob, General) {
   {
     // Create a Blob with text.
     Blob b{"a"};
+    EXPECT_EQ(b.getType(), Blob::Type::TEXT);
     // Convert it to a file.
+    EXPECT_FALSE(b.convertToFile());
+    EXPECT_EQ(b.getType(), Blob::Type::FILE);
     // Verify that the file contains the text.
+    ASSERT_EQ(string{b.getFile()}, "a");
     // Write to the file and verify.
+    ASSERT_FALSE(b.append("b"));
+    // Verify the file wite was successful.
+    ASSERT_EQ(string{b.getFile()}, "ab");
   }
 }
 

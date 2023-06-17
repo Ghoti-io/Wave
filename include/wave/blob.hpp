@@ -91,6 +91,35 @@ class Blob {
    */
   bool operator==(const Ghoti::shared_string_view & rhs) const;
 
+  /**
+   * Append text to the current Blob object.
+   *
+   * The supplied text will be added to the end of any currently existing
+   * text.
+   *
+   * @param text The text to be appended.
+   * @return The error code resulting from the operation (if any).
+   */
+  std::error_code append(const Ghoti::shared_string_view & text);
+
+  /**
+   * Truncate text in the current Blob object and replace it with the supplied
+   * text.
+   *
+   * @param text The text to be written after the truncation..
+   * @return The error code resulting from the operation (if any).
+   */
+  std::error_code truncate(const Ghoti::shared_string_view & text);
+
+  /**
+   * Convert the Blob object to be file-based.
+   *
+   * If the Blob is already file-based, no error will be returned.
+   *
+   * @return The error code resulting from the operation (if any).
+   */
+  std::error_code convertToFile();
+
   private:
   /**
    * The type of data the blob contains.
