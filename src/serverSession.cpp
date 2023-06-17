@@ -184,7 +184,7 @@ void ServerSession::write() {
       case Message::Transport::FIXED : {
         auto assembledMessage = response->getRenderedHeader1() + "Content-Length: " + to_string(response->getContentLength()) + "\r\n\r\n";
         if (response->getContentLength()) {
-          assembledMessage += response->getMessageBody();
+          assembledMessage += response->getMessageBody().getText();
         }
 
         // Write out as much as possible.

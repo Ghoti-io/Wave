@@ -196,7 +196,7 @@ Message & Message::setMessageBody(const shared_string_view & messageBody) {
   return *this;
 }
 
-const shared_string_view & Message::getMessageBody() const {
+const Blob & Message::getMessageBody() const {
   return this->messageBody;
 }
 

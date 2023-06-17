@@ -13,7 +13,8 @@ SO_NAME := $(BASE_NAME).$(MAJOR_VERSION)
 TARGET := $(SO_NAME).$(MINOR_VERSION)
 
 INCLUDE := -I include/ -I include/wave
-LIBOBJECTS := $(OBJ_DIR)/client.o \
+LIBOBJECTS := $(OBJ_DIR)/blob.o \
+							$(OBJ_DIR)/client.o \
 							$(OBJ_DIR)/clientSession.o \
 							$(OBJ_DIR)/parser.o \
 							$(OBJ_DIR)/parsing.o \
@@ -25,7 +26,7 @@ LIBOBJECTS := $(OBJ_DIR)/client.o \
 TESTFLAGS := `pkg-config --libs --cflags gtest`
 
 
-WAVELIBRARY := -L $(APP_DIR) -lghoti.io-wave `pkg-config --libs --cflags ghoti.io-shared_string_view`
+WAVELIBRARY := -L $(APP_DIR) -lghoti.io-wave `pkg-config --libs --cflags ghoti.io-shared_string_view ghoti.io-os`
 
 
 all: $(APP_DIR)/$(TARGET) ## Build the shared library
@@ -37,7 +38,10 @@ DEP_MACROS = \
 	include/wave/macros.hpp
 DEP_PARSING = \
 	include/wave/parsing.hpp
+DEP_BLOB = \
+	include/wave/blob.hpp
 DEP_MESSAGE = \
+	$(DEP_BLOB) \
 	$(DEP_PARSING) \
 	include/wave/message.hpp
 DEP_PARSER = \
@@ -80,6 +84,10 @@ $(LIBOBJECTS) :
 	@echo "\n### Compiling $@ ###"
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -MMD -o $@ -fPIC
+
+$(OBJ_DIR)/blob.o: \
+				src/blob.cpp \
+				$(DEP_BLOB)
 
 $(OBJ_DIR)/client.o: \
 				src/client.cpp \

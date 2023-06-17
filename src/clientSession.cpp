@@ -188,7 +188,7 @@ void ClientSession::write() {
     auto & [request, response] = this->messages[this->writeSequence];
     auto assembledMessage = request->getRenderedHeader1() + string{"Content-Length: "} + to_string(request->getContentLength()) + "\r\n\r\n";
     if (request->getContentLength()) {
-      assembledMessage += request->getMessageBody();
+      assembledMessage += request->getMessageBody().getText();
     }
 
     // Write out as much as possible.

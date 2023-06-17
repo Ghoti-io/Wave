@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include <ghoti.io/shared_string_view.hpp>
+#include "wave/blob.hpp"
 
 namespace Ghoti::Wave {
 
@@ -223,7 +224,7 @@ class Message {
    *
    * @return The content body.
    */
-  const Ghoti::shared_string_view & getMessageBody() const;
+  const Ghoti::Wave::Blob & getMessageBody() const;
 
   /**
    * Get the content length of the message body.
@@ -375,7 +376,7 @@ class Message {
   /**
    * The content body of the message.
    */
-  Ghoti::shared_string_view messageBody;
+  Ghoti::Wave::Blob messageBody;
 
   /**
    * A collection of headers and their associated values.
