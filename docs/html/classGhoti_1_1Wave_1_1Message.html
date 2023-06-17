@@ -102,9 +102,10 @@ Collaboration diagram for Ghoti::Wave::Message:</div>
 <div class="dyncontent">
 <div class="center"><img src="classGhoti_1_1Wave_1_1Message__coll__graph.png" border="0" usemap="#aGhoti_1_1Wave_1_1Message_coll__map" alt="Collaboration graph"/></div>
 <map name="aGhoti_1_1Wave_1_1Message_coll__map" id="aGhoti_1_1Wave_1_1Message_coll__map">
-<area shape="rect" title="Represents a HTTP message." alt="" coords="40,228,207,255"/>
-<area shape="rect" title=" " alt="" coords="5,109,241,165"/>
-<area shape="rect" title=" " alt="" coords="38,5,209,47"/>
+<area shape="rect" title="Represents a HTTP message." alt="" coords="671,63,837,89"/>
+<area shape="rect" title=" " alt="" coords="289,5,525,61"/>
+<area shape="rect" title=" " alt="" coords="5,13,176,54"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1Blob.html" title=" " alt="" coords="338,85,477,112"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -115,6 +116,17 @@ Public Types</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a7778a82d1bd66554e6184b79f0626c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the message is a request or a response.  <a href="classGhoti_1_1Wave_1_1Message.html#a7778a82d1bd66554e6184b79f0626c84">More...</a><br /></td></tr>
 <tr class="separator:a7778a82d1bd66554e6184b79f0626c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a761153d7c88a30dcf97328c8c9548afa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afa">Transport</a> { <br />
+&#160;&#160;<a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afaa287cb887b1ce546cc9cbaf2dbe89c54a">UNDECLARED</a>
+, <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afaafecf1b105992f414d123b4e24c3d16fc">FIXED</a>
+, <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afaa2e150f7631ee269d5c9d39cc17162936">MULTIPART</a>
+, <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afaad1674d8172ac50ca6337a51b175f4655">CHUNKED</a>
+, <br />
+&#160;&#160;<a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afaa9962598b869711f22d27c4af6b89a0e9">STREAM</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:a761153d7c88a30dcf97328c8c9548afa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate the transport type of the message.  <a href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afa">More...</a><br /></td></tr>
+<tr class="separator:a761153d7c88a30dcf97328c8c9548afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -130,6 +142,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abf5bc935d782164083cffbb4671a67b5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#abf5bc935d782164083cffbb4671a67b5">hasError</a> () const</td></tr>
 <tr class="memdesc:abf5bc935d782164083cffbb4671a67b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates that the message has an error.  <a href="classGhoti_1_1Wave_1_1Message.html#abf5bc935d782164083cffbb4671a67b5">More...</a><br /></td></tr>
 <tr class="separator:abf5bc935d782164083cffbb4671a67b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56fd51c18ce05e84746bc79721c5d7ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a56fd51c18ce05e84746bc79721c5d7ae">setTransport</a> (<a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afa">Message::Transport</a> <a class="el" href="classGhoti_1_1Wave_1_1Message.html#adb012de19ffa6f7861db4a77ee793823">transport</a>)</td></tr>
+<tr class="memdesc:a56fd51c18ce05e84746bc79721c5d7ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afa" title="Indicate the transport type of the message.">Message::Transport</a> type of the <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a>.  <a href="classGhoti_1_1Wave_1_1Message.html#a56fd51c18ce05e84746bc79721c5d7ae">More...</a><br /></td></tr>
+<tr class="separator:a56fd51c18ce05e84746bc79721c5d7ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeb105501a0702721f6eea3bd9028447"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afa">Message::Transport</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#abeb105501a0702721f6eea3bd9028447">getTransport</a> () const</td></tr>
+<tr class="memdesc:abeb105501a0702721f6eea3bd9028447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afa" title="Indicate the transport type of the message.">Message::Transport</a> type of the <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a>.  <a href="classGhoti_1_1Wave_1_1Message.html#abeb105501a0702721f6eea3bd9028447">More...</a><br /></td></tr>
+<tr class="separator:abeb105501a0702721f6eea3bd9028447"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee3409a6431faa20c8cc04fafe2ce2d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#aee3409a6431faa20c8cc04fafe2ce2d9">setStatusCode</a> (size_t <a class="el" href="classGhoti_1_1Wave_1_1Message.html#aa41c76f5a266fcaabe044f5603f2c397">statusCode</a>)</td></tr>
 <tr class="memdesc:aee3409a6431faa20c8cc04fafe2ce2d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the status code of the message.  <a href="classGhoti_1_1Wave_1_1Message.html#aee3409a6431faa20c8cc04fafe2ce2d9">More...</a><br /></td></tr>
 <tr class="separator:aee3409a6431faa20c8cc04fafe2ce2d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,9 +181,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6c26a38c081da7023944325f539c6c05"><td class="memItemLeft" align="right" valign="top">const Ghoti::shared_string_view &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a6c26a38c081da7023944325f539c6c05">getVersion</a> () const</td></tr>
 <tr class="memdesc:a6c26a38c081da7023944325f539c6c05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the HTTP version of the message.  <a href="classGhoti_1_1Wave_1_1Message.html#a6c26a38c081da7023944325f539c6c05">More...</a><br /></td></tr>
 <tr class="separator:a6c26a38c081da7023944325f539c6c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee51c219f10c07c3e66090e72abea584"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#aee51c219f10c07c3e66090e72abea584">addFieldValue</a> (const Ghoti::shared_string_view &amp;name, const Ghoti::shared_string_view &amp;value)</td></tr>
-<tr class="memdesc:aee51c219f10c07c3e66090e72abea584"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a header key/value pair.  <a href="classGhoti_1_1Wave_1_1Message.html#aee51c219f10c07c3e66090e72abea584">More...</a><br /></td></tr>
-<tr class="separator:aee51c219f10c07c3e66090e72abea584"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa575b2a04477430c7da80f4711e56a45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#aa575b2a04477430c7da80f4711e56a45">addFieldValue</a> (const Ghoti::shared_string_view &amp;name, const Ghoti::shared_string_view &amp;value)</td></tr>
+<tr class="memdesc:aa575b2a04477430c7da80f4711e56a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a header key/value pair.  <a href="classGhoti_1_1Wave_1_1Message.html#aa575b2a04477430c7da80f4711e56a45">More...</a><br /></td></tr>
+<tr class="separator:aa575b2a04477430c7da80f4711e56a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4d10daa3eb583c2a3b6393db8972995"><td class="memItemLeft" align="right" valign="top">const std::map&lt; Ghoti::shared_string_view, std::vector&lt; Ghoti::shared_string_view &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#ab4d10daa3eb583c2a3b6393db8972995">getFields</a> () const</td></tr>
 <tr class="memdesc:ab4d10daa3eb583c2a3b6393db8972995"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the map of all header field key/value pairs.  <a href="classGhoti_1_1Wave_1_1Message.html#ab4d10daa3eb583c2a3b6393db8972995">More...</a><br /></td></tr>
 <tr class="separator:ab4d10daa3eb583c2a3b6393db8972995"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,9 +193,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a76cf1c9b587c462a70c51442f6211b50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a76cf1c9b587c462a70c51442f6211b50">setMessageBody</a> (const Ghoti::shared_string_view &amp;body)</td></tr>
 <tr class="memdesc:a76cf1c9b587c462a70c51442f6211b50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the content body of the message.  <a href="classGhoti_1_1Wave_1_1Message.html#a76cf1c9b587c462a70c51442f6211b50">More...</a><br /></td></tr>
 <tr class="separator:a76cf1c9b587c462a70c51442f6211b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5b9d0182c343967c0877f41d17e27b0"><td class="memItemLeft" align="right" valign="top">const Ghoti::shared_string_view &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#aa5b9d0182c343967c0877f41d17e27b0">getMessageBody</a> () const</td></tr>
-<tr class="memdesc:aa5b9d0182c343967c0877f41d17e27b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content body of the message.  <a href="classGhoti_1_1Wave_1_1Message.html#aa5b9d0182c343967c0877f41d17e27b0">More...</a><br /></td></tr>
-<tr class="separator:aa5b9d0182c343967c0877f41d17e27b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84b9107c58543899ddcdaa587f9bdbd1"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Ghoti::Wave::Blob</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a84b9107c58543899ddcdaa587f9bdbd1">getMessageBody</a> () const</td></tr>
+<tr class="memdesc:a84b9107c58543899ddcdaa587f9bdbd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content body of the message.  <a href="classGhoti_1_1Wave_1_1Message.html#a84b9107c58543899ddcdaa587f9bdbd1">More...</a><br /></td></tr>
+<tr class="separator:a84b9107c58543899ddcdaa587f9bdbd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5f40c60f7bb77880e7e33e7179b2730"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#aa5f40c60f7bb77880e7e33e7179b2730">getContentLength</a> () const</td></tr>
 <tr class="memdesc:aa5f40c60f7bb77880e7e33e7179b2730"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content length of the message body.  <a href="classGhoti_1_1Wave_1_1Message.html#aa5f40c60f7bb77880e7e33e7179b2730">More...</a><br /></td></tr>
 <tr class="separator:aa5f40c60f7bb77880e7e33e7179b2730"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -220,6 +238,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a7778a82d1bd66554e6184b79f0626c84">Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a6dff22b3e7e443ed9982e156a46c46b5">type</a></td></tr>
 <tr class="memdesc:a6dff22b3e7e443ed9982e156a46c46b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a7778a82d1bd66554e6184b79f0626c84" title="Indicates whether the message is a request or a response.">Message::Type</a> of the message. <br /></td></tr>
 <tr class="separator:a6dff22b3e7e443ed9982e156a46c46b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb012de19ffa6f7861db4a77ee793823"><td class="memItemLeft" align="right" valign="top"><a id="adb012de19ffa6f7861db4a77ee793823"></a>
+<a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afa">Transport</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#adb012de19ffa6f7861db4a77ee793823">transport</a></td></tr>
+<tr class="memdesc:adb012de19ffa6f7861db4a77ee793823"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afa" title="Indicate the transport type of the message.">Message::Transport</a> type of the message. <br /></td></tr>
+<tr class="separator:adb012de19ffa6f7861db4a77ee793823"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a245cd09c6ff6781233b7c91d5c7a6d7f"><td class="memItemLeft" align="right" valign="top"><a id="a245cd09c6ff6781233b7c91d5c7a6d7f"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a245cd09c6ff6781233b7c91d5c7a6d7f">id</a></td></tr>
 <tr class="memdesc:a245cd09c6ff6781233b7c91d5c7a6d7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ID number of the message. <br /></td></tr>
@@ -260,10 +282,10 @@ Ghoti::shared_string_view&#160;</td><td class="memItemRight" valign="bottom"><a 
 Ghoti::shared_string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a6fa9342ca64bb2fec473beb1fe6f18fa">version</a></td></tr>
 <tr class="memdesc:a6fa9342ca64bb2fec473beb1fe6f18fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The HTTP version of the message. <br /></td></tr>
 <tr class="separator:a6fa9342ca64bb2fec473beb1fe6f18fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaec0382ea132d5105f77aee21c04a6b8"><td class="memItemLeft" align="right" valign="top"><a id="aaec0382ea132d5105f77aee21c04a6b8"></a>
-Ghoti::shared_string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#aaec0382ea132d5105f77aee21c04a6b8">messageBody</a></td></tr>
-<tr class="memdesc:aaec0382ea132d5105f77aee21c04a6b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The content body of the message. <br /></td></tr>
-<tr class="separator:aaec0382ea132d5105f77aee21c04a6b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ef73fdb8802fbf6b37f0a73c2c3d679"><td class="memItemLeft" align="right" valign="top"><a id="a1ef73fdb8802fbf6b37f0a73c2c3d679"></a>
+<a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Ghoti::Wave::Blob</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a1ef73fdb8802fbf6b37f0a73c2c3d679">messageBody</a></td></tr>
+<tr class="memdesc:a1ef73fdb8802fbf6b37f0a73c2c3d679"><td class="mdescLeft">&#160;</td><td class="mdescRight">The content body of the message. <br /></td></tr>
+<tr class="separator:a1ef73fdb8802fbf6b37f0a73c2c3d679"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58a565cde943e98f9fd313a1718e0efb"><td class="memItemLeft" align="right" valign="top">std::map&lt; Ghoti::shared_string_view, std::vector&lt; Ghoti::shared_string_view &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a58a565cde943e98f9fd313a1718e0efb">headers</a></td></tr>
 <tr class="memdesc:a58a565cde943e98f9fd313a1718e0efb"><td class="mdescLeft">&#160;</td><td class="mdescRight">A collection of headers and their associated values.  <a href="classGhoti_1_1Wave_1_1Message.html#a58a565cde943e98f9fd313a1718e0efb">More...</a><br /></td></tr>
 <tr class="separator:a58a565cde943e98f9fd313a1718e0efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -279,6 +301,37 @@ std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a HTTP message. </p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a761153d7c88a30dcf97328c8c9548afa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a761153d7c88a30dcf97328c8c9548afa">&#9670;&nbsp;</a></span>Transport</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afa">Ghoti::Wave::Message::Transport</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indicate the transport type of the message. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a761153d7c88a30dcf97328c8c9548afaa287cb887b1ce546cc9cbaf2dbe89c54a"></a>UNDECLARED&#160;</td><td class="fielddoc"><p>The transport type has not been declared, and the <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a> should not be considered to be safe for processing. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a761153d7c88a30dcf97328c8c9548afaafecf1b105992f414d123b4e24c3d16fc"></a>FIXED&#160;</td><td class="fielddoc"><p>The <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a> is a fixed-length and should not be processed until the full length has been received. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a761153d7c88a30dcf97328c8c9548afaa2e150f7631ee269d5c9d39cc17162936"></a>MULTIPART&#160;</td><td class="fielddoc"><p>The <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a> is multipart, each part being separated by a boundary. </p>
+<p>The message should not be processed until all parts have been received. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a761153d7c88a30dcf97328c8c9548afaad1674d8172ac50ca6337a51b175f4655"></a>CHUNKED&#160;</td><td class="fielddoc"><p>The <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a> is sent using a chunked encoding. </p>
+<p>The chunks can be processed as they arrive, asynchronously. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a761153d7c88a30dcf97328c8c9548afaa9962598b869711f22d27c4af6b89a0e9"></a>STREAM&#160;</td><td class="fielddoc"><p>The <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a> did not have a declared (fixed) length. </p>
+<p>The received bytes may be processed asynchronously. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="a7778a82d1bd66554e6184b79f0626c84"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7778a82d1bd66554e6184b79f0626c84">&#9670;&nbsp;</a></span>Type</h2>
 
@@ -330,14 +383,14 @@ std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aee51c219f10c07c3e66090e72abea584"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee51c219f10c07c3e66090e72abea584">&#9670;&nbsp;</a></span>addFieldValue()</h2>
+<a id="aa575b2a04477430c7da80f4711e56a45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa575b2a04477430c7da80f4711e56a45">&#9670;&nbsp;</a></span>addFieldValue()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Message::addFieldValue </td>
+          <td class="memname"><a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &amp; Message::addFieldValue </td>
           <td>(</td>
           <td class="paramtype">const Ghoti::shared_string_view &amp;&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -364,6 +417,7 @@ std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a> object. </dd></dl>
 
 </div>
 </div>
@@ -494,14 +548,14 @@ std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 
 </div>
 </div>
-<a id="aa5b9d0182c343967c0877f41d17e27b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5b9d0182c343967c0877f41d17e27b0">&#9670;&nbsp;</a></span>getMessageBody()</h2>
+<a id="a84b9107c58543899ddcdaa587f9bdbd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84b9107c58543899ddcdaa587f9bdbd1">&#9670;&nbsp;</a></span>getMessageBody()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const shared_string_view &amp; Message::getMessageBody </td>
+          <td class="memname">const <a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Blob</a> &amp; Message::getMessageBody </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -596,18 +650,20 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classGhoti_1_1Wave_1_1Message_a3ec8ce96f52df398037b838014da0031_cgraph.png" border="0" usemap="#aclassGhoti_1_1Wave_1_1Message_a3ec8ce96f52df398037b838014da0031_cgraph" alt=""/></div>
 <map name="aclassGhoti_1_1Wave_1_1Message_a3ec8ce96f52df398037b838014da0031_cgraph" id="aclassGhoti_1_1Wave_1_1Message_a3ec8ce96f52df398037b838014da0031_cgraph">
-<area shape="rect" title="Get the HTTP/1.1 rendered header as a string." alt="" coords="5,201,173,242"/>
-<area shape="rect" href="parsing_8hpp.html#a84b68a0239fef8e3d5c4593b03a79c09" title="Escape a field value." alt="" coords="221,125,440,152"/>
-<area shape="rect" href="parsing_8hpp.html#a92a01e5b01f69671528e110aae88db9b" title="Indicate whether or not the string contains a character which makes it necessary to wrap the string i..." alt="" coords="221,201,440,242"/>
-<area shape="rect" href="parsing_8hpp.html#af45e3e7f8100495bfc94223e866a4414" title="Identify a field name as accepting a list&#45;based set of values." alt="" coords="243,291,418,317"/>
-<area shape="rect" href="parsing_8hpp.html#a47a77678d5e4638680880b45ac1ac761" title="Identify CRLF characters." alt="" coords="514,29,697,56"/>
-<area shape="rect" href="parsing_8hpp.html#adec70db92a8865a37e101e871b5630bb" title="Identify valid field&#45;content characters." alt="" coords="489,104,721,131"/>
-<area shape="rect" href="parsing_8hpp.html#aeb98ad8f7c5015924ee719b3808f0af3" title="Identify valid field&#45;name characters." alt="" coords="495,179,715,205"/>
-<area shape="rect" href="parsing_8hpp.html#aa6729eba8a420c4fecc314d279577d9c" title="Identify valid obs&#45;text characters." alt="" coords="488,253,723,280"/>
-<area shape="rect" href="parsing_8hpp.html#a8f722bdb04497379cf8b142c42afe5a3" title="Identify valid quoted characters." alt="" coords="507,328,704,355"/>
-<area shape="rect" href="parsing_8hpp.html#ad9f44084593f45f840e69de9563f4ff5" title="Identify valid Token characters." alt="" coords="512,403,699,429"/>
-<area shape="rect" href="parsing_8hpp.html#a8de0b151f7ab8614d40964e53e726cd5" title="Identify valid Visible (printing) characters." alt="" coords="508,477,703,504"/>
-<area shape="rect" href="parsing_8hpp.html#a55629dc93ba2176f1146989e91be4971" title="Identify valid whitespace characters." alt="" coords="492,552,719,579"/>
+<area shape="rect" title="Get the HTTP/1.1 rendered header as a string." alt="" coords="5,170,173,211"/>
+<area shape="rect" href="parsing_8hpp.html#a84b68a0239fef8e3d5c4593b03a79c09" title="Escape a field value." alt="" coords="221,29,440,56"/>
+<area shape="rect" href="parsing_8hpp.html#a92a01e5b01f69671528e110aae88db9b" title="Indicate whether or not the string contains a character which makes it necessary to wrap the string i..." alt="" coords="221,105,440,146"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1Message.html#a1e570469338f24476142dd6dd4533dda" title="Get the HTTP method of the message." alt="" coords="247,170,414,211"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1Message.html#a60afe3b00769fe7036469f0094d454e7" title="Get the URL target of the message." alt="" coords="247,235,414,277"/>
+<area shape="rect" href="parsing_8hpp.html#af45e3e7f8100495bfc94223e866a4414" title="Identify a field name as accepting a list&#45;based set of values." alt="" coords="243,325,418,352"/>
+<area shape="rect" href="parsing_8hpp.html#a47a77678d5e4638680880b45ac1ac761" title="Identify CRLF characters." alt="" coords="514,64,697,91"/>
+<area shape="rect" href="parsing_8hpp.html#adec70db92a8865a37e101e871b5630bb" title="Identify valid field&#45;content characters." alt="" coords="489,139,721,165"/>
+<area shape="rect" href="parsing_8hpp.html#aeb98ad8f7c5015924ee719b3808f0af3" title="Identify valid field&#45;name characters." alt="" coords="495,213,715,240"/>
+<area shape="rect" href="parsing_8hpp.html#aa6729eba8a420c4fecc314d279577d9c" title="Identify valid obs&#45;text characters." alt="" coords="488,288,723,315"/>
+<area shape="rect" href="parsing_8hpp.html#a8f722bdb04497379cf8b142c42afe5a3" title="Identify valid quoted characters." alt="" coords="507,363,704,389"/>
+<area shape="rect" href="parsing_8hpp.html#ad9f44084593f45f840e69de9563f4ff5" title="Identify valid Token characters." alt="" coords="512,437,699,464"/>
+<area shape="rect" href="parsing_8hpp.html#a8de0b151f7ab8614d40964e53e726cd5" title="Identify valid Visible (printing) characters." alt="" coords="508,512,703,539"/>
+<area shape="rect" href="parsing_8hpp.html#a55629dc93ba2176f1146989e91be4971" title="Identify valid whitespace characters." alt="" coords="492,587,719,613"/>
 </map>
 </div>
 
@@ -650,6 +706,26 @@ Here is the call graph for this function:</div>
 
 <p>Get the URL target of the message. </p>
 <dl class="section return"><dt>Returns</dt><dd>The URL target. </dd></dl>
+
+</div>
+</div>
+<a id="abeb105501a0702721f6eea3bd9028447"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abeb105501a0702721f6eea3bd9028447">&#9670;&nbsp;</a></span>getTransport()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afa">Message::Transport</a> Message::getTransport </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afa" title="Indicate the transport type of the message.">Message::Transport</a> type of the <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>The transport type of the <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a>. </dd></dl>
 
 </div>
 </div>
@@ -838,6 +914,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Set the content body of the message. </p>
+<p>Sets the transport type to Message::Transport::FIXED.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">body</td><td>The content body. </td></tr>
@@ -978,6 +1055,33 @@ Here is the call graph for this function:</div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">target</td><td>The URL target. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a> object. </dd></dl>
+
+</div>
+</div>
+<a id="a56fd51c18ce05e84746bc79721c5d7ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56fd51c18ce05e84746bc79721c5d7ae">&#9670;&nbsp;</a></span>setTransport()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &amp; Message::setTransport </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afa">Message::Transport</a>&#160;</td>
+          <td class="paramname"><em>transport</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a761153d7c88a30dcf97328c8c9548afa" title="Indicate the transport type of the message.">Message::Transport</a> type of the <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>The transport type of the <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a>. </td></tr>
   </table>
   </dd>
 </dl>

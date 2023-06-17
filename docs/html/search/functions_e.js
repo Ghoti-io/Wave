@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['_7eclient_277',['~Client',['../classGhoti_1_1Wave_1_1Client.html#a840e519ca781888cbd54181572ebe3a7',1,'Ghoti::Wave::Client']]],
-  ['_7eclientsession_278',['~ClientSession',['../classGhoti_1_1Wave_1_1ClientSession.html#a79235eb6d8ce509da6bc1619a750bba6',1,'Ghoti::Wave::ClientSession']]],
-  ['_7eserver_279',['~Server',['../classGhoti_1_1Wave_1_1Server.html#a4b3aa2579cb1c8cd1d069582c14d0fa6',1,'Ghoti::Wave::Server']]],
-  ['_7eserversession_280',['~ServerSession',['../classGhoti_1_1Wave_1_1ServerSession.html#adb56f9aa86018c1f32ef9f0d8736934d',1,'Ghoti::Wave::ServerSession']]]
+  ['write_304',['write',['../classGhoti_1_1Wave_1_1ClientSession.html#a78aab4cb5aad589e3d41d1b49f546af3',1,'Ghoti::Wave::ClientSession::write()'],['../classGhoti_1_1Wave_1_1ServerSession.html#a27a203574e73d16caf3827b5a395642a',1,'Ghoti::Wave::ServerSession::write()']]]
 ];

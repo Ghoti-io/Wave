@@ -1,5 +1,6 @@
 var dir_0da18da037a39bf19c0023fcb6fbfa4a =
 [
+    [ "blob.hpp", "blob_8hpp.html", "blob_8hpp" ],
     [ "client.hpp", "client_8hpp.html", [
       [ "Client", "classGhoti_1_1Wave_1_1Client.html", "classGhoti_1_1Wave_1_1Client" ]
     ] ],

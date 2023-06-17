@@ -109,22 +109,26 @@ Include dependency graph for parser.cpp:</div>
 <area shape="rect" title=" " alt="" coords="122,80,253,107"/>
 <area shape="rect" title=" " alt="" coords="277,80,357,107"/>
 <area shape="rect" href="parser_8hpp.html" title="Header file for declaring the Session class." alt="" coords="431,80,522,107"/>
-<area shape="rect" href="parsing_8hpp.html" title="Header file for declaring text parsing functions." alt="" coords="334,155,433,181"/>
+<area shape="rect" href="parsing_8hpp.html" title="Header file for declaring text parsing functions." alt="" coords="230,155,329,181"/>
 <area shape="rect" title=" " alt="" coords="546,80,589,107"/>
 <area shape="rect" title=" " alt="" coords="613,80,684,107"/>
-<area shape="rect" title=" " alt="" coords="457,155,520,181"/>
-<area shape="rect" href="message_8hpp.html" title="Header file for declaring the Message class." alt="" coords="201,155,310,181"/>
-<area shape="rect" title=" " alt="" coords="437,229,599,271"/>
-<area shape="rect" title=" " alt="" coords="269,237,330,263"/>
-<area shape="rect" title=" " alt="" coords="6,237,57,263"/>
-<area shape="rect" title=" " alt="" coords="81,237,157,263"/>
-<area shape="rect" title=" " alt="" coords="354,237,413,263"/>
-<area shape="rect" title=" " alt="" coords="181,237,244,263"/>
+<area shape="rect" title=" " alt="" coords="667,155,729,181"/>
+<area shape="rect" href="message_8hpp.html" title="Header file for declaring the Message class." alt="" coords="533,155,642,181"/>
+<area shape="rect" title=" " alt="" coords="382,304,545,345"/>
+<area shape="rect" title=" " alt="" coords="477,229,538,256"/>
+<area shape="rect" title=" " alt="" coords="562,229,613,256"/>
+<area shape="rect" title=" " alt="" coords="916,229,992,256"/>
+<area shape="rect" title=" " alt="" coords="394,229,453,256"/>
+<area shape="rect" title=" " alt="" coords="829,229,892,256"/>
+<area shape="rect" href="blob_8hpp.html" title="Header file for declaring the Blob class." alt="" coords="687,229,805,256"/>
+<area shape="rect" title=" " alt="" coords="675,311,817,338"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:aa396377f6e943f589776b5a3af552972"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>START_NEW_INPUT</b></td></tr>
+<tr class="separator:aa396377f6e943f589776b5a3af552972"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a343bec5bf8e30214d3c802351c8b7fd5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>SET_NEW_HEADER</b></td></tr>
 <tr class="separator:a343bec5bf8e30214d3c802351c8b7fd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabe10b53604d079176c7b8de86a1b3ae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>SET_MINOR_STATE</b>(nextState)</td></tr>
@@ -366,6 +370,23 @@ Macros</h2></td></tr>
 <div class="line">  this-&gt;majorStart = this-&gt;cursor; \</div>
 <div class="line">  this-&gt;minorStart = this-&gt;cursor; \</div>
 <div class="line">  this-&gt;contentLength = 0;</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa396377f6e943f589776b5a3af552972"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa396377f6e943f589776b5a3af552972">&#9670;&nbsp;</a></span>START_NEW_INPUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define START_NEW_INPUT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">  this-&gt;input = <span class="keywordtype">string</span>{this-&gt;input.substr(this-&gt;cursor, this-&gt;input.length())}; \</div>
+<div class="line">  this-&gt;cursor = 0; \</div>
+<div class="line">  input_length = this-&gt;input.length();</div>
 </div><!-- fragment -->
 </div>
 </div>

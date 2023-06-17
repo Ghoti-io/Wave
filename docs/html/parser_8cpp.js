@@ -7,5 +7,6 @@ var parser_8cpp =
     [ "REQUEST_STATUS_ERROR", "parser_8cpp.html#aa363cd5ff8824e4bc7c4951fc66c3483", null ],
     [ "SET_MAJOR_STATE", "parser_8cpp.html#aef4ca3980e4157dce87949dbfa3cfe20", null ],
     [ "SET_MINOR_STATE", "parser_8cpp.html#aabe10b53604d079176c7b8de86a1b3ae", null ],
-    [ "SET_NEW_HEADER", "parser_8cpp.html#a343bec5bf8e30214d3c802351c8b7fd5", null ]
+    [ "SET_NEW_HEADER", "parser_8cpp.html#a343bec5bf8e30214d3c802351c8b7fd5", null ],
+    [ "START_NEW_INPUT", "parser_8cpp.html#aa396377f6e943f589776b5a3af552972", null ]
 ];

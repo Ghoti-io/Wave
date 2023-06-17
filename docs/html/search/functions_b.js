@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['read_257',['read',['../classGhoti_1_1Wave_1_1ClientSession.html#a44c5552661bf45641abc61b97f831e53',1,'Ghoti::Wave::ClientSession::read()'],['../classGhoti_1_1Wave_1_1ServerSession.html#a2a02acac9b064406f4e4c3fae5dc6364',1,'Ghoti::Wave::ServerSession::read()']]],
-  ['registermessage_258',['registerMessage',['../classGhoti_1_1Wave_1_1Parser.html#ad30005371048deaf8771cf24de45c806',1,'Ghoti::Wave::Parser']]]
+  ['parser_281',['Parser',['../classGhoti_1_1Wave_1_1Parser.html#a651d50fdabf3f324177aea48be538780',1,'Ghoti::Wave::Parser']]],
+  ['processchunk_282',['processChunk',['../classGhoti_1_1Wave_1_1Parser.html#afc4ff85b48ad66fa9e06e9f32e07981f',1,'Ghoti::Wave::Parser']]]
 ];

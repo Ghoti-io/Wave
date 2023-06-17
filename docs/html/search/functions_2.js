@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['dispatchloop_217',['dispatchLoop',['../classGhoti_1_1Wave_1_1Client.html#aed15ae6bd46ea8a0ab89471eb42d60f5',1,'Ghoti::Wave::Client::dispatchLoop()'],['../classGhoti_1_1Wave_1_1Server.html#a7c9f0bda456b04571ab7abef19a0d3cc',1,'Ghoti::Wave::Server::dispatchLoop()']]]
+  ['clearerror_235',['clearError',['../classGhoti_1_1Wave_1_1Server.html#a542b38d0973a09bbe856b61830d49851',1,'Ghoti::Wave::Server']]],
+  ['client_236',['Client',['../classGhoti_1_1Wave_1_1Client.html#ae51af7aa6b8f591496a8f6a4a87a14bf',1,'Ghoti::Wave::Client']]],
+  ['clientsession_237',['ClientSession',['../classGhoti_1_1Wave_1_1ClientSession.html#a5d2de1fdf67002a3f0a1fe99e576b4f3',1,'Ghoti::Wave::ClientSession']]],
+  ['createnewmessage_238',['createNewMessage',['../classGhoti_1_1Wave_1_1Parser.html#a2ff414c5948042e505cc4d84240329dd',1,'Ghoti::Wave::Parser']]]
 ];
