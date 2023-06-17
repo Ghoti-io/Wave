@@ -211,6 +211,8 @@ class Message {
   /**
    * Set the content body of the message.
    *
+   * Sets the transport type to Message::Transport::FIXED.
+   *
    * @param body The content body.
    * @return The Message object.
    */

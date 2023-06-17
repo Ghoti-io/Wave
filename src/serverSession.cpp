@@ -71,7 +71,14 @@ bool ServerSession::hasWriteDataWaiting() {
   bool dataIsWaiting{false};
 
   if (this->controlMutex->try_lock()) {
-    dataIsWaiting = this->pipeline.size();
+    if (this->pipeline.size()) {
+      auto currentRequest = this->pipeline.front();
+      auto [request, response] = this->messages[currentRequest];
+      if (response->getTransport() == Message::Transport::FIXED) {
+        // A fixed message is waiting to be written.
+        dataIsWaiting = true;
+      }
+    }
     this->controlMutex->unlock();
   }
   return dataIsWaiting;
@@ -99,7 +106,6 @@ void ServerSession::read() {
         auto response = make_shared<Message>(Message::Type::RESPONSE);
         response->setStatusCode(200)
           .setMessageBody("Hello World!");
-        cout << *response;
         this->messages[this->requestSequence] = {temp, response};
         this->pipeline.push(this->requestSequence);
         ++this->requestSequence;
@@ -156,30 +162,33 @@ void ServerSession::write() {
     // Attempt to write out some of the response.
     auto currentRequest = this->pipeline.front();
     auto [request, response] = this->messages[currentRequest];
-    auto assembledMessage = response->getRenderedHeader1() + "Content-Length: " + to_string(response->getContentLength()) + "\r\n\r\n";
-    if (response->getContentLength()) {
-      assembledMessage += response->getMessageBody();
-    }
+    if (response->getTransport() == Message::Transport::FIXED) {
+      auto assembledMessage = response->getRenderedHeader1() + "Content-Length: " + to_string(response->getContentLength()) + "\r\n\r\n";
+      if (response->getContentLength()) {
+        assembledMessage += response->getMessageBody();
+      }
 
-    // Write out as much as possible.
-    auto bytesWritten = ::write(this->hClient, string{assembledMessage}.c_str() + this->writeOffset, assembledMessage.length() - this->writeOffset);
+      // Write out as much as possible.
+      auto bytesWritten = ::write(this->hClient, string{assembledMessage}.c_str() + this->writeOffset, assembledMessage.length() - this->writeOffset);
 
-    // Detect any errors.
-    if (bytesWritten == -1) {
-      cout << "Error writing response: " << strerror(errno) << endl;
-      this->finished = true;
-      close(this->hClient);
-      return;
-    }
+      // Detect any errors.
+      if (bytesWritten == -1) {
+        cout << "Error writing response: " << strerror(errno) << endl;
+        this->finished = true;
+        close(this->hClient);
+        return;
+      }
 
-    // Advance the internal pointer.
-    this->writeOffset += bytesWritten;
+      // Advance the internal pointer.
+      this->writeOffset += bytesWritten;
 
-    // If everything has been written, then remove this message from the
-    // pipeline queue.
-    if (this->writeOffset == assembledMessage.length()) {
-      this->messages.erase(currentRequest);
-      this->pipeline.pop();
+      // If everything has been written, then remove this message from the
+      // pipeline queue.
+      if (this->writeOffset == assembledMessage.length()) {
+        this->messages.erase(currentRequest);
+        this->pipeline.pop();
+        this->writeOffset = 0;
+      }
     }
   }
 }
