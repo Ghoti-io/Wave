@@ -164,10 +164,11 @@ const shared_string_view & Message::getVersion() const {
   return this->version;
 }
 
-void Message::addFieldValue(const shared_string_view & name, const shared_string_view & value) {
+Message & Message::addFieldValue(const shared_string_view & name, const shared_string_view & value) {
   if (!this->headerIsRendered) {
     this->headers[name].push_back(value);
   }
+  return *this;
 }
 
 const map<shared_string_view, vector<shared_string_view>> & Message::getFields() const {

@@ -158,8 +158,9 @@ class Message {
    *
    * @param name The field name.
    * @param value The field value.
+   * @return The Message object.
    */
-  void addFieldValue(const Ghoti::shared_string_view & name, const Ghoti::shared_string_view & value);
+  Message & addFieldValue(const Ghoti::shared_string_view & name, const Ghoti::shared_string_view & value);
 
   /**
    * Get the map of all header field key/value pairs.
