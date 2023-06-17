@@ -31,6 +31,23 @@ class Message {
   };
 
   /**
+   * Indicate the transport type of the message.
+   */
+  enum Transport {
+    UNDECLARED, ///< The transport type has not been declared, and the Message
+                ///<   should not be considered to be safe for processing.
+    FIXED,      ///< The Message is a fixed-length and should not be processed
+                ///<   until the full length has been received.
+    MULTIPART,  ///< The Message is multipart, each part being separated by a
+                ///<   boundary.  The message should not be processed until all
+                ///<   parts have been received.
+    CHUNKED,    ///< The Message is sent using a chunked encoding.  The chunks
+                ///<   can be processed as they arrive, asynchronously.
+    STREAM,     ///< The Message did not have a declared (fixed) length.  The
+                ///<   received bytes may be processed asynchronously.
+  };
+
+  /**
    * The constructor.
    *
    * Messages must have an associated type.
@@ -67,6 +84,21 @@ class Message {
    * @return `true` if there is an error, `false` otherwise.
    */
   bool hasError() const;
+
+  /**
+   * Set the Message::Transport type of the Message.
+   *
+   * @param type The transport type of the Message.
+   * @return The Message object.
+   */
+  Message & setTransport(Message::Transport transport);
+
+  /**
+   * Get the Message::Transport type of the Message.
+   *
+   * @return The transport type of the Message.
+   */
+  Message::Transport getTransport() const;
 
   /**
    * Set the status code of the message.
@@ -282,6 +314,11 @@ class Message {
    * The Message::Type of the message.
    */
   Type type;
+
+  /**
+   * The Message::Transport type of the message.
+   */
+  Transport transport;
 
   /**
    * The ID number of the message.

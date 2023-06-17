@@ -17,6 +17,7 @@ Message::Message(Type type) :
   headerIsRendered{false},
   errorIsSet{false},
   type{type},
+  transport{UNDECLARED},
   id{0},
   port{0},
   statusCode{},
@@ -99,6 +100,15 @@ const shared_string_view & Message::getRenderedHeader1() {
 
 bool Message::hasError() const {
   return this->errorIsSet;
+}
+
+Message & Message::setTransport(Transport transport) {
+  this->transport = transport;
+  return *this;
+}
+
+Message::Transport Message::getTransport() const {
+  return this->transport;
 }
 
 Message & Message::setStatusCode(size_t statusCode) {

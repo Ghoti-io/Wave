@@ -75,6 +75,7 @@ TEST(Message, Defaults) {
   {
     Message m{Message::Type::REQUEST};
     ASSERT_EQ(m.getType(), Message::Type::REQUEST);
+    ASSERT_EQ(m.getTransport(), Message::Transport::UNDECLARED);
     ASSERT_EQ(m.getTarget(), "");
     ASSERT_EQ(m.getDomain(), "");
     ASSERT_EQ(m.getPort(), 0);
@@ -92,6 +93,7 @@ TEST(Message, Defaults) {
   {
     Message m{Message::Type::RESPONSE};
     ASSERT_EQ(m.getType(), Message::Type::RESPONSE);
+    ASSERT_EQ(m.getTransport(), Message::Transport::UNDECLARED);
     ASSERT_EQ(m.getTarget(), "");
     ASSERT_EQ(m.getDomain(), "");
     ASSERT_EQ(m.getPort(), 0);
