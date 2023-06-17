@@ -5,10 +5,13 @@
 
 #include "message.hpp"
 #include "parsing.hpp"
+#include <iostream>
 
 using namespace std;
 using namespace Ghoti;
 using namespace Ghoti::Wave;
+
+static shared_string_view defaultMethod{"GET"};
 
 Message::Message(Type type) :
   headerIsRendered{false},
@@ -19,7 +22,7 @@ Message::Message(Type type) :
   statusCode{},
   contentLength{0},
   message{},
-  method{},
+  method{defaultMethod},
   domain{},
   target{},
   version{},
@@ -39,10 +42,17 @@ void Message::adoptContents(Message & source) {
 
 const shared_string_view & Message::getRenderedHeader1() {
   if (!this->headerIsRendered) {
-    this->renderedHeader = "HTTP/1.1 "
-      + to_string(this->statusCode)
-      + " " + (this->message.length() ? string{this->message} : "OK")
-      + "\r\n";
+    if (this->type == REQUEST) {
+      this->renderedHeader = this->getMethod()
+        + " " + this->getTarget()
+        + " HTTP/1.1\r\n";
+    }
+    else {
+      this->renderedHeader = "HTTP/1.1 "
+        + to_string(this->statusCode)
+        + " " + (this->message.length() ? string{this->message} : "OK")
+        + "\r\n";
+    }
     for (auto & [field, values] : this->headers) {
       if (values.size()) {
         // Output the field name as provided.
@@ -53,8 +63,16 @@ const shared_string_view & Message::getRenderedHeader1() {
         transform(temp.begin(), temp.end(), temp.begin(), ::toupper);
 
         // Wrap the field values with double quotes only when necessary.
-        if (!isListField(temp)) {
-          this->renderedHeader += field[0] + "\r\n";
+        if (!isListField(temp) && (values.size() == 1)) {
+          // Only use double quotes if necessary.
+          // https://www.rfc-editor.org/rfc/rfc9110.html#section-5.6.4-5
+          if (fieldValueQuotesNeeded(values[0])) {
+            this->renderedHeader += '"' + fieldValueEscape(values[0]) + '"';
+          }
+          else {
+            this->renderedHeader += values[0];
+          }
+          this->renderedHeader += "\r\n";
         }
         else {
           bool isFirst{true};
@@ -214,6 +232,7 @@ ostream & Ghoti::Wave::operator<<(ostream & out, Message & message) {
     out << "Request:" << endl
       << "  Domain: " << message.getDomain() << endl
       << "  Port: " << message.getPort() << endl
+      << "  Method: " << message.getMethod() << endl
       << "  Target: " << message.getTarget() << endl;
   }
   else {
@@ -228,7 +247,7 @@ ostream & Ghoti::Wave::operator<<(ostream & out, Message & message) {
       size_t i = values.size();
 
       for (auto & value : values) {
-        out << '"' << value << '"' << (--i ? "," : "");
+        out << value << (--i ? "," : "");
       }
       out << endl;
     }

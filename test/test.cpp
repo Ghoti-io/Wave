@@ -83,7 +83,8 @@ int main(int argc, char** argv) {
     request
       ->setDomain("127.0.0.1")
       .setPort(serverPort)
-      .setTarget("/foo");
+      .setTarget("/foo")
+      .addFieldValue("x-test", "hi\"");
     auto response = c.sendRequest(request);
     cout << "Starting wait" << endl;
     response->getReadyFuture().wait();
