@@ -190,9 +190,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a24e3e1e59ce3d07deea11e62d649b521"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a7778a82d1bd66554e6184b79f0626c84">Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a24e3e1e59ce3d07deea11e62d649b521">getType</a> () const</td></tr>
 <tr class="memdesc:a24e3e1e59ce3d07deea11e62d649b521"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a7778a82d1bd66554e6184b79f0626c84" title="Indicates whether the message is a request or a response.">Message::Type</a> of the message.  <a href="classGhoti_1_1Wave_1_1Message.html#a24e3e1e59ce3d07deea11e62d649b521">More...</a><br /></td></tr>
 <tr class="separator:a24e3e1e59ce3d07deea11e62d649b521"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76cf1c9b587c462a70c51442f6211b50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a76cf1c9b587c462a70c51442f6211b50">setMessageBody</a> (const Ghoti::shared_string_view &amp;body)</td></tr>
-<tr class="memdesc:a76cf1c9b587c462a70c51442f6211b50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the content body of the message.  <a href="classGhoti_1_1Wave_1_1Message.html#a76cf1c9b587c462a70c51442f6211b50">More...</a><br /></td></tr>
-<tr class="separator:a76cf1c9b587c462a70c51442f6211b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5792b18491a0f260b1ddf2c6e391a603"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a5792b18491a0f260b1ddf2c6e391a603">setMessageBody</a> (<a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Ghoti::Wave::Blob</a> &amp;&amp;body)</td></tr>
+<tr class="memdesc:a5792b18491a0f260b1ddf2c6e391a603"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the content body of the message.  <a href="classGhoti_1_1Wave_1_1Message.html#a5792b18491a0f260b1ddf2c6e391a603">More...</a><br /></td></tr>
+<tr class="separator:a5792b18491a0f260b1ddf2c6e391a603"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84b9107c58543899ddcdaa587f9bdbd1"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Ghoti::Wave::Blob</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a84b9107c58543899ddcdaa587f9bdbd1">getMessageBody</a> () const</td></tr>
 <tr class="memdesc:a84b9107c58543899ddcdaa587f9bdbd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content body of the message.  <a href="classGhoti_1_1Wave_1_1Message.html#a84b9107c58543899ddcdaa587f9bdbd1">More...</a><br /></td></tr>
 <tr class="separator:a84b9107c58543899ddcdaa587f9bdbd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -897,8 +897,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a76cf1c9b587c462a70c51442f6211b50"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a76cf1c9b587c462a70c51442f6211b50">&#9670;&nbsp;</a></span>setMessageBody()</h2>
+<a id="a5792b18491a0f260b1ddf2c6e391a603"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5792b18491a0f260b1ddf2c6e391a603">&#9670;&nbsp;</a></span>setMessageBody()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -906,7 +906,7 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="memname"><a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &amp; Message::setMessageBody </td>
           <td>(</td>
-          <td class="paramtype">const Ghoti::shared_string_view &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Ghoti::Wave::Blob</a> &amp;&amp;&#160;</td>
           <td class="paramname"><em>body</em></td><td>)</td>
           <td></td>
         </tr>
@@ -922,6 +922,16 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a> object. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGhoti_1_1Wave_1_1Message_a5792b18491a0f260b1ddf2c6e391a603_cgraph.png" border="0" usemap="#aclassGhoti_1_1Wave_1_1Message_a5792b18491a0f260b1ddf2c6e391a603_cgraph" alt=""/></div>
+<map name="aclassGhoti_1_1Wave_1_1Message_a5792b18491a0f260b1ddf2c6e391a603_cgraph" id="aclassGhoti_1_1Wave_1_1Message_a5792b18491a0f260b1ddf2c6e391a603_cgraph">
+<area shape="rect" title="Set the content body of the message." alt="" coords="5,5,172,47"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1Blob.html#ad68dcb7ed1e26bc9be378c103644045a" title="Alias for Blob.size()." alt="" coords="220,5,367,47"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1Blob.html#a21cbcfdb3e88cd6d16f6735311a2b27d" title="Get the size of the text in the blob." alt="" coords="415,13,587,39"/>
+</map>
+</div>
 
 </div>
 </div>

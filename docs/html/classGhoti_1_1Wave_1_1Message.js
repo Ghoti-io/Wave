@@ -34,7 +34,7 @@ var classGhoti_1_1Wave_1_1Message =
     [ "setErrorMessage", "classGhoti_1_1Wave_1_1Message.html#a369e6742395a32fb0b520e80ab95d9e3", null ],
     [ "setId", "classGhoti_1_1Wave_1_1Message.html#a7e166031a90f643ab9a0ab02f525b772", null ],
     [ "setMessage", "classGhoti_1_1Wave_1_1Message.html#a6659196072f36cea92702e6d53ff854a", null ],
-    [ "setMessageBody", "classGhoti_1_1Wave_1_1Message.html#a76cf1c9b587c462a70c51442f6211b50", null ],
+    [ "setMessageBody", "classGhoti_1_1Wave_1_1Message.html#a5792b18491a0f260b1ddf2c6e391a603", null ],
     [ "setMethod", "classGhoti_1_1Wave_1_1Message.html#a0bc8c0a18f3cbe71cac5f9462f682857", null ],
     [ "setPort", "classGhoti_1_1Wave_1_1Message.html#a534cc103063c73a180385760fcaf1ace", null ],
     [ "setReady", "classGhoti_1_1Wave_1_1Message.html#a551d6c96db4476646e3d8c6f671edf9d", null ],
