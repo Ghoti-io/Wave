@@ -4,6 +4,7 @@
  * Define the Ghoti::Wave::Blob class.
  */
 
+#include <filesystem>
 #include "blob.hpp"
 
 using namespace std;
@@ -14,6 +15,18 @@ Blob::Blob() : type{Blob::Type::TEXT}, text{}, file{} {}
 Blob::Blob(const Ghoti::shared_string_view & text) : type{Blob::Type::TEXT}, text{text}, file{} {}
 
 Blob::Blob(Ghoti::OS::File && file) : type{Blob::Type::FILE}, text{}, file{move(file)} {}
+
+uint32_t Blob::size() const noexcept {
+  if (this->type == Blob::Type::TEXT) {
+    return this->text.length();
+  }
+  error_code ec{};
+  return filesystem::file_size(this->file.getPath(), ec);
+}
+
+uint32_t Blob::length() const noexcept {
+  return this->size();
+}
 
 void Blob::set(Ghoti::shared_string_view & text) {
   this->text = text;

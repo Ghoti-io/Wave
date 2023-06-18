@@ -21,16 +21,22 @@ constexpr auto quantum{10ms};
 
 TEST(Blob, General) {
   {
+    // Default blob object.
     Blob b{};
     ASSERT_EQ(b.getType(), Blob::Type::TEXT);
     ASSERT_EQ(b.getText(), "");
     ASSERT_EQ(string{b.getFile()}, "");
+    ASSERT_EQ(b.size(), 0);
+    ASSERT_EQ(b.length(), 0);
   }
   {
+    // Blob object using a text string.
     Blob b{"a"};
     ASSERT_EQ(b.getType(), Blob::Type::TEXT);
     ASSERT_EQ(b.getText(), "a");
     ASSERT_EQ(string{b.getFile()}, "");
+    ASSERT_EQ(b.size(), 1);
+    ASSERT_EQ(b.length(), 1);
   }
   {
     // Set up a temporary file and write something to it.
@@ -42,8 +48,8 @@ TEST(Blob, General) {
     ASSERT_EQ(b.getType(), Blob::Type::FILE);
     ASSERT_EQ(b.getText(), "");
     ASSERT_EQ(string{b.getFile()}, "a");
-
-    // Verify that the append works.
+    ASSERT_EQ(b.size(), 1);
+    ASSERT_EQ(b.length(), 1);
   }
   {
     // Create a Blob with text.
@@ -58,6 +64,23 @@ TEST(Blob, General) {
     ASSERT_FALSE(b.append("b"));
     // Verify the file wite was successful.
     ASSERT_EQ(string{b.getFile()}, "ab");
+    ASSERT_EQ(b.size(), 2);
+    ASSERT_EQ(b.length(), 2);
+  }
+  {
+    // Truncating a blob with text in memory.
+    Blob b{"abc"};
+    ASSERT_EQ(b.size(), 3);
+    ASSERT_FALSE(b.truncate("hello"));
+    ASSERT_EQ(b.size(), 5);
+  }
+  {
+    // Truncating a blob with text in a file.
+    Blob b{"abc"};
+    b.convertToFile();
+    ASSERT_EQ(b.size(), 3);
+    ASSERT_FALSE(b.truncate("hello"));
+    ASSERT_EQ(b.size(), 5);
   }
 }
 

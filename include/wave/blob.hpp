@@ -59,6 +59,30 @@ class Blob {
   void set(Ghoti::OS::File && file);
 
   /**
+   * Get the size of the text in the blob.
+   *
+   * If the file operation encounters an error, then it will return a
+   * size of 0.  It is up to the caller to investigate to see if there is
+   * a problem with the file.
+   *
+   * @return The size of the text in bytes.
+   */
+  uint32_t size() const noexcept;
+
+  /**
+   * Alias for Blob.size().
+   *
+   * Get the size of the text in the blob.
+   *
+   * If the file operation encounters an error, then it will return a
+   * size of 0.  It is up to the caller to investigate to see if there is
+   * a problem with the file.
+   *
+   * @return The size of the text in bytes.
+   */
+  uint32_t length() const noexcept;
+
+  /**
    * Get the text in the blob.
    *
    * If the Blob is a file blob, then the text will be empty.
