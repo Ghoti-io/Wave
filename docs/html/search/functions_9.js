@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['message_278',['Message',['../classGhoti_1_1Wave_1_1Message.html#ae1563e63f59d38b8eab8ff3846cae504',1,'Ghoti::Wave::Message']]]
+  ['length_285',['length',['../classGhoti_1_1Wave_1_1Blob.html#ad68dcb7ed1e26bc9be378c103644045a',1,'Ghoti::Wave::Blob']]]
 ];

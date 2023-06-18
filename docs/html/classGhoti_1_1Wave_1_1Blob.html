@@ -118,6 +118,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9eebaf199c3685d7fc04045a61b1f0f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Blob.html#a9eebaf199c3685d7fc04045a61b1f0f9">set</a> (Ghoti::OS::File &amp;&amp;<a class="el" href="classGhoti_1_1Wave_1_1Blob.html#ac5170633c2bd0b0ee250b9b76387be82">file</a>)</td></tr>
 <tr class="memdesc:a9eebaf199c3685d7fc04045a61b1f0f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the file contents of the <a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Blob</a>.  <a href="classGhoti_1_1Wave_1_1Blob.html#a9eebaf199c3685d7fc04045a61b1f0f9">More...</a><br /></td></tr>
 <tr class="separator:a9eebaf199c3685d7fc04045a61b1f0f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21cbcfdb3e88cd6d16f6735311a2b27d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Blob.html#a21cbcfdb3e88cd6d16f6735311a2b27d">size</a> () const noexcept</td></tr>
+<tr class="memdesc:a21cbcfdb3e88cd6d16f6735311a2b27d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the size of the text in the blob.  <a href="classGhoti_1_1Wave_1_1Blob.html#a21cbcfdb3e88cd6d16f6735311a2b27d">More...</a><br /></td></tr>
+<tr class="separator:a21cbcfdb3e88cd6d16f6735311a2b27d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad68dcb7ed1e26bc9be378c103644045a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Blob.html#ad68dcb7ed1e26bc9be378c103644045a">length</a> () const noexcept</td></tr>
+<tr class="memdesc:ad68dcb7ed1e26bc9be378c103644045a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for <a class="el" href="classGhoti_1_1Wave_1_1Blob.html#a21cbcfdb3e88cd6d16f6735311a2b27d" title="Get the size of the text in the blob.">Blob.size()</a>.  <a href="classGhoti_1_1Wave_1_1Blob.html#ad68dcb7ed1e26bc9be378c103644045a">More...</a><br /></td></tr>
+<tr class="separator:ad68dcb7ed1e26bc9be378c103644045a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac540571ea2efc084c1e4400f90532f20"><td class="memItemLeft" align="right" valign="top">const Ghoti::shared_string_view &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Blob.html#ac540571ea2efc084c1e4400f90532f20">getText</a> () const</td></tr>
 <tr class="memdesc:ac540571ea2efc084c1e4400f90532f20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the text in the blob.  <a href="classGhoti_1_1Wave_1_1Blob.html#ac540571ea2efc084c1e4400f90532f20">More...</a><br /></td></tr>
 <tr class="separator:ac540571ea2efc084c1e4400f90532f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,6 +136,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6e1575ec7eb964777f1622458f967bd8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Blob.html#a6e1575ec7eb964777f1622458f967bd8">operator==</a> (const Ghoti::shared_string_view &amp;rhs) const</td></tr>
 <tr class="memdesc:a6e1575ec7eb964777f1622458f967bd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare a file against a string.  <a href="classGhoti_1_1Wave_1_1Blob.html#a6e1575ec7eb964777f1622458f967bd8">More...</a><br /></td></tr>
 <tr class="separator:a6e1575ec7eb964777f1622458f967bd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a315a81f55d5414dcc75528158638cc0a"><td class="memItemLeft" align="right" valign="top">std::error_code&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Blob.html#a315a81f55d5414dcc75528158638cc0a">append</a> (const Ghoti::shared_string_view &amp;<a class="el" href="classGhoti_1_1Wave_1_1Blob.html#a4e1484c9a8e19a1297070d7fb523d6be">text</a>)</td></tr>
+<tr class="memdesc:a315a81f55d5414dcc75528158638cc0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append text to the current <a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Blob</a> object.  <a href="classGhoti_1_1Wave_1_1Blob.html#a315a81f55d5414dcc75528158638cc0a">More...</a><br /></td></tr>
+<tr class="separator:a315a81f55d5414dcc75528158638cc0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfd51e3ee3a9e2ad896b612b3a865343"><td class="memItemLeft" align="right" valign="top">std::error_code&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Blob.html#acfd51e3ee3a9e2ad896b612b3a865343">truncate</a> (const Ghoti::shared_string_view &amp;<a class="el" href="classGhoti_1_1Wave_1_1Blob.html#a4e1484c9a8e19a1297070d7fb523d6be">text</a>)</td></tr>
+<tr class="memdesc:acfd51e3ee3a9e2ad896b612b3a865343"><td class="mdescLeft">&#160;</td><td class="mdescRight">Truncate text in the current <a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Blob</a> object and replace it with the supplied text.  <a href="classGhoti_1_1Wave_1_1Blob.html#acfd51e3ee3a9e2ad896b612b3a865343">More...</a><br /></td></tr>
+<tr class="separator:acfd51e3ee3a9e2ad896b612b3a865343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeedee4104422af4cdab0ab29963da0f1"><td class="memItemLeft" align="right" valign="top">std::error_code&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Blob.html#aeedee4104422af4cdab0ab29963da0f1">convertToFile</a> ()</td></tr>
+<tr class="memdesc:aeedee4104422af4cdab0ab29963da0f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the <a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Blob</a> object to be file-based.  <a href="classGhoti_1_1Wave_1_1Blob.html#aeedee4104422af4cdab0ab29963da0f1">More...</a><br /></td></tr>
+<tr class="separator:aeedee4104422af4cdab0ab29963da0f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -200,6 +215,55 @@ Ghoti::OS::File&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a315a81f55d5414dcc75528158638cc0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a315a81f55d5414dcc75528158638cc0a">&#9670;&nbsp;</a></span>append()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">error_code Blob::append </td>
+          <td>(</td>
+          <td class="paramtype">const Ghoti::shared_string_view &amp;&#160;</td>
+          <td class="paramname"><em>text</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Append text to the current <a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Blob</a> object. </p>
+<p>The supplied text will be added to the end of any currently existing text.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>The text to be appended. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The error code resulting from the operation (if any). </dd></dl>
+
+</div>
+</div>
+<a id="aeedee4104422af4cdab0ab29963da0f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeedee4104422af4cdab0ab29963da0f1">&#9670;&nbsp;</a></span>convertToFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">error_code Blob::convertToFile </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert the <a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Blob</a> object to be file-based. </p>
+<p>If the <a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Blob</a> is already file-based, no error will be returned.</p>
+<dl class="section return"><dt>Returns</dt><dd>The error code resulting from the operation (if any). </dd></dl>
+
+</div>
+</div>
 <a id="a9ea95551937be392ba2dde081ae286df"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9ea95551937be392ba2dde081ae286df">&#9670;&nbsp;</a></span>getFile()</h2>
 
@@ -259,6 +323,45 @@ Ghoti::OS::File&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 
 <p>Get the Ghoti::Wave::Blob::Type of data the blob contains. </p>
 <dl class="section return"><dt>Returns</dt><dd>The Ghoti::Wave::Blob::Type of data the blob contains. </dd></dl>
+
+</div>
+</div>
+<a id="ad68dcb7ed1e26bc9be378c103644045a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad68dcb7ed1e26bc9be378c103644045a">&#9670;&nbsp;</a></span>length()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Blob::length </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Alias for <a class="el" href="classGhoti_1_1Wave_1_1Blob.html#a21cbcfdb3e88cd6d16f6735311a2b27d" title="Get the size of the text in the blob.">Blob.size()</a>. </p>
+<p>Get the size of the text in the blob.</p>
+<p>If the file operation encounters an error, then it will return a size of 0. It is up to the caller to investigate to see if there is a problem with the file.</p>
+<dl class="section return"><dt>Returns</dt><dd>The size of the text in bytes. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGhoti_1_1Wave_1_1Blob_ad68dcb7ed1e26bc9be378c103644045a_cgraph.png" border="0" usemap="#aclassGhoti_1_1Wave_1_1Blob_ad68dcb7ed1e26bc9be378c103644045a_cgraph" alt=""/></div>
+<map name="aclassGhoti_1_1Wave_1_1Blob_ad68dcb7ed1e26bc9be378c103644045a_cgraph" id="aclassGhoti_1_1Wave_1_1Blob_ad68dcb7ed1e26bc9be378c103644045a_cgraph">
+<area shape="rect" title="Alias for Blob.size()." alt="" coords="5,5,152,47"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1Blob.html#a21cbcfdb3e88cd6d16f6735311a2b27d" title="Get the size of the text in the blob." alt="" coords="200,13,372,39"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -340,6 +443,62 @@ Ghoti::OS::File&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a21cbcfdb3e88cd6d16f6735311a2b27d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21cbcfdb3e88cd6d16f6735311a2b27d">&#9670;&nbsp;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Blob::size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the size of the text in the blob. </p>
+<p>If the file operation encounters an error, then it will return a size of 0. It is up to the caller to investigate to see if there is a problem with the file.</p>
+<dl class="section return"><dt>Returns</dt><dd>The size of the text in bytes. </dd></dl>
+
+</div>
+</div>
+<a id="acfd51e3ee3a9e2ad896b612b3a865343"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfd51e3ee3a9e2ad896b612b3a865343">&#9670;&nbsp;</a></span>truncate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">error_code Blob::truncate </td>
+          <td>(</td>
+          <td class="paramtype">const Ghoti::shared_string_view &amp;&#160;</td>
+          <td class="paramname"><em>text</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Truncate text in the current <a class="el" href="classGhoti_1_1Wave_1_1Blob.html">Blob</a> object and replace it with the supplied text. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>The text to be written after the truncation.. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The error code resulting from the operation (if any). </dd></dl>
 
 </div>
 </div>
