@@ -8,10 +8,12 @@
 #define SERVER_HPP
 
 #include <ghoti.io/pool.hpp>
+#include <any>
 #include <map>
 #include <memory>
 #include <string>
 #include <thread>
+#include "wave/macros.hpp"
 
 namespace Ghoti::Wave {
 class ServerSession;

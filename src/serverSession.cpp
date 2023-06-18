@@ -108,8 +108,10 @@ void ServerSession::read() {
   scoped_lock lock{*this->controlMutex};
 
   while (1) {
-    char buffer[MAXBUFFERSIZE] = {0};
-    ssize_t byte_count = recv(hClient, buffer, MAXBUFFERSIZE, 0);
+    auto maxBufferSize = *this->getParameter<uint32_t>(Parameter::MAXBUFFERSIZE);
+    vector<char> bufferVector(maxBufferSize);
+    char * buffer{bufferVector.data()};
+    ssize_t byte_count = recv(hClient, buffer, maxBufferSize, 0);
     if (byte_count > 0) {
       this->parser.processChunk(buffer, byte_count);
 

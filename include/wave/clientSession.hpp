@@ -17,6 +17,7 @@
 #include <map>
 #include "message.hpp"
 #include <string>
+#include "wave/hasParameters.hpp"
 
 namespace Ghoti::Wave {
 class Client;
@@ -24,7 +25,7 @@ class Client;
 /**
  * Represents a connection to a particular domain/port pair.
  */
-class ClientSession {
+class ClientSession : public HasParameters {
   public:
   /**
    * The constructor.

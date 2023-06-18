@@ -16,6 +16,7 @@
 #include <map>
 #include "message.hpp"
 #include <string>
+#include "wave/hasParameters.hpp"
 
 namespace Ghoti::Wave {
 class Server;
@@ -23,7 +24,7 @@ class Server;
 /**
  * Represents a persistent connection with a client.
  */
-class ServerSession {
+class ServerSession : public HasParameters {
   public:
   /**
    * The constructor.

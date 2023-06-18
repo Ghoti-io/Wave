@@ -8,7 +8,14 @@
 
 
 namespace Ghoti::Wave {
-  constexpr size_t MAXBUFFERSIZE = 4096;
+  /**
+   * Sessings parameters which influence the behavior of Wave and its
+   * components.
+   */
+  enum class Parameter {
+    MAXBUFFERSIZE, ///< The read/write buffer size used when interacting with
+                   ///<   sockets.
+  };
 };
 
 #endif // MACROS_HPP
