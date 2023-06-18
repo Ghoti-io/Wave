@@ -3,8 +3,8 @@
  * Header file for declaring the Client class.
  */
 
-#ifndef MACROS_HPP
-#define MACROS_HPP
+#ifndef GHOTI_WAVE_MACROS_HPP
+#define GHOTI_WAVE_MACROS_HPP
 
 
 namespace Ghoti::Wave {
@@ -18,6 +18,6 @@ namespace Ghoti::Wave {
   };
 };
 
-#endif // MACROS_HPP
+#endif // GHOTI_WAVE_MACROS_HPP
 
 

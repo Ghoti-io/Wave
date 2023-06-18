@@ -162,6 +162,14 @@ $(APP_DIR)/test: \
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) $(WAVELIBRARY)
 
+$(APP_DIR)/test-hasParameters: \
+				test/test-hasParameters.cpp \
+				$(DEP_HASPARAMETERS) \
+				$(OBJ_DIR)/hasParameters.o
+	@echo "\n### Compiling Wave HasParameters Test ###"
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) $(OBJ_DIR)/hasParameters.o
+
 ####################################################################
 # Commands
 ####################################################################
@@ -192,12 +200,14 @@ test-watch: ## Watch the file directory for changes and run the unit tests
 
 test: ## Make and run the Unit tests
 test: \
+				$(APP_DIR)/test-hasParameters \
 				$(APP_DIR)/test
 	@echo "\033[0;32m"
 	@echo "############################"
 	@echo "### Running normal tests ###"
 	@echo "############################"
 	@echo "\033[0m"
+	env $(APP_DIR)/test-hasParameters --gtest_brief=1
 	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test --gtest_brief=1
 
 clean: ## Remove all contents of the build directories.
