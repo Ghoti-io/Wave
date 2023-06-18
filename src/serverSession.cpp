@@ -120,7 +120,7 @@ void ServerSession::read() {
         this->parser.messages.pop();
         auto response = make_shared<Message>(Message::Type::RESPONSE);
         response->setStatusCode(200)
-          .setMessageBody("Hello World!");
+          .setMessageBody({"Hello World!"});
         this->messages[this->requestSequence] = {temp, response};
         this->pipeline.push(this->requestSequence);
         ++this->requestSequence;

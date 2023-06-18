@@ -217,7 +217,7 @@ class Message {
    * @param body The content body.
    * @return The Message object.
    */
-  Message & setMessageBody(const Ghoti::shared_string_view & body);
+  Message & setMessageBody(Ghoti::Wave::Blob && body);
 
   /**
    * Get the content body of the message.

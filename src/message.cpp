@@ -189,9 +189,9 @@ Message::Type Message::getType() const {
   return this->type;
 }
 
-Message & Message::setMessageBody(const shared_string_view & messageBody) {
-  this->messageBody = messageBody;
+Message & Message::setMessageBody(Blob && messageBody) {
   this->contentLength = messageBody.length();
+  this->messageBody = move(messageBody);
   this->transport = Message::Transport::FIXED;
   return *this;
 }
