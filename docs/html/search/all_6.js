@@ -14,7 +14,7 @@ var searchData=
   ['getparameter_68',['getParameter',['../classGhoti_1_1Wave_1_1HasParameters.html#ac887c0d14747d6645dd9b81661f342a2',1,'Ghoti::Wave::HasParameters']]],
   ['getparameterany_69',['getParameterAny',['../classGhoti_1_1Wave_1_1HasParameters.html#ad5e4544876b6fdd4916899c4863952c6',1,'Ghoti::Wave::HasParameters']]],
   ['getport_70',['getPort',['../classGhoti_1_1Wave_1_1Message.html#ac80517eec2651791842526bd4ca29ea8',1,'Ghoti::Wave::Message::getPort()'],['../classGhoti_1_1Wave_1_1Server.html#a0bebc34d68fc248fabfdd6f77b0c938e',1,'Ghoti::Wave::Server::getPort()']]],
-  ['getreadyfuture_71',['getReadyFuture',['../classGhoti_1_1Wave_1_1Message.html#aa3561a72d5422eb83a61cab4185ebf26',1,'Ghoti::Wave::Message']]],
+  ['getreadysemaphore_71',['getReadySemaphore',['../classGhoti_1_1Wave_1_1Message.html#ad553dbe840e25fcb7ae0fb1402969ee5',1,'Ghoti::Wave::Message']]],
   ['getrenderedheader1_72',['getRenderedHeader1',['../classGhoti_1_1Wave_1_1Message.html#a3ec8ce96f52df398037b838014da0031',1,'Ghoti::Wave::Message']]],
   ['getsockethandle_73',['getSocketHandle',['../classGhoti_1_1Wave_1_1Server.html#ade6e470129f7f05029a2ef26c32ce6db',1,'Ghoti::Wave::Server']]],
   ['getstatuscode_74',['getStatusCode',['../classGhoti_1_1Wave_1_1Message.html#a06e6a6dc0b915e8d19367fb6d7b76b53',1,'Ghoti::Wave::Message']]],

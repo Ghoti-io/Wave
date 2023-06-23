@@ -211,12 +211,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afadb119954460e121a699f3dbed4bd76"><td class="memItemLeft" align="right" valign="top">const Ghoti::shared_string_view &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#afadb119954460e121a699f3dbed4bd76">getDomain</a> () const</td></tr>
 <tr class="memdesc:afadb119954460e121a699f3dbed4bd76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the domain to which the message is targeted.  <a href="classGhoti_1_1Wave_1_1Message.html#afadb119954460e121a699f3dbed4bd76">More...</a><br /></td></tr>
 <tr class="separator:afadb119954460e121a699f3dbed4bd76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a551d6c96db4476646e3d8c6f671edf9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a551d6c96db4476646e3d8c6f671edf9d">setReady</a> (bool isError)</td></tr>
-<tr class="memdesc:a551d6c96db4476646e3d8c6f671edf9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notify the associated promise/future that the message is completed.  <a href="classGhoti_1_1Wave_1_1Message.html#a551d6c96db4476646e3d8c6f671edf9d">More...</a><br /></td></tr>
-<tr class="separator:a551d6c96db4476646e3d8c6f671edf9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3561a72d5422eb83a61cab4185ebf26"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#aa3561a72d5422eb83a61cab4185ebf26">getReadyFuture</a> ()</td></tr>
-<tr class="memdesc:aa3561a72d5422eb83a61cab4185ebf26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the future which will indicate when the message has been fully processed.  <a href="classGhoti_1_1Wave_1_1Message.html#aa3561a72d5422eb83a61cab4185ebf26">More...</a><br /></td></tr>
-<tr class="separator:aa3561a72d5422eb83a61cab4185ebf26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca9e5210c8b1d90d045980cee2c3a86e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#aca9e5210c8b1d90d045980cee2c3a86e">setReady</a> (bool <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a2d5b99523eab83b443464db35b101532">isFinished</a>)</td></tr>
+<tr class="memdesc:aca9e5210c8b1d90d045980cee2c3a86e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notify anyone monitoring the readySemaphore that there is data ready to be processed.  <a href="classGhoti_1_1Wave_1_1Message.html#aca9e5210c8b1d90d045980cee2c3a86e">More...</a><br /></td></tr>
+<tr class="separator:aca9e5210c8b1d90d045980cee2c3a86e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d5b99523eab83b443464db35b101532"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a2d5b99523eab83b443464db35b101532">isFinished</a> () const noexcept</td></tr>
+<tr class="memdesc:a2d5b99523eab83b443464db35b101532"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate that the message parsing is completed for this message.  <a href="classGhoti_1_1Wave_1_1Message.html#a2d5b99523eab83b443464db35b101532">More...</a><br /></td></tr>
+<tr class="separator:a2d5b99523eab83b443464db35b101532"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad553dbe840e25fcb7ae0fb1402969ee5"><td class="memItemLeft" align="right" valign="top">std::binary_semaphore &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#ad553dbe840e25fcb7ae0fb1402969ee5">getReadySemaphore</a> ()</td></tr>
+<tr class="memdesc:ad553dbe840e25fcb7ae0fb1402969ee5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the semaphore which will indicate when the message is ready for further processing.  <a href="classGhoti_1_1Wave_1_1Message.html#ad553dbe840e25fcb7ae0fb1402969ee5">More...</a><br /></td></tr>
+<tr class="separator:ad553dbe840e25fcb7ae0fb1402969ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e166031a90f643ab9a0ab02f525b772"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a7e166031a90f643ab9a0ab02f525b772">setId</a> (uint32_t <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a245cd09c6ff6781233b7c91d5c7a6d7f">id</a>)</td></tr>
 <tr class="memdesc:a7e166031a90f643ab9a0ab02f525b772"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the ID of the message.  <a href="classGhoti_1_1Wave_1_1Message.html#a7e166031a90f643ab9a0ab02f525b772">More...</a><br /></td></tr>
 <tr class="separator:a7e166031a90f643ab9a0ab02f525b772"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -234,6 +237,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#ad27e642b3851e4b29a0af01348e58576">errorIsSet</a></td></tr>
 <tr class="memdesc:ad27e642b3851e4b29a0af01348e58576"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tracks whether or not an error has been set. <br /></td></tr>
 <tr class="separator:ad27e642b3851e4b29a0af01348e58576"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96355b3d1aa1ae2d1f048e224d73d923"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a96355b3d1aa1ae2d1f048e224d73d923">parsingIsFinished</a></td></tr>
+<tr class="memdesc:a96355b3d1aa1ae2d1f048e224d73d923"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether or not the message is "finished" (i.e., there is no more content expected) when the readySemaphore is set.  <a href="classGhoti_1_1Wave_1_1Message.html#a96355b3d1aa1ae2d1f048e224d73d923">More...</a><br /></td></tr>
+<tr class="separator:a96355b3d1aa1ae2d1f048e224d73d923"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6dff22b3e7e443ed9982e156a46c46b5"><td class="memItemLeft" align="right" valign="top"><a id="a6dff22b3e7e443ed9982e156a46c46b5"></a>
 <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a7778a82d1bd66554e6184b79f0626c84">Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a6dff22b3e7e443ed9982e156a46c46b5">type</a></td></tr>
 <tr class="memdesc:a6dff22b3e7e443ed9982e156a46c46b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a7778a82d1bd66554e6184b79f0626c84" title="Indicates whether the message is a request or a response.">Message::Type</a> of the message. <br /></td></tr>
@@ -289,14 +295,10 @@ Ghoti::shared_string_view&#160;</td><td class="memItemRight" valign="bottom"><a 
 <tr class="memitem:a58a565cde943e98f9fd313a1718e0efb"><td class="memItemLeft" align="right" valign="top">std::map&lt; Ghoti::shared_string_view, std::vector&lt; Ghoti::shared_string_view &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a58a565cde943e98f9fd313a1718e0efb">headers</a></td></tr>
 <tr class="memdesc:a58a565cde943e98f9fd313a1718e0efb"><td class="mdescLeft">&#160;</td><td class="mdescRight">A collection of headers and their associated values.  <a href="classGhoti_1_1Wave_1_1Message.html#a58a565cde943e98f9fd313a1718e0efb">More...</a><br /></td></tr>
 <tr class="separator:a58a565cde943e98f9fd313a1718e0efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6753968a4fcedc65624e1ddc5b830383"><td class="memItemLeft" align="right" valign="top"><a id="a6753968a4fcedc65624e1ddc5b830383"></a>
-std::promise&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a6753968a4fcedc65624e1ddc5b830383">readyPromise</a></td></tr>
-<tr class="memdesc:a6753968a4fcedc65624e1ddc5b830383"><td class="mdescLeft">&#160;</td><td class="mdescRight">The promise used for asynchronous notification of when the message has been processed. <br /></td></tr>
-<tr class="separator:a6753968a4fcedc65624e1ddc5b830383"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf628c2c962563f586d394467b8e9350"><td class="memItemLeft" align="right" valign="top"><a id="abf628c2c962563f586d394467b8e9350"></a>
-std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#abf628c2c962563f586d394467b8e9350">readyFuture</a></td></tr>
-<tr class="memdesc:abf628c2c962563f586d394467b8e9350"><td class="mdescLeft">&#160;</td><td class="mdescRight">The future used for asynchronous notification of when the message has been processed. <br /></td></tr>
-<tr class="separator:abf628c2c962563f586d394467b8e9350"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95d4cb7d018bc6569d1527e6a7b1bd10"><td class="memItemLeft" align="right" valign="top"><a id="a95d4cb7d018bc6569d1527e6a7b1bd10"></a>
+std::binary_semaphore&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Message.html#a95d4cb7d018bc6569d1527e6a7b1bd10">readySemaphore</a></td></tr>
+<tr class="memdesc:a95d4cb7d018bc6569d1527e6a7b1bd10"><td class="mdescLeft">&#160;</td><td class="mdescRight">The semaphore used for asynchronous notification of when the message is ready for processing. <br /></td></tr>
+<tr class="separator:a95d4cb7d018bc6569d1527e6a7b1bd10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a HTTP message. </p>
@@ -608,14 +610,14 @@ std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 
 </div>
 </div>
-<a id="aa3561a72d5422eb83a61cab4185ebf26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3561a72d5422eb83a61cab4185ebf26">&#9670;&nbsp;</a></span>getReadyFuture()</h2>
+<a id="ad553dbe840e25fcb7ae0fb1402969ee5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad553dbe840e25fcb7ae0fb1402969ee5">&#9670;&nbsp;</a></span>getReadySemaphore()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">future&lt; bool &gt; &amp; Message::getReadyFuture </td>
+          <td class="memname">binary_semaphore &amp; Message::getReadySemaphore </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -623,8 +625,8 @@ std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
       </table>
 </div><div class="memdoc">
 
-<p>Get the future which will indicate when the message has been fully processed. </p>
-<dl class="section return"><dt>Returns</dt><dd>The future used to monitor the status of the message. </dd></dl>
+<p>Get the semaphore which will indicate when the message is ready for further processing. </p>
+<dl class="section return"><dt>Returns</dt><dd>The semaphore used to monitor the status of the message. </dd></dl>
 
 </div>
 </div>
@@ -786,6 +788,34 @@ Here is the call graph for this function:</div>
 
 <p>Indicates that the message has an error. </p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if there is an error, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a2d5b99523eab83b443464db35b101532"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d5b99523eab83b443464db35b101532">&#9670;&nbsp;</a></span>isFinished()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Message::isFinished </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Indicate that the message parsing is completed for this message. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the message parsing is complete, <code>false</code> otherwise. </dd></dl>
 
 </div>
 </div>
@@ -989,8 +1019,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a551d6c96db4476646e3d8c6f671edf9d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a551d6c96db4476646e3d8c6f671edf9d">&#9670;&nbsp;</a></span>setReady()</h2>
+<a id="aca9e5210c8b1d90d045980cee2c3a86e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca9e5210c8b1d90d045980cee2c3a86e">&#9670;&nbsp;</a></span>setReady()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -999,21 +1029,28 @@ Here is the call graph for this function:</div>
           <td class="memname">void Message::setReady </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>isError</em></td><td>)</td>
+          <td class="paramname"><em>isFinished</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Notify the associated promise/future that the message is completed. </p>
-<p>Note that a value of <code>true</code> only indicates that the message completed and the response was parsed. It does not indicate anything about the response code of the message (e.g., the status code may be 404, but because the response actually came from the server, this value should be <code>true</code>).</p>
-<p>A value of <code>false</code> indicates that there was a problem either in delivering the message (such as a write failure) or an error in parsing the response.</p>
+<p>Notify anyone monitoring the readySemaphore that there is data ready to be processed. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">requestCompleted</td><td><code>true</code> if this is the result of a successful HTTP request, otherwise <code>false</code>. </td></tr>
+    <tr><td class="paramname">isFinished</td><td><code>true</code> if the message transmission is completed, otherwise <code>false</code>. </td></tr>
   </table>
   </dd>
 </dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGhoti_1_1Wave_1_1Message_aca9e5210c8b1d90d045980cee2c3a86e_cgraph.png" border="0" usemap="#aclassGhoti_1_1Wave_1_1Message_aca9e5210c8b1d90d045980cee2c3a86e_cgraph" alt=""/></div>
+<map name="aclassGhoti_1_1Wave_1_1Message_aca9e5210c8b1d90d045980cee2c3a86e_cgraph" id="aclassGhoti_1_1Wave_1_1Message_aca9e5210c8b1d90d045980cee2c3a86e_cgraph">
+<area shape="rect" title="Notify anyone monitoring the readySemaphore that there is data ready to be processed." alt="" coords="5,5,172,47"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1Message.html#a2d5b99523eab83b443464db35b101532" title="Indicate that the message parsing is completed for this message." alt="" coords="220,5,387,47"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -1149,6 +1186,31 @@ Here is the call graph for this function:</div>
 
 <p>A collection of headers and their associated values. </p>
 <p><code>headers[field name] = [field value]</code> </p>
+
+</div>
+</div>
+<a id="a96355b3d1aa1ae2d1f048e224d73d923"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96355b3d1aa1ae2d1f048e224d73d923">&#9670;&nbsp;</a></span>parsingIsFinished</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Ghoti::Wave::Message::parsingIsFinished</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Indicates whether or not the message is "finished" (i.e., there is no more content expected) when the readySemaphore is set. </p>
+<p>Streaming, multipart, and chunked messages will use the readySemaphore to indicate that some part of the message is newly available so that processing can be done in a streaming format. </p>
 
 </div>
 </div>
