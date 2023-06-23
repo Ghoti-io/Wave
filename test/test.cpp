@@ -237,7 +237,7 @@ int main(int argc, char** argv) {
       .addFieldValue("x-test", "hi\"");
     auto response = c.sendRequest(request);
     cout << "Starting wait" << endl;
-    response->getReadyFuture().wait();
+    response->getReadySemaphore().acquire();
     cout << "After wait" << endl;
 
     cout << *response;

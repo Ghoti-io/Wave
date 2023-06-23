@@ -7,9 +7,9 @@
 #ifndef MESSAGE_HPP
 #define MESSAGE_HPP
 
-#include <future>
 #include <map>
 #include <ostream>
+#include <semaphore>
 #include <string>
 #include <vector>
 #include <ghoti.io/shared_string_view.hpp>
@@ -264,28 +264,28 @@ class Message {
   const Ghoti::shared_string_view & getDomain() const;
 
   /**
-   * Notify the associated promise/future that the message is completed.
+   * Notify anyone monitoring the readySemaphore that there is data ready to
+   * be processed.
    *
-   * Note that a value of `true` only indicates that the message completed and
-   * the response was parsed.  It does not indicate anything about the response
-   * code of the message (e.g., the status code may be 404, but because the
-   * response actually came from the server, this value should be `true`).
-   *
-   * A value of `false` indicates that there was a problem either in delivering
-   * the message (such as a write failure) or an error in parsing the response.
-   *
-   * @param requestCompleted `true` if this is the result of a successful HTTP
-   *   request, otherwise `false`.
+   * @param isFinished `true` if the message transmission is completed,
+   *   otherwise `false`.
    */
-  void setReady(bool isError);
+  void setReady(bool isFinished);
 
   /**
-   * Get the future which will indicate when the message has been fully
-   * processed.
+   * Indicate that the message parsing is completed for this message.
    *
-   * @return The future used to monitor the status of the message.
+   * @return `true` if the message parsing is complete, `false` otherwise.
    */
-  std::future<bool> & getReadyFuture();
+  bool isFinished() const noexcept;
+
+  /**
+   * Get the semaphore which will indicate when the message is ready for
+   * further processing.
+   *
+   * @return The semaphore used to monitor the status of the message.
+   */
+  std::binary_semaphore & getReadySemaphore();
 
   /**
    * Set the ID of the message.
@@ -312,6 +312,16 @@ class Message {
    * Tracks whether or not an error has been set.
    */
   bool errorIsSet;
+
+  /**
+   * Indicates whether or not the message is "finished" (i.e., there is no
+   * more content expected) when the readySemaphore is set.
+   *
+   * Streaming, multipart, and chunked messages will use the readySemaphore
+   * to indicate that some part of the message is newly available so that
+   * processing can be done in a streaming format.
+   */
+  bool parsingIsFinished;
 
   /**
    * The Message::Type of the message.
@@ -386,16 +396,10 @@ class Message {
   std::map<Ghoti::shared_string_view, std::vector<Ghoti::shared_string_view>> headers;
 
   /**
-   * The promise used for asynchronous notification of when the message has
-   * been processed.
+   * The semaphore used for asynchronous notification of when the message
+   * is ready for processing.
    */
-  std::promise<bool> readyPromise;
-
-  /**
-   * The future used for asynchronous notification of when the message has
-   * been processed.
-   */
-  std::future<bool> readyFuture;
+  std::binary_semaphore readySemaphore;
 };
 
 /**

@@ -16,6 +16,7 @@ static shared_string_view defaultMethod{"GET"};
 Message::Message(Type type) :
   headerIsRendered{false},
   errorIsSet{false},
+  parsingIsFinished{false},
   type{type},
   transport{UNDECLARED},
   id{0},
@@ -29,16 +30,31 @@ Message::Message(Type type) :
   version{},
   messageBody{},
   headers{},
-  readyPromise{},
-  readyFuture{this->readyPromise.get_future()} {
+  readySemaphore{0} {
 }
 
 void Message::adoptContents(Message & source) {
-  auto tempPromise = move(this->readyPromise);
-  auto tempFuture = move(this->readyFuture);
-  *this = move(source);
-  this->readyPromise = move(tempPromise);
-  this->readyFuture = move(tempFuture);
+  // The semaphore cannot be moved, so we have to do things the hard way.
+  this->headerIsRendered = move(source.headerIsRendered);
+  this->errorIsSet = move(source.errorIsSet);
+  this->parsingIsFinished = move(source.parsingIsFinished);
+  this->type = move(source.type);
+  this->transport = move(source.transport);
+  this->id = move(source.id);
+  this->port = move(source.port);
+  this->statusCode = move(source.statusCode);
+  this->contentLength = move(source.contentLength);
+  this->message = move(source.message);
+  this->method = move(source.method);
+  this->domain = move(source.domain);
+  this->target = move(source.target);
+  this->version = move(source.version);
+  this->messageBody = move(source.messageBody);
+  this->headers = move(source.headers);
+  // The semaphore is not copied, but we can synchronize the state.
+  if (source.readySemaphore.try_acquire()) {
+    this->readySemaphore.release();
+  }
 }
 
 const shared_string_view & Message::getRenderedHeader1() {
@@ -222,12 +238,17 @@ const shared_string_view & Message::getDomain() const {
   return this->domain;
 }
 
-void Message::setReady(bool isError) {
-  this->readyPromise.set_value(isError);
+void Message::setReady(bool isFinished) {
+  this->parsingIsFinished = isFinished;
+  this->readySemaphore.release();
 }
 
-future<bool> & Message::getReadyFuture() {
-  return this->readyFuture;
+bool Message::isFinished() const noexcept {
+  return this->parsingIsFinished;
+}
+
+binary_semaphore & Message::getReadySemaphore() {
+  return this->readySemaphore;
 }
 
 Message & Message::setId(uint32_t id) {

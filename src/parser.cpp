@@ -553,6 +553,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
             if ((this->cursor - this->minorStart) == this->contentLength) {
               this->currentMessage->setMessageBody(this->input.substr(this->minorStart, this->cursor - this->minorStart));
               // This is the end of the message.
+              this->currentMessage->setReady(true);
               this->messages.emplace(move(this->currentMessage));
               this->currentMessage = this->createNewMessage();
 
@@ -585,12 +586,8 @@ void Parser::registerMessage(shared_ptr<Message> message) {
   if (this->messageRegister.contains(id)) {
     // There is already a message with this id.
     auto source = this->messageRegister[id];
-    message->adoptContents(*source);
     this->messageRegister[id] = message;
-    if (future_status::ready == source->getReadyFuture().wait_for(0s)) {
-      // The source future is already ready, so pass the result to the target.
-      message->setReady(source->getReadyFuture().get());
-    }
+    message->adoptContents(*source);
   }
   else {
     // There is not a message with this id.
