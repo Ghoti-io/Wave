@@ -84,6 +84,7 @@ $(document).ready(function(){initNavTree('classGhoti_1_1Wave_1_1Client.html','')
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classGhoti_1_1Wave_1_1Client-members.html">List of all members</a>  </div>
@@ -107,6 +108,13 @@ Collaboration diagram for Ghoti::Wave::Client:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a9e1f5e24dc2e132a1189c0a7affe06a8"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Client.html#a9e1f5e24dc2e132a1189c0a7affe06a8">Parameter</a> { <a class="el" href="classGhoti_1_1Wave_1_1Client.html#a9e1f5e24dc2e132a1189c0a7affe06a8af2f31a8f9d68f088b5be1070b5007d41">MAXBUFFERSIZE</a>
+ }</td></tr>
+<tr class="memdesc:a9e1f5e24dc2e132a1189c0a7affe06a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sessings parameters which influence the behavior of Wave and its components.  <a href="classGhoti_1_1Wave_1_1Client.html#a9e1f5e24dc2e132a1189c0a7affe06a8">More...</a><br /></td></tr>
+<tr class="separator:a9e1f5e24dc2e132a1189c0a7affe06a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae51af7aa6b8f591496a8f6a4a87a14bf"><td class="memItemLeft" align="right" valign="top"><a id="ae51af7aa6b8f591496a8f6a4a87a14bf"></a>
@@ -156,7 +164,36 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>This class is currently only used for testing (so that the HTTP connection can be controlled explicitly), but that does not mean that it can't be used for more.</p>
 <p>The <a class="el" href="classGhoti_1_1Wave_1_1Client.html" title="Represents a client and all of its HTTP connections.">Client</a> object can establish connections to a server, receive message requests and forward them to the appropriate session, and report on the status of the connections.</p>
 <p>This class exists primarily for testing the server, and as such offers fine-grained control of enabling and disabling features. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a9e1f5e24dc2e132a1189c0a7affe06a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e1f5e24dc2e132a1189c0a7affe06a8">&#9670;&nbsp;</a></span>Parameter</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classGhoti_1_1Wave_1_1Client.html#a9e1f5e24dc2e132a1189c0a7affe06a8">Ghoti::Wave::Client::Parameter</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sessings parameters which influence the behavior of Wave and its components. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a9e1f5e24dc2e132a1189c0a7affe06a8af2f31a8f9d68f088b5be1070b5007d41"></a>MAXBUFFERSIZE&#160;</td><td class="fielddoc"><p>The read/write buffer size used when interacting with sockets. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="aed15ae6bd46ea8a0ab89471eb42d60f5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aed15ae6bd46ea8a0ab89471eb42d60f5">&#9670;&nbsp;</a></span>dispatchLoop()</h2>
 

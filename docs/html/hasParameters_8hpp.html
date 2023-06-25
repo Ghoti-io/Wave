@@ -96,17 +96,15 @@ $(document).ready(function(){initNavTree('hasParameters_8hpp.html',''); initResi
 <div class="textblock"><code>#include &lt;any&gt;</code><br />
 <code>#include &lt;optional&gt;</code><br />
 <code>#include &lt;unordered_map&gt;</code><br />
-<code>#include &quot;<a class="el" href="macros_8hpp_source.html">wave/macros.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for hasParameters.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="hasParameters_8hpp__incl.png" border="0" usemap="#ainclude_2wave_2hasParameters_8hpp" alt=""/></div>
 <map name="ainclude_2wave_2hasParameters_8hpp" id="ainclude_2wave_2hasParameters_8hpp">
-<area shape="rect" title="Header file for declaring the hasParameters class." alt="" coords="57,5,294,32"/>
-<area shape="rect" title=" " alt="" coords="5,80,52,107"/>
-<area shape="rect" title=" " alt="" coords="77,80,151,107"/>
-<area shape="rect" title=" " alt="" coords="176,80,300,107"/>
-<area shape="rect" href="macros_8hpp.html" title="Header file for declaring the Client class." alt="" coords="324,80,461,107"/>
+<area shape="rect" title="Header file for declaring the hasParameters class." alt="" coords="5,5,243,32"/>
+<area shape="rect" title=" " alt="" coords="15,80,62,107"/>
+<area shape="rect" title=" " alt="" coords="87,80,161,107"/>
+<area shape="rect" title=" " alt="" coords="186,80,310,107"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -114,11 +112,10 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="hasParameters_8hpp__dep__incl.png" border="0" usemap="#ainclude_2wave_2hasParameters_8hppdep" alt=""/></div>
 <map name="ainclude_2wave_2hasParameters_8hppdep" id="ainclude_2wave_2hasParameters_8hppdep">
-<area shape="rect" title="Header file for declaring the hasParameters class." alt="" coords="513,5,750,32"/>
+<area shape="rect" title="Header file for declaring the hasParameters class." alt="" coords="401,5,638,32"/>
 <area shape="rect" href="clientSession_8hpp.html" title="Header file for declaring the ClientSession class." alt="" coords="137,80,363,107"/>
 <area shape="rect" href="serverSession_8hpp.html" title="Header file for declaring the ServerSession class." alt="" coords="404,80,635,107"/>
-<area shape="rect" href="hasParameters_8cpp.html" title="Define the Ghoti::Wave::Client class." alt="" coords="659,80,828,107"/>
-<area shape="rect" href="test-hasParameters_8cpp.html" title="Test the general Wave server behavior." alt="" coords="853,80,1058,107"/>
+<area shape="rect" href="test-hasParameters_8cpp.html" title="Test the general Wave server behavior." alt="" coords="659,80,865,107"/>
 <area shape="rect" href="wave_8hpp.html" title="Header file supplied for use by 3rd party code so that they can easily include all necessary headers ..." alt="" coords="321,155,457,181"/>
 <area shape="rect" href="client_8cpp.html" title="Define the Ghoti::Wave::Client class." alt="" coords="5,155,113,181"/>
 <area shape="rect" href="clientSession_8cpp.html" title="Define the Ghoti::Wave::ClientSession class." alt="" coords="137,155,296,181"/>
@@ -132,16 +129,17 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serves as a base class for any other class to have settings parameters.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a28be49f04b5a40421d4677207a726e69"><td class="memItemLeft" align="right" valign="top"><a id="a28be49f04b5a40421d4677207a726e69"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hasParameters_8hpp.html#a28be49f04b5a40421d4677207a726e69">Ghoti::Wave::ParameterMap</a> = std::unordered_map&lt; Parameter, std::any &gt;</td></tr>
-<tr class="memdesc:a28be49f04b5a40421d4677207a726e69"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type alias for the structure that stores the settings map. <br /></td></tr>
-<tr class="separator:a28be49f04b5a40421d4677207a726e69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a027597370faf01a3a20c857f00140e8f"><td class="memTemplParams" colspan="2"><a id="a027597370faf01a3a20c857f00140e8f"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a027597370faf01a3a20c857f00140e8f"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="hasParameters_8hpp.html#a027597370faf01a3a20c857f00140e8f">Ghoti::Wave::ParameterMap</a> = std::unordered_map&lt; T, std::any &gt;</td></tr>
+<tr class="memdesc:a027597370faf01a3a20c857f00140e8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type alias for the structure that stores the settings map. <br /></td></tr>
+<tr class="separator:a027597370faf01a3a20c857f00140e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Header file for declaring the hasParameters class. </p>

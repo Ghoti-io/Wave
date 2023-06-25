@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Wave: Ghoti::Wave::HasParameters Class Reference</title>
+<title>Wave: Ghoti::Wave::HasParameters&lt; T &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,10 +85,11 @@ $(document).ready(function(){initNavTree('classGhoti_1_1Wave_1_1HasParameters.ht
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classGhoti_1_1Wave_1_1HasParameters-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Ghoti::Wave::HasParameters Class Reference</div>  </div>
+<div class="title">Ghoti::Wave::HasParameters&lt; T &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -96,75 +97,120 @@ $(document).ready(function(){initNavTree('classGhoti_1_1Wave_1_1HasParameters.ht
  <a href="classGhoti_1_1Wave_1_1HasParameters.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="hasParameters_8hpp_source.html">hasParameters.hpp</a>&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for Ghoti::Wave::HasParameters:</div>
-<div class="dyncontent">
-<div class="center"><img src="classGhoti_1_1Wave_1_1HasParameters__inherit__graph.png" border="0" usemap="#aGhoti_1_1Wave_1_1HasParameters_inherit__map" alt="Inheritance graph"/></div>
-<map name="aGhoti_1_1Wave_1_1HasParameters_inherit__map" id="aGhoti_1_1Wave_1_1HasParameters_inherit__map">
-<area shape="rect" title="Serves as a base class for any other class to have settings parameters." alt="" coords="112,5,320,32"/>
-<area shape="rect" href="classGhoti_1_1Wave_1_1ClientSession.html" title="Represents a connection to a particular domain/port pair." alt="" coords="5,80,203,107"/>
-<area shape="rect" href="classGhoti_1_1Wave_1_1ServerSession.html" title="Represents a persistent connection with a client." alt="" coords="227,80,429,107"/>
-</map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
-<div class="dynheader">
-Collaboration diagram for Ghoti::Wave::HasParameters:</div>
-<div class="dyncontent">
-<div class="center"><img src="classGhoti_1_1Wave_1_1HasParameters__coll__graph.png" border="0" usemap="#aGhoti_1_1Wave_1_1HasParameters_coll__map" alt="Collaboration graph"/></div>
-<map name="aGhoti_1_1Wave_1_1HasParameters_coll__map" id="aGhoti_1_1Wave_1_1HasParameters_coll__map">
-<area shape="rect" title="Serves as a base class for any other class to have settings parameters." alt="" coords="5,124,213,151"/>
-<area shape="rect" title=" " alt="" coords="20,5,199,47"/>
-</map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a49ac8c791e457ac95b5d8db0f85d96ab"><td class="memItemLeft" align="right" valign="top"><a id="a49ac8c791e457ac95b5d8db0f85d96ab"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a49ac8c791e457ac95b5d8db0f85d96ab">HasParameters</a> ()</td></tr>
-<tr class="memdesc:a49ac8c791e457ac95b5d8db0f85d96ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">The constructor. <br /></td></tr>
-<tr class="separator:a49ac8c791e457ac95b5d8db0f85d96ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48cca84eef73a1f7789f005dfd189386"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a48cca84eef73a1f7789f005dfd189386">HasParameters</a> (const <a class="el" href="hasParameters_8hpp.html#a28be49f04b5a40421d4677207a726e69">ParameterMap</a> &amp;defaultValues)</td></tr>
-<tr class="memdesc:a48cca84eef73a1f7789f005dfd189386"><td class="mdescLeft">&#160;</td><td class="mdescRight">The constructor.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#a48cca84eef73a1f7789f005dfd189386">More...</a><br /></td></tr>
-<tr class="separator:a48cca84eef73a1f7789f005dfd189386"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5e4544876b6fdd4916899c4863952c6"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ad5e4544876b6fdd4916899c4863952c6">getParameterAny</a> (<a class="el" href="macros_8hpp.html#a10f8a012e24da9c3a2baf0682a484322">Parameter</a>)</td></tr>
-<tr class="memdesc:ad5e4544876b6fdd4916899c4863952c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the named parameter if it exists, checking locally first, then checking the global defaults.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#ad5e4544876b6fdd4916899c4863952c6">More...</a><br /></td></tr>
-<tr class="separator:ad5e4544876b6fdd4916899c4863952c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac887c0d14747d6645dd9b81661f342a2"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:ac887c0d14747d6645dd9b81661f342a2"><td class="memTemplItemLeft" align="right" valign="top">const std::optional&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ac887c0d14747d6645dd9b81661f342a2">getParameter</a> (<a class="el" href="macros_8hpp.html#a10f8a012e24da9c3a2baf0682a484322">Parameter</a> parameter)</td></tr>
-<tr class="memdesc:ac887c0d14747d6645dd9b81661f342a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parameter as a specified type.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#ac887c0d14747d6645dd9b81661f342a2">More...</a><br /></td></tr>
-<tr class="separator:ac887c0d14747d6645dd9b81661f342a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7d340ac3d92d5932c5dea5e82ae3078"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:ae7d340ac3d92d5932c5dea5e82ae3078"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">HasParameters</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ae7d340ac3d92d5932c5dea5e82ae3078">setParameter</a> (<a class="el" href="macros_8hpp.html#a10f8a012e24da9c3a2baf0682a484322">Parameter</a> parameter, const std::any &amp;value)</td></tr>
-<tr class="memdesc:ae7d340ac3d92d5932c5dea5e82ae3078"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a parameter.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#ae7d340ac3d92d5932c5dea5e82ae3078">More...</a><br /></td></tr>
-<tr class="separator:ae7d340ac3d92d5932c5dea5e82ae3078"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae33eb3dccaebb8e2405ca52567297cc1"><td class="memItemLeft" align="right" valign="top"><a id="ae33eb3dccaebb8e2405ca52567297cc1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ae33eb3dccaebb8e2405ca52567297cc1">HasParameters</a> ()</td></tr>
+<tr class="memdesc:ae33eb3dccaebb8e2405ca52567297cc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The constructor. <br /></td></tr>
+<tr class="separator:ae33eb3dccaebb8e2405ca52567297cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbfe11cd0338fa39418c9e8aeb3b2f1a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#adbfe11cd0338fa39418c9e8aeb3b2f1a">HasParameters</a> (const <a class="el" href="hasParameters_8hpp.html#a027597370faf01a3a20c857f00140e8f">ParameterMap</a>&lt; T &gt; &amp;defaultValues)</td></tr>
+<tr class="memdesc:adbfe11cd0338fa39418c9e8aeb3b2f1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The constructor.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#adbfe11cd0338fa39418c9e8aeb3b2f1a">More...</a><br /></td></tr>
+<tr class="separator:adbfe11cd0338fa39418c9e8aeb3b2f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2864353fa919e3004ea7f9eeb4573e2"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ab2864353fa919e3004ea7f9eeb4573e2">getParameterAny</a> (const T &amp;parameter)</td></tr>
+<tr class="memdesc:ab2864353fa919e3004ea7f9eeb4573e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the named parameter if it exists, checking locally first, then checking the global defaults.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#ab2864353fa919e3004ea7f9eeb4573e2">More...</a><br /></td></tr>
+<tr class="separator:ab2864353fa919e3004ea7f9eeb4573e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7e2e49d458ea3ef91f8785ba2baff54"><td class="memTemplParams" colspan="2">template&lt;class U &gt; </td></tr>
+<tr class="memitem:ab7e2e49d458ea3ef91f8785ba2baff54"><td class="memTemplItemLeft" align="right" valign="top">const std::optional&lt; U &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ab7e2e49d458ea3ef91f8785ba2baff54">getParameter</a> (const T &amp;parameter)</td></tr>
+<tr class="memdesc:ab7e2e49d458ea3ef91f8785ba2baff54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parameter as a specified type.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#ab7e2e49d458ea3ef91f8785ba2baff54">More...</a><br /></td></tr>
+<tr class="separator:ab7e2e49d458ea3ef91f8785ba2baff54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6480809dd5a7f459da9937c84750aac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">HasParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ad6480809dd5a7f459da9937c84750aac">setParameter</a> (const T &amp;parameter, const std::any &amp;value)</td></tr>
+<tr class="memdesc:ad6480809dd5a7f459da9937c84750aac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a parameter.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#ad6480809dd5a7f459da9937c84750aac">More...</a><br /></td></tr>
+<tr class="separator:ad6480809dd5a7f459da9937c84750aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad27708f607c4fe01ddb13149a0ce4b22"><td class="memItemLeft" align="right" valign="top">optional&lt; any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ad27708f607c4fe01ddb13149a0ce4b22">getParameterDefault</a> (const <a class="el" href="classGhoti_1_1Wave_1_1Client.html#a9e1f5e24dc2e132a1189c0a7affe06a8">Client::Parameter</a> &amp;p)</td></tr>
+<tr class="memdesc:ad27708f607c4fe01ddb13149a0ce4b22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides default values for <a class="el" href="classGhoti_1_1Wave_1_1Client.html#a9e1f5e24dc2e132a1189c0a7affe06a8" title="Sessings parameters which influence the behavior of Wave and its components.">Client::Parameter</a> values.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#ad27708f607c4fe01ddb13149a0ce4b22">More...</a><br /></td></tr>
+<tr class="separator:ad27708f607c4fe01ddb13149a0ce4b22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bf62e4b578833bdf822de42e1dc3186"><td class="memItemLeft" align="right" valign="top">optional&lt; any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a3bf62e4b578833bdf822de42e1dc3186">getParameterDefault</a> (const <a class="el" href="classGhoti_1_1Wave_1_1Server.html#ac513ce7b86405c16285bffa52545ccb4">Server::Parameter</a> &amp;p)</td></tr>
+<tr class="memdesc:a3bf62e4b578833bdf822de42e1dc3186"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides default values for <a class="el" href="classGhoti_1_1Wave_1_1Server.html#ac513ce7b86405c16285bffa52545ccb4" title="Sessings parameters which influence the behavior of Wave and its components.">Server::Parameter</a> values.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#a3bf62e4b578833bdf822de42e1dc3186">More...</a><br /></td></tr>
+<tr class="separator:a3bf62e4b578833bdf822de42e1dc3186"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17ae577c48a635e99b1c86087c464caf"><td class="memItemLeft" align="right" valign="top"><a id="a17ae577c48a635e99b1c86087c464caf"></a>
+optional&lt; any &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getParameterDefault</b> (const Param &amp;p)</td></tr>
+<tr class="separator:a17ae577c48a635e99b1c86087c464caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:aa1aeba7a164ac310148e3fe613aa0d17"><td class="memItemLeft" align="right" valign="top">static std::optional&lt; std::any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#aa1aeba7a164ac310148e3fe613aa0d17">getParameterDefault</a> (const T &amp;parameter)</td></tr>
+<tr class="memdesc:aa1aeba7a164ac310148e3fe613aa0d17"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is only a prototype.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#aa1aeba7a164ac310148e3fe613aa0d17">More...</a><br /></td></tr>
+<tr class="separator:aa1aeba7a164ac310148e3fe613aa0d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:ab3407b914f84db075c99a4c28b3d36cd"><td class="memItemLeft" align="right" valign="top"><a id="ab3407b914f84db075c99a4c28b3d36cd"></a>
-<a class="el" href="hasParameters_8hpp.html#a28be49f04b5a40421d4677207a726e69">ParameterMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ab3407b914f84db075c99a4c28b3d36cd">defaultParameterValues</a></td></tr>
-<tr class="memdesc:ab3407b914f84db075c99a4c28b3d36cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store default parameter key/value pairs, if the value is not otherwise explicitly set. <br /></td></tr>
-<tr class="separator:ab3407b914f84db075c99a4c28b3d36cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade978474bb5d42dc067a9e1c758a8ec3"><td class="memItemLeft" align="right" valign="top"><a id="ade978474bb5d42dc067a9e1c758a8ec3"></a>
-<a class="el" href="hasParameters_8hpp.html#a28be49f04b5a40421d4677207a726e69">ParameterMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ade978474bb5d42dc067a9e1c758a8ec3">parameterValues</a></td></tr>
-<tr class="memdesc:ade978474bb5d42dc067a9e1c758a8ec3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store explicitly set parameter key/value pairs. <br /></td></tr>
-<tr class="separator:ade978474bb5d42dc067a9e1c758a8ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7569d91eb2b6810fcd8a0b35465c9a60"><td class="memItemLeft" align="right" valign="top"><a id="a7569d91eb2b6810fcd8a0b35465c9a60"></a>
+<a class="el" href="hasParameters_8hpp.html#a027597370faf01a3a20c857f00140e8f">ParameterMap</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a7569d91eb2b6810fcd8a0b35465c9a60">parameterValues</a></td></tr>
+<tr class="memdesc:a7569d91eb2b6810fcd8a0b35465c9a60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store explicitly set parameter key/value pairs. <br /></td></tr>
+<tr class="separator:a7569d91eb2b6810fcd8a0b35465c9a60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Serves as a base class for any other class to have settings parameters. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a48cca84eef73a1f7789f005dfd189386"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48cca84eef73a1f7789f005dfd189386">&#9670;&nbsp;</a></span>HasParameters()</h2>
+<div class="textblock"><h3>template&lt;typename T&gt;<br />
+class Ghoti::Wave::HasParameters&lt; T &gt;</h3>
+
+<p>Serves as a base class for any other class to have settings parameters. </p>
+<p><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html" title="Serves as a base class for any other class to have settings parameters.">HasParameters</a> is a templated utility class. It's purpose is to associate key/value pairs as settings, in which the keys are of an enum type and the values may be of any type.</p>
+<p>In order to use this class, the programmer must supply two things.</p><ol type="1">
+<li>An <code>enum</code> or <code>enum class</code> type (with values defined, of course).</li>
+<li>A function to supply default values.</li>
+</ol>
+<p>The default value function must be defined by the programmer. The prototype is defined in the header file via the template, but the definition must be written, even if the definition only returns a default (empty) value.</p>
+<p>A simple example of the usage of this class can be seen below:</p>
+<div class="fragment"><div class="line"><span class="keyword">enum class</span> Foo {</div>
+<div class="line">  GIMME_A_INT,</div>
+<div class="line">  GIMME_A_STRING,</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span>&lt;&gt;</div>
+<div class="line">optional&lt;any&gt; <a class="code" href="classGhoti_1_1Wave_1_1HasParameters.html#aa1aeba7a164ac310148e3fe613aa0d17">Ghoti::Wave::HasParameters&lt;Foo&gt;::getParameterDefault</a>(<span class="keyword">const</span> Foo &amp; p) {</div>
+<div class="line">  <span class="keywordflow">if</span> (p == Foo::GIMME_A_INT) {</div>
+<div class="line">    <span class="keywordflow">return</span> <span class="keywordtype">int</span>{1};</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">if</span> (p == Foo::GIMME_A_STRING) {</div>
+<div class="line">    <span class="keywordflow">return</span> <span class="keywordtype">string</span>{<span class="stringliteral">&quot;foo&quot;</span>};</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> {};</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassGhoti_1_1Wave_1_1HasParameters_html_aa1aeba7a164ac310148e3fe613aa0d17"><div class="ttname"><a href="classGhoti_1_1Wave_1_1HasParameters.html#aa1aeba7a164ac310148e3fe613aa0d17">Ghoti::Wave::HasParameters::getParameterDefault</a></div><div class="ttdeci">static std::optional&lt; std::any &gt; getParameterDefault(const T &amp;parameter)</div><div class="ttdoc">This is only a prototype.</div></div>
+</div><!-- fragment --><p>Alternate example of <code><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html" title="Serves as a base class for any other class to have settings parameters.">HasParameters</a></code>:</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;&gt;</div>
+<div class="line">optional&lt;any&gt; <a class="code" href="classGhoti_1_1Wave_1_1HasParameters.html#aa1aeba7a164ac310148e3fe613aa0d17">Ghoti::Wave::HasParameters&lt;Foo&gt;::getParameterDefault</a>(<span class="keyword">const</span> Foo &amp; p) {</div>
+<div class="line">  unordered_map&lt;Foo, optional&lt;any&gt;&gt; defaults{</div>
+<div class="line">    {Foo::GIMME_A_INT, {<span class="keywordtype">int</span>{1}}},</div>
+<div class="line">    {Foo::GIMME_A_STRING, {<span class="keywordtype">string</span>{<span class="stringliteral">&quot;foo&quot;</span>}}},</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> defaults.contains(p) ? defaults[p] : {};</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>To Use it:</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>Something : <span class="keyword">public</span> <a class="code" href="classGhoti_1_1Wave_1_1HasParameters.html#ae33eb3dccaebb8e2405ca52567297cc1">HasParameters</a>&lt;Foo&gt; {}</div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">  Something s{};</div>
+<div class="line">  cout &lt;&lt; s.getParameter&lt;uint32_t&gt;(Foo::GIMME_A_INT) &lt;&lt; endl;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassGhoti_1_1Wave_1_1HasParameters_html_ae33eb3dccaebb8e2405ca52567297cc1"><div class="ttname"><a href="classGhoti_1_1Wave_1_1HasParameters.html#ae33eb3dccaebb8e2405ca52567297cc1">Ghoti::Wave::HasParameters::HasParameters</a></div><div class="ttdeci">HasParameters()</div><div class="ttdoc">The constructor.</div><div class="ttdef"><b>Definition:</b> hasParameters.hpp:89</div></div>
+</div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="adbfe11cd0338fa39418c9e8aeb3b2f1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbfe11cd0338fa39418c9e8aeb3b2f1a">&#9670;&nbsp;</a></span>HasParameters()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">HasParameters::HasParameters </td>
+          <td class="memname"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; T &gt;::<a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">HasParameters</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="hasParameters_8hpp.html#a28be49f04b5a40421d4677207a726e69">ParameterMap</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="hasParameters_8hpp.html#a027597370faf01a3a20c857f00140e8f">ParameterMap</a>&lt; T &gt; &amp;&#160;</td>
           <td class="paramname"><em>defaultValues</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>The constructor. </p>
@@ -179,21 +225,23 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac887c0d14747d6645dd9b81661f342a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac887c0d14747d6645dd9b81661f342a2">&#9670;&nbsp;</a></span>getParameter()</h2>
+<a id="ab7e2e49d458ea3ef91f8785ba2baff54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7e2e49d458ea3ef91f8785ba2baff54">&#9670;&nbsp;</a></span>getParameter()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class T &gt; </div>
+template&lt;typename T &gt; </div>
+<div class="memtemplate">
+template&lt;class U &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::optional&lt;T&gt; Ghoti::Wave::HasParameters::getParameter </td>
+          <td class="memname">const std::optional&lt;U&gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; T &gt;::getParameter </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="macros_8hpp.html#a10f8a012e24da9c3a2baf0682a484322">Parameter</a>&#160;</td>
+          <td class="paramtype">const T &amp;&#160;</td>
           <td class="paramname"><em>parameter</em></td><td>)</td>
           <td></td>
         </tr>
@@ -217,29 +265,40 @@ template&lt;class T &gt; </div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classGhoti_1_1Wave_1_1HasParameters_ac887c0d14747d6645dd9b81661f342a2_cgraph.png" border="0" usemap="#aclassGhoti_1_1Wave_1_1HasParameters_ac887c0d14747d6645dd9b81661f342a2_cgraph" alt=""/></div>
-<map name="aclassGhoti_1_1Wave_1_1HasParameters_ac887c0d14747d6645dd9b81661f342a2_cgraph" id="aclassGhoti_1_1Wave_1_1HasParameters_ac887c0d14747d6645dd9b81661f342a2_cgraph">
+<div class="center"><img src="classGhoti_1_1Wave_1_1HasParameters_ab7e2e49d458ea3ef91f8785ba2baff54_cgraph.png" border="0" usemap="#aclassGhoti_1_1Wave_1_1HasParameters_ab7e2e49d458ea3ef91f8785ba2baff54_cgraph" alt=""/></div>
+<map name="aclassGhoti_1_1Wave_1_1HasParameters_ab7e2e49d458ea3ef91f8785ba2baff54_cgraph" id="aclassGhoti_1_1Wave_1_1HasParameters_ab7e2e49d458ea3ef91f8785ba2baff54_cgraph">
 <area shape="rect" title="Get the parameter as a specified type." alt="" coords="5,5,213,47"/>
-<area shape="rect" href="classGhoti_1_1Wave_1_1HasParameters.html#ad5e4544876b6fdd4916899c4863952c6" title="Gets the named parameter if it exists, checking locally first, then checking the global defaults." alt="" coords="261,5,469,47"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1HasParameters.html#ab2864353fa919e3004ea7f9eeb4573e2" title="Gets the named parameter if it exists, checking locally first, then checking the global defaults." alt="" coords="261,5,469,47"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1HasParameters.html#aa1aeba7a164ac310148e3fe613aa0d17" title="This is only a prototype." alt="" coords="517,5,725,47"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="ad5e4544876b6fdd4916899c4863952c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad5e4544876b6fdd4916899c4863952c6">&#9670;&nbsp;</a></span>getParameterAny()</h2>
+<a id="ab2864353fa919e3004ea7f9eeb4573e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2864353fa919e3004ea7f9eeb4573e2">&#9670;&nbsp;</a></span>getParameterAny()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">optional&lt; any &gt; HasParameters::getParameterAny </td>
+          <td class="memname">std::optional&lt;std::any&gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; T &gt;::getParameterAny </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="macros_8hpp.html#a10f8a012e24da9c3a2baf0682a484322">Parameter</a>&#160;</td>
+          <td class="paramtype">const T &amp;&#160;</td>
           <td class="paramname"><em>parameter</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Gets the named parameter if it exists, checking locally first, then checking the global defaults. </p>
@@ -250,24 +309,126 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The parameter value if it exists. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGhoti_1_1Wave_1_1HasParameters_ab2864353fa919e3004ea7f9eeb4573e2_cgraph.png" border="0" usemap="#aclassGhoti_1_1Wave_1_1HasParameters_ab2864353fa919e3004ea7f9eeb4573e2_cgraph" alt=""/></div>
+<map name="aclassGhoti_1_1Wave_1_1HasParameters_ab2864353fa919e3004ea7f9eeb4573e2_cgraph" id="aclassGhoti_1_1Wave_1_1HasParameters_ab2864353fa919e3004ea7f9eeb4573e2_cgraph">
+<area shape="rect" title="Gets the named parameter if it exists, checking locally first, then checking the global defaults." alt="" coords="5,5,213,47"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1HasParameters.html#aa1aeba7a164ac310148e3fe613aa0d17" title="This is only a prototype." alt="" coords="261,5,469,47"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="ae7d340ac3d92d5932c5dea5e82ae3078"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7d340ac3d92d5932c5dea5e82ae3078">&#9670;&nbsp;</a></span>setParameter()</h2>
+<a id="ad27708f607c4fe01ddb13149a0ce4b22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad27708f607c4fe01ddb13149a0ce4b22">&#9670;&nbsp;</a></span>getParameterDefault() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">optional&lt; any &gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="classGhoti_1_1Wave_1_1Client.html#a9e1f5e24dc2e132a1189c0a7affe06a8">Client::Parameter</a> &gt;::getParameterDefault </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classGhoti_1_1Wave_1_1Client.html#a9e1f5e24dc2e132a1189c0a7affe06a8">Client::Parameter</a> &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Provides default values for <a class="el" href="classGhoti_1_1Wave_1_1Client.html#a9e1f5e24dc2e132a1189c0a7affe06a8" title="Sessings parameters which influence the behavior of Wave and its components.">Client::Parameter</a> values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td>The parameter to look up. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The default value associated with the value (if any). </dd></dl>
+
+</div>
+</div>
+<a id="a3bf62e4b578833bdf822de42e1dc3186"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bf62e4b578833bdf822de42e1dc3186">&#9670;&nbsp;</a></span>getParameterDefault() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">optional&lt; any &gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="classGhoti_1_1Wave_1_1Server.html#ac513ce7b86405c16285bffa52545ccb4">Server::Parameter</a> &gt;::getParameterDefault </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classGhoti_1_1Wave_1_1Server.html#ac513ce7b86405c16285bffa52545ccb4">Server::Parameter</a> &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Provides default values for <a class="el" href="classGhoti_1_1Wave_1_1Server.html#ac513ce7b86405c16285bffa52545ccb4" title="Sessings parameters which influence the behavior of Wave and its components.">Server::Parameter</a> values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td>The parameter to look up. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The default value associated with the value (if any). </dd></dl>
+
+</div>
+</div>
+<a id="aa1aeba7a164ac310148e3fe613aa0d17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1aeba7a164ac310148e3fe613aa0d17">&#9670;&nbsp;</a></span>getParameterDefault() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class T &gt; </div>
+template&lt;typename T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">HasParameters</a>&amp; Ghoti::Wave::HasParameters::setParameter </td>
+          <td class="memname">static std::optional&lt;std::any&gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; T &gt;::getParameterDefault </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="macros_8hpp.html#a10f8a012e24da9c3a2baf0682a484322">Parameter</a>&#160;</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>parameter</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This is only a prototype. </p>
+<p>The actual function must be supplied by the programmer in order to implement the desired default values. See the example in the class documentation.</p>
+<p>This definition declares the function prototype which the programmer must then supply. The programmer does not need to redeclare the prototype itself, but only needs to make sure that the function definition is implemented as part of the standard compilation step.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parameter</td><td>The parameter key to fetch. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The associated value. </dd></dl>
+
+</div>
+</div>
+<a id="ad6480809dd5a7f459da9937c84750aac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6480809dd5a7f459da9937c84750aac">&#9670;&nbsp;</a></span>setParameter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">HasParameters</a>&amp; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; T &gt;::setParameter </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
           <td class="paramname"><em>parameter</em>, </td>
         </tr>
         <tr>
@@ -301,9 +462,8 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/wave/<a class="el" href="hasParameters_8hpp_source.html">hasParameters.hpp</a></li>
-<li>src/<a class="el" href="hasParameters_8cpp.html">hasParameters.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

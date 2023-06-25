@@ -21,6 +21,64 @@ using ParameterMap = std::unordered_map<T, std::any>;
 
 /**
  * Serves as a base class for any other class to have settings parameters.
+ *
+ * HasParameters is a templated utility class.  It's purpose is to associate
+ * key/value pairs as settings, in which the keys are of an enum type and the
+ * values may be of any type.
+ *
+ * In order to use this class, the programmer must supply two things.
+ *   1. An `enum` or `enum class` type (with values defined, of course).
+ *   2. A function to supply default values.
+ *
+ * The default value function must be defined by the programmer.  The prototype
+ * is defined in the header file via the template, but the definition must be
+ * written, even if the definition only returns a default (empty) value.
+ *
+ * A simple example of the usage of this class can be seen below:
+ *
+ * @code{cpp}
+ * enum class Foo {
+ *   GIMME_A_INT,
+ *   GIMME_A_STRING,
+ * };
+ *
+ * template<>
+ * optional<any> Ghoti::Wave::HasParameters<Foo>::getParameterDefault(const Foo & p) {
+ *   if (p == Foo::GIMME_A_INT) {
+ *     return int{1};
+ *   }
+ *   if (p == Foo::GIMME_A_STRING) {
+ *     return string{"foo"};
+ *   }
+ *   return {};
+ * }
+ * @endcode
+ *
+ * Alternate example of `HasParameters`:
+ *
+ * @code{cpp}
+ * template<>
+ * optional<any> Ghoti::Wave::HasParameters<Foo>::getParameterDefault(const Foo & p) {
+ *   unordered_map<Foo, optional<any>> defaults{
+ *     {Foo::GIMME_A_INT, {int{1}}},
+ *     {Foo::GIMME_A_STRING, {string{"foo"}}},
+ *   };
+ *
+ *   return defaults.contains(p) ? defaults[p] : {};
+ * }
+ * @endcode
+ *
+ *
+ * To Use it:
+ *
+ * @code{cpp}
+ * class Something : public HasParameters<Foo> {}
+ * int main() {
+ *   Something s{};
+ *   cout << s.getParameter<uint32_t>(Foo::GIMME_A_INT) << endl;
+ *   return 0;
+ * }
+ * @endcode
  */
 template <typename T>
 class HasParameters {
@@ -40,7 +98,17 @@ class HasParameters {
   HasParameters(const ParameterMap<T> & defaultValues) : parameterValues{defaultValues} {}
 
   /**
-   * This function must be supplied by the programmer.
+   * This is only a prototype.  The actual function must be supplied by the
+   * programmer in order to implement the desired default values.  See the
+   * example in the class documentation.
+   *
+   * This definition declares the function prototype which the programmer must
+   * then supply.  The programmer does not need to redeclare the prototype
+   * itself, but only needs to make sure that the function definition is
+   * implemented as part of the standard compilation step.
+   *
+   * @param parameter The parameter key to fetch.
+   * @return The associated value.
    */
   static std::optional<std::any> getParameterDefault(const T & parameter);
 

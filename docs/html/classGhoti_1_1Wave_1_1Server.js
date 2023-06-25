@@ -5,6 +5,9 @@ var classGhoti_1_1Wave_1_1Server =
       [ "SERVER_ALREADY_RUNNING", "classGhoti_1_1Wave_1_1Server.html#a9d609467a71ba8ed1976e1b053c4f154a4395472630c1241d013f1eb00aad24e6", null ],
       [ "START_FAILED", "classGhoti_1_1Wave_1_1Server.html#a9d609467a71ba8ed1976e1b053c4f154a109747a826ef24ae6d8fae4c93334e26", null ]
     ] ],
+    [ "Parameter", "classGhoti_1_1Wave_1_1Server.html#ac513ce7b86405c16285bffa52545ccb4", [
+      [ "MAXBUFFERSIZE", "classGhoti_1_1Wave_1_1Server.html#ac513ce7b86405c16285bffa52545ccb4af2f31a8f9d68f088b5be1070b5007d41", null ]
+    ] ],
     [ "Server", "classGhoti_1_1Wave_1_1Server.html#ad5ec9462b520e59f7ea831e157ee5e59", null ],
     [ "~Server", "classGhoti_1_1Wave_1_1Server.html#a4b3aa2579cb1c8cd1d069582c14d0fa6", null ],
     [ "clearError", "classGhoti_1_1Wave_1_1Server.html#a542b38d0973a09bbe856b61830d49851", null ],

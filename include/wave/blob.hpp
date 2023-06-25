@@ -13,6 +13,28 @@
 namespace Ghoti::Wave {
 
 /**
+ * The Blob class is a generic container which may reference text (binary or
+ * otherwise) either in-memory or on-disk (e.g., in a file).
+ *
+ * The Blob provides a mechanism to append to the text (whether in-memory or
+ * on-disk), and to convert the in-memory text to a file.
+ *
+ * The purpose of this container is so that, if text is growing too large
+ * (a threshold decision which is left up to the programmer, and is not a part
+ * of this object), then it can be converted to disk storage.  The disk storage
+ * is likewise specifically useful for our approach to HTTP messages.  In short,
+ * Blob makes use of the Ghoti::OS::File object, which will put files into the
+ * OS temp directory by default, and clean up after itself when the file object
+ * goes out of scope (if not handled in other ways).
+ *
+ * In short: large text is possibly a file and is moved to the disk so that RAM
+ * is not wasted while either waiting on requests to arrive, or when preparing
+ * responses. The end result is that it eliminates the need to store the entire
+ * file in memory when the disk is available.
+ *
+ * Blobs are used for all message types, including chunked and multipart
+ * messages (each chunk/part is its own Blob, and may be either in-memory or
+ * on-disk).
  */
 class Blob {
   public:

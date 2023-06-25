@@ -19,7 +19,7 @@ using namespace Ghoti::Pool;
 using namespace Ghoti::Wave;
 
 /**
- * Provides default values for Server::Parameter values.
+ * Provides default values for Client::Parameter values.
  *
  * @param p The parameter to look up.
  * @return The default value associated with the value (if any).

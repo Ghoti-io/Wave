@@ -1,5 +1,8 @@
 var classGhoti_1_1Wave_1_1Client =
 [
+    [ "Parameter", "classGhoti_1_1Wave_1_1Client.html#a9e1f5e24dc2e132a1189c0a7affe06a8", [
+      [ "MAXBUFFERSIZE", "classGhoti_1_1Wave_1_1Client.html#a9e1f5e24dc2e132a1189c0a7affe06a8af2f31a8f9d68f088b5be1070b5007d41", null ]
+    ] ],
     [ "Client", "classGhoti_1_1Wave_1_1Client.html#ae51af7aa6b8f591496a8f6a4a87a14bf", null ],
     [ "~Client", "classGhoti_1_1Wave_1_1Client.html#a840e519ca781888cbd54181572ebe3a7", null ],
     [ "dispatchLoop", "classGhoti_1_1Wave_1_1Client.html#aed15ae6bd46ea8a0ab89471eb42d60f5", null ],
