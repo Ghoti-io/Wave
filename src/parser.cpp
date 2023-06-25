@@ -7,10 +7,10 @@
 #include <arpa/inet.h>
 #include <ghoti.io/pool.hpp>
 #include <iostream>
-#include "parser.hpp"
-#include "parsing.hpp"
 #include <set>
 #include <string.h>
+#include "wave/parser.hpp"
+#include "wave/parsing.hpp"
 
 using namespace std;
 using namespace Ghoti;

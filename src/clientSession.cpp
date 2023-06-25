@@ -5,17 +5,16 @@
  */
 
 #include <arpa/inet.h>
-#include "clientSession.hpp"
 #include <ghoti.io/pool.hpp>
 #include <iostream>
-#include "macros.hpp"
-#include "message.hpp"
 #include <poll.h>
 #include <sys/socket.h>
 #include <sstream>
 #include <set>
 #include <string.h>
 #include <unistd.h>
+#include "wave/clientSession.hpp"
+#include "wave/message.hpp"
 
 using namespace std;
 using namespace Ghoti::Pool;
@@ -117,7 +116,7 @@ void ClientSession::read() {
   scoped_lock lock{*this->controlMutex};
 
   while (1) {
-    auto maxBufferSize = *this->getParameter<uint32_t>(Parameter::MAXBUFFERSIZE);
+    auto maxBufferSize = *this->getParameter<uint32_t>(Client::Parameter::MAXBUFFERSIZE);
     vector<char> bufferVector(maxBufferSize);
     char * buffer{bufferVector.data()};
     ssize_t byte_count = recv(this->hServer, buffer, maxBufferSize, 0);

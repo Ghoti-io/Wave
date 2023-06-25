@@ -4,10 +4,9 @@
  * Header file for declaring the Client class.
  */
 
-#ifndef CLIENT_HPP
-#define CLIENT_HPP
+#ifndef GHOTI_WAVE_CLIENT_HPP
+#define GHOTI_WAVE_CLIENT_HPP
 
-#include <future>
 #include <ghoti.io/pool.hpp>
 #include <ghoti.io/shared_string_view.hpp>
 #include <map>
@@ -37,6 +36,15 @@ class Message;
  */
 class Client {
   public:
+  /**
+   * Sessings parameters which influence the behavior of Wave and its
+   * components.
+   */
+  enum class Parameter {
+    MAXBUFFERSIZE, ///< The read/write buffer size used when interacting with
+                   ///<   sockets.
+  };
+
   /**
    * The constructor.
    */
@@ -118,5 +126,5 @@ class Client {
 
 }
 
-#endif // CLIENT_HPP
+#endif // GHOTI_WAVE_CLIENT_HPP
 

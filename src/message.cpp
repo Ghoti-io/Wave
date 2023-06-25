@@ -3,9 +3,9 @@
  * Define the Ghoti::Wave::Message class.
  */
 
-#include "message.hpp"
-#include "parsing.hpp"
 #include <iostream>
+#include "wave/message.hpp"
+#include "wave/parsing.hpp"
 
 using namespace std;
 using namespace Ghoti;

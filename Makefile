@@ -16,7 +16,6 @@ INCLUDE := -I include/ -I include/wave
 LIBOBJECTS := $(OBJ_DIR)/blob.o \
 							$(OBJ_DIR)/client.o \
 							$(OBJ_DIR)/clientSession.o \
-							$(OBJ_DIR)/hasParameters.o \
 							$(OBJ_DIR)/parser.o \
 							$(OBJ_DIR)/parsing.o \
 							$(OBJ_DIR)/response.o \
@@ -42,7 +41,6 @@ DEP_PARSING = \
 DEP_BLOB = \
 	include/wave/blob.hpp
 DEP_HASPARAMETERS = \
-	$(DEP_MACROS) \
 	include/wave/hasParameters.hpp
 DEP_MESSAGE = \
 	$(DEP_BLOB) \
@@ -56,13 +54,11 @@ DEP_RESPONSE = \
 	include/wave/response.hpp
 DEP_CLIENTSESSION = \
 	$(DEP_HASPARAMETERS) \
-	$(DEP_MACROS) \
 	$(DEP_PARSER) \
 	$(DEP_MESSAGE) \
 	include/wave/clientSession.hpp
 DEP_SERVERSESSION = \
 	$(DEP_HASPARAMETERS) \
-	$(DEP_MACROS) \
 	$(DEP_PARSER) \
 	$(DEP_MESSAGE) \
 	include/wave/serverSession.hpp
@@ -105,10 +101,6 @@ $(OBJ_DIR)/client.o: \
 $(OBJ_DIR)/clientSession.o: \
 				src/clientSession.cpp \
 				$(DEP_CLIENTSESSION)
-
-$(OBJ_DIR)/hasParameters.o: \
-				src/hasParameters.cpp \
-				$(DEP_HASPARAMETERS)
 
 $(OBJ_DIR)/parser.o: \
 				src/parser.cpp \

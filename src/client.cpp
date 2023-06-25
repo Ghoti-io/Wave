@@ -11,12 +11,30 @@
 #include <sys/socket.h>
 #include <sstream>
 #include <poll.h>
-#include "client.hpp"
-#include "clientSession.hpp"
+#include "wave/client.hpp"
+#include "wave/clientSession.hpp"
 
 using namespace std;
 using namespace Ghoti::Pool;
 using namespace Ghoti::Wave;
+
+/**
+ * Provides default values for Server::Parameter values.
+ *
+ * @param p The parameter to look up.
+ * @return The default value associated with the value (if any).
+ */
+template<>
+optional<any> Ghoti::Wave::HasParameters<Client::Parameter>::getParameterDefault(const Client::Parameter& p) {
+  static unordered_map<Client::Parameter, any> defaults{
+    {Client::Parameter::MAXBUFFERSIZE, {uint32_t{4096}}},
+  };
+  if (defaults.contains(p)) {
+    return defaults[p];
+  }
+  return {};
+};
+
 
 /**
  * Helper function to create a ClientSession connection to the provided

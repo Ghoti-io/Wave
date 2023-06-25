@@ -4,29 +4,36 @@
  * Header file for declaring the ClientSession class.
  */
 
-#ifndef CLIENTSESSION_HPP
-#define CLIENTSESSION_HPP
+#ifndef GHOTI_WAVE_CLIENTSESSION_HPP
+#define GHOTI_WAVE_CLIENTSESSION_HPP
 
 #include <condition_variable>
 #include <ghoti.io/pool.hpp>
-#include <future>
 #include <memory>
 #include <mutex>
 #include <ostream>
-#include "parser.hpp"
 #include <map>
-#include "message.hpp"
 #include <string>
+#include "wave/client.hpp"
 #include "wave/hasParameters.hpp"
+#include "wave/message.hpp"
+#include "wave/parser.hpp"
 
 namespace Ghoti::Wave {
-class Client;
-
 /**
  * Represents a connection to a particular domain/port pair.
  */
-class ClientSession : public HasParameters {
+class ClientSession : public HasParameters<Ghoti::Wave::Client::Parameter> {
   public:
+  /**
+   * Sessings parameters which influence the behavior of Wave and its
+   * components.
+   */
+  enum class Parameter {
+    MAXBUFFERSIZE, ///< The read/write buffer size used when interacting with
+                   ///<   sockets.
+  };
+
   /**
    * The constructor.
    *
@@ -182,5 +189,5 @@ class ClientSession : public HasParameters {
 
 }
 
-#endif // CLIENTSESSION_HPP
+#endif // GHOTI_WAVE_CLIENTSESSION_HPP
 

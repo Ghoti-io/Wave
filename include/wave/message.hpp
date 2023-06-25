@@ -4,8 +4,8 @@
  * Header file for declaring the Message class.
  */
 
-#ifndef MESSAGE_HPP
-#define MESSAGE_HPP
+#ifndef GHOTI_WAVE_MESSAGE_HPP
+#define GHOTI_WAVE_MESSAGE_HPP
 
 #include <map>
 #include <ostream>
@@ -414,5 +414,5 @@ std::ostream & operator<<(std::ostream & out, Message & message);
 
 }
 
-#endif // MESSAGE_HPP
+#endif // GHOTI_WAVE_MESSAGE_HPP
 

@@ -4,12 +4,12 @@
  * Header file for declaring the Session class.
  */
 
-#ifndef PARSER_HPP
-#define PARSER_HPP
+#ifndef GHOTI_WAVE_PARSER_HPP
+#define GHOTI_WAVE_PARSER_HPP
 
 #include <queue>
-#include "message.hpp"
 #include <ghoti.io/shared_string_view.hpp>
+#include "wave/message.hpp"
 
 namespace Ghoti::Wave {
 
@@ -216,5 +216,5 @@ class Parser {
 
 }
 
-#endif // PARSER_HPP
+#endif // GHOTI_WAVE_PARSER_HPP
 

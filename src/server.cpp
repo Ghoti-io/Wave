@@ -9,8 +9,8 @@
 #include <iostream>
 #include <sys/socket.h>
 #include <sstream>
-#include "server.hpp"
-#include "serverSession.hpp"
+#include "wave/server.hpp"
+#include "wave/serverSession.hpp"
 
 using namespace std;
 using namespace Ghoti::Pool;
@@ -26,6 +26,24 @@ Content-Length: 13
 Content-Type: text/plain
 
 Hello, world)"};
+
+/**
+ * Provides default values for Server::Parameter values.
+ *
+ * @param p The parameter to look up.
+ * @return The default value associated with the value (if any).
+ */
+template<>
+optional<any> Ghoti::Wave::HasParameters<Server::Parameter>::getParameterDefault(const Server::Parameter& p) {
+  static unordered_map<Server::Parameter, any> defaults{
+    {Server::Parameter::MAXBUFFERSIZE, {uint32_t{4096}}},
+  };
+  if (defaults.contains(p)) {
+    return defaults[p];
+  }
+  return {};
+};
+
 
 void Server::dispatchLoop(stop_token stopToken) {
   // Create the worker pool queue.

@@ -4,27 +4,27 @@
  * Header file for declaring the ServerSession class.
  */
 
-#ifndef SERVERSESSION_HPP
-#define SERVERSESSION_HPP
+#ifndef GHOTI_WAVE_SERVERSESSION_HPP
+#define GHOTI_WAVE_SERVERSESSION_HPP
 
 #include <condition_variable>
 #include <ghoti.io/pool.hpp>
 #include <memory>
+#include <map>
 #include <mutex>
 #include <ostream>
-#include "parser.hpp"
-#include <map>
-#include "message.hpp"
 #include <string>
 #include "wave/hasParameters.hpp"
+#include "wave/message.hpp"
+#include "wave/parser.hpp"
+#include "wave/server.hpp"
 
 namespace Ghoti::Wave {
-class Server;
 
 /**
  * Represents a persistent connection with a client.
  */
-class ServerSession : public HasParameters {
+class ServerSession : public HasParameters<Ghoti::Wave::Server::Parameter> {
   public:
   /**
    * The constructor.
@@ -150,5 +150,5 @@ class ServerSession : public HasParameters {
 
 }
 
-#endif // SERVERSESSION_HPP
+#endif // GHOTI_WAVE_SERVERSESSION_HPP
 

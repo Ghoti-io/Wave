@@ -10,24 +10,25 @@
 #include <any>
 #include <optional>
 #include <unordered_map>
-#include "wave/macros.hpp"
 
 namespace Ghoti::Wave {
 
 /**
  * A type alias for the structure that stores the settings map.
  */
-using ParameterMap = std::unordered_map<Parameter, std::any>;
+template <typename T>
+using ParameterMap = std::unordered_map<T, std::any>;
 
 /**
  * Serves as a base class for any other class to have settings parameters.
  */
+template <typename T>
 class HasParameters {
   public:
   /**
    * The constructor.
    */
-  HasParameters();
+  HasParameters() : parameterValues{} {}
 
   /**
    * The constructor.
@@ -36,7 +37,12 @@ class HasParameters {
    *
    * @param defaultValues The initial settings to be used.
    */
-  HasParameters(const ParameterMap & defaultValues);
+  HasParameters(const ParameterMap<T> & defaultValues) : parameterValues{defaultValues} {}
+
+  /**
+   * This function must be supplied by the programmer.
+   */
+  static std::optional<std::any> getParameterDefault(const T & parameter);
 
   /**
    * Gets the named parameter if it exists, checking locally first, then
@@ -45,7 +51,13 @@ class HasParameters {
    * @param parameter The parameter to get.
    * @return The parameter value if it exists.
    */
-  std::optional<std::any> getParameterAny(Parameter);
+  std::optional<std::any> getParameterAny(const T & parameter) {
+    if (this->parameterValues.contains(parameter)) {
+      return this->parameterValues[parameter];
+    }
+    return getParameterDefault(parameter);
+  }
+
 
   /**
    * Get the parameter as a specified type.
@@ -56,11 +68,11 @@ class HasParameters {
    * @param parameter The parameter value to get.
    * @return The (optional) parameter value.
    */
-  template<class T>
-  const std::optional<T> getParameter(Parameter parameter) {
+  template<class U>
+  const std::optional<U> getParameter(const T & parameter) {
     auto val = getParameterAny(parameter);
-    if (val && (val->type() == typeid(T))) {
-      return {std::any_cast<const T &>(*val)};
+    if (val && (val->type() == typeid(U))) {
+      return {std::any_cast<const U &>(*val)};
     }
     return {};
   }
@@ -72,23 +84,16 @@ class HasParameters {
    * @param value The parameter value to be set.
    * @return The calling object, to allow for chaining.
    */
-  template<class T>
-  HasParameters & setParameter(Parameter parameter, const std::any & value) {
+  HasParameters & setParameter(const T & parameter, const std::any & value) {
     this->parameterValues[parameter] = value;
     return *this;
   }
 
   private:
   /**
-   * Store default parameter key/value pairs, if the value is not otherwise
-   * explicitly set.
-   */
-  ParameterMap defaultParameterValues;
-
-  /**
    * Store explicitly set parameter key/value pairs.
    */
-  ParameterMap parameterValues;
+  ParameterMap<T> parameterValues;
 };
 
 }

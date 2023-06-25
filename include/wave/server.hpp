@@ -4,8 +4,8 @@
  * Header file for declaring the Server class.
  */
 
-#ifndef SERVER_HPP
-#define SERVER_HPP
+#ifndef GHOTI_WAVE_SERVER_HPP
+#define GHOTI_WAVE_SERVER_HPP
 
 #include <ghoti.io/pool.hpp>
 #include <any>
@@ -13,7 +13,6 @@
 #include <memory>
 #include <string>
 #include <thread>
-#include "wave/macros.hpp"
 
 namespace Ghoti::Wave {
 class ServerSession;
@@ -26,6 +25,15 @@ class ServerSession;
  */
 class Server {
   public:
+  /**
+   * Sessings parameters which influence the behavior of Wave and its
+   * components.
+   */
+  enum class Parameter {
+    MAXBUFFERSIZE, ///< The read/write buffer size used when interacting with
+                   ///<   sockets.
+  };
+
   /**
    * These are the error codes that the Server may generate when control
    * functions fail.
@@ -217,5 +225,5 @@ class Server {
 
 }
 
-#endif // SERVER_HPP
+#endif // GHOTI_WAVE_SERVER_HPP
 

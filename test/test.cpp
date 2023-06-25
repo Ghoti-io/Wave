@@ -84,7 +84,7 @@ TEST(Blob, General) {
   }
 }
 
-TEST(Server, Startup){
+TEST(Server, Startup) {
   // Verify default state.
   this_thread::sleep_for(quantum);
   ASSERT_EQ(s.getAddress(), "127.0.0.1");
@@ -136,7 +136,6 @@ TEST(Server, Startup){
   ASSERT_EQ(s.getErrorCode(), Server::ErrorCode::SERVER_ALREADY_RUNNING);
   ASSERT_NE(s.getErrorMessage(), "");
   s.clearError();
-
 }
 
 TEST(Message, Defaults) {
