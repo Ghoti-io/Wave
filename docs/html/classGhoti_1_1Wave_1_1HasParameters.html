@@ -116,6 +116,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a50544b9660d50494722fcef9a6e49b6a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">HasParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a50544b9660d50494722fcef9a6e49b6a">setParameter</a> (const T &amp;parameter, const std::any &amp;value)</td></tr>
 <tr class="memdesc:a50544b9660d50494722fcef9a6e49b6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a parameter.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#a50544b9660d50494722fcef9a6e49b6a">More...</a><br /></td></tr>
 <tr class="separator:a50544b9660d50494722fcef9a6e49b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6b208f61e376db2dfcdafa25a0abccc"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="hasParameters_8hpp.html#a027597370faf01a3a20c857f00140e8f">ParameterMap</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ae6b208f61e376db2dfcdafa25a0abccc">getAllParameters</a> () const</td></tr>
+<tr class="memdesc:ae6b208f61e376db2dfcdafa25a0abccc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current explicitly-set parameters and their values.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#ae6b208f61e376db2dfcdafa25a0abccc">More...</a><br /></td></tr>
+<tr class="separator:ae6b208f61e376db2dfcdafa25a0abccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -174,6 +177,36 @@ class Ghoti::Wave::HasParameters&lt; T &gt;</h3>
 <div class="line">}</div>
 </div><!-- fragment --><p>Remember that <code><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ab7e2e49d458ea3ef91f8785ba2baff54" title="Get the parameter as a specified type.">getParameter()</a></code> returns an <code>optional&lt;any&gt;</code> and <code>getParameters&lt;type&gt;()</code> returns an <code>optional&lt;type&gt;</code>. In either case, you should verify that the optional value is set before use. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae6b208f61e376db2dfcdafa25a0abccc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6b208f61e376db2dfcdafa25a0abccc">&#9670;&nbsp;</a></span>getAllParameters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="hasParameters_8hpp.html#a027597370faf01a3a20c857f00140e8f">ParameterMap</a>&lt;T&gt;&amp; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; T &gt;::getAllParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the current explicitly-set parameters and their values. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current explicitly-set parameters. </dd></dl>
+
+</div>
+</div>
 <a id="ab7e2e49d458ea3ef91f8785ba2baff54"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab7e2e49d458ea3ef91f8785ba2baff54">&#9670;&nbsp;</a></span>getParameter()</h2>
 
@@ -353,6 +386,8 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The calling object, to allow for chaining. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classGhoti_1_1Wave_1_1Server.html#ad4f5e11de85ea8184a0937dbe72906c5">Ghoti::Wave::Server</a>, and <a class="el" href="classGhoti_1_1Wave_1_1Client.html#a1632a81fae14a57d81dbb124d44373fc">Ghoti::Wave::Client</a>.</p>
 
 </div>
 </div>

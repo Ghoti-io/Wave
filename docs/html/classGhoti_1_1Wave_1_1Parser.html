@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('classGhoti_1_1Wave_1_1Parser.html','')
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classGhoti_1_1Wave_1_1Parser-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Ghoti::Wave::Parser Class Reference</div>  </div>
+<div class="title">Ghoti::Wave::Parser Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -100,6 +100,16 @@ $(document).ready(function(){initNavTree('classGhoti_1_1Wave_1_1Parser.html','')
  <a href="classGhoti_1_1Wave_1_1Parser.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="parser_8hpp_source.html">parser.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for Ghoti::Wave::Parser:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGhoti_1_1Wave_1_1Parser__inherit__graph.png" border="0" usemap="#aGhoti_1_1Wave_1_1Parser_inherit__map" alt="Inheritance graph"/></div>
+<map name="aGhoti_1_1Wave_1_1Parser_inherit__map" id="aGhoti_1_1Wave_1_1Parser_inherit__map">
+<area shape="rect" title="Parses a HTTP/1.1 data stream into discrete messages." alt="" coords="148,5,297,32"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1RequestParser.html" title="Specialized class for handling the request parser, to make it easier to pass in ServerParameters." alt="" coords="5,80,208,107"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1ResponseParser.html" title="Specialized class for handling the response parser, to make it easier to pass in ClientParameters." alt="" coords="233,80,445,107"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for Ghoti::Wave::Parser:</div>
 <div class="dyncontent">
@@ -196,6 +206,9 @@ Private Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
+<tr class="memitem:a08c81d2678f673cc4b166423edd67944"><td class="memItemLeft" align="right" valign="top">virtual uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#a08c81d2678f673cc4b166423edd67944">getMEMCHUNKSIZELIMIT</a> ()=0</td></tr>
+<tr class="memdesc:a08c81d2678f673cc4b166423edd67944"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the parameter value for MEMCHUNKSIZELIMIT.  <a href="classGhoti_1_1Wave_1_1Parser.html#a08c81d2678f673cc4b166423edd67944">More...</a><br /></td></tr>
+<tr class="separator:a08c81d2678f673cc4b166423edd67944"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ff414c5948042e505cc4d84240329dd"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Parser.html#a2ff414c5948042e505cc4d84240329dd">createNewMessage</a> () const</td></tr>
 <tr class="memdesc:a2ff414c5948042e505cc4d84240329dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new message whose <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a7778a82d1bd66554e6184b79f0626c84" title="Indicates whether the message is a request or a response.">Message::Type</a> matches the <a class="el" href="classGhoti_1_1Wave_1_1Parser.html#ab36eff066f6206f8e5b71073bc45a1e2" title="Represents the type of parsing being performed.">Parser::Type</a> of this parser.  <a href="classGhoti_1_1Wave_1_1Parser.html#a2ff414c5948042e505cc4d84240329dd">More...</a><br /></td></tr>
 <tr class="separator:a2ff414c5948042e505cc4d84240329dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -460,6 +473,36 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <p>Create a new message whose <a class="el" href="classGhoti_1_1Wave_1_1Message.html#a7778a82d1bd66554e6184b79f0626c84" title="Indicates whether the message is a request or a response.">Message::Type</a> matches the <a class="el" href="classGhoti_1_1Wave_1_1Parser.html#ab36eff066f6206f8e5b71073bc45a1e2" title="Represents the type of parsing being performed.">Parser::Type</a> of this parser. </p>
 <p>This function should really only be used by Parser::Type::Request parsing, since all Parser::Type::Response streams should have already registered a <a class="el" href="classGhoti_1_1Wave_1_1Message.html" title="Represents a HTTP message.">Message</a> object to receive the parsed message.</p>
 <dl class="section return"><dt>Returns</dt><dd>A properly typed message. </dd></dl>
+
+</div>
+</div>
+<a id="a08c81d2678f673cc4b166423edd67944"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08c81d2678f673cc4b166423edd67944">&#9670;&nbsp;</a></span>getMEMCHUNKSIZELIMIT()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint32_t Ghoti::Wave::Parser::getMEMCHUNKSIZELIMIT </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the parameter value for MEMCHUNKSIZELIMIT. </p>
+<dl class="section return"><dt>Returns</dt><dd>The parameter value. </dd></dl>
+
+<p>Implemented in <a class="el" href="classGhoti_1_1Wave_1_1ResponseParser.html#aa0c69a23395ea73d5cfc81e8a42549a1">Ghoti::Wave::ResponseParser</a>, and <a class="el" href="classGhoti_1_1Wave_1_1RequestParser.html#aee94754f8c4343a0a347bfc9d8c76834">Ghoti::Wave::RequestParser</a>.</p>
 
 </div>
 </div>

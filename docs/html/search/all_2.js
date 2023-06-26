@@ -7,7 +7,7 @@ var searchData=
   ['client_25',['Client',['../classGhoti_1_1Wave_1_1Client.html',1,'Ghoti::Wave']]],
   ['client_2ecpp_26',['client.cpp',['../client_8cpp.html',1,'']]],
   ['client_2ehpp_27',['client.hpp',['../client_8hpp.html',1,'']]],
-  ['clientparameter_28',['ClientParameter',['../client_8hpp.html#a59e62b6506178821b988e87c519e3140',1,'Ghoti::Wave']]],
+  ['clientparameter_28',['ClientParameter',['../hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140',1,'Ghoti::Wave']]],
   ['clientsession_29',['ClientSession',['../classGhoti_1_1Wave_1_1ClientSession.html#a5d2de1fdf67002a3f0a1fe99e576b4f3',1,'Ghoti::Wave::ClientSession::ClientSession()'],['../classGhoti_1_1Wave_1_1ClientSession.html',1,'Ghoti::Wave::ClientSession']]],
   ['clientsession_2ecpp_30',['clientSession.cpp',['../clientSession_8cpp.html',1,'']]],
   ['clientsession_2ehpp_31',['clientSession.hpp',['../clientSession_8hpp.html',1,'']]],

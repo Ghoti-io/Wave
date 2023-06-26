@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['server_236',['Server',['../classGhoti_1_1Wave_1_1Server.html',1,'Ghoti::Wave']]],
-  ['serversession_237',['ServerSession',['../classGhoti_1_1Wave_1_1ServerSession.html',1,'Ghoti::Wave']]]
+  ['requestparser_246',['RequestParser',['../classGhoti_1_1Wave_1_1RequestParser.html',1,'Ghoti::Wave']]],
+  ['responseparser_247',['ResponseParser',['../classGhoti_1_1Wave_1_1ResponseParser.html',1,'Ghoti::Wave']]]
 ];

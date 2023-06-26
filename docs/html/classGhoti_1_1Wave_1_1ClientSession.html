@@ -113,19 +113,20 @@ Collaboration diagram for Ghoti::Wave::ClientSession:</div>
 <div class="dyncontent">
 <div class="center"><img src="classGhoti_1_1Wave_1_1ClientSession__coll__graph.png" border="0" usemap="#aGhoti_1_1Wave_1_1ClientSession_coll__map" alt="Collaboration graph"/></div>
 <map name="aGhoti_1_1Wave_1_1ClientSession_coll__map" id="aGhoti_1_1Wave_1_1ClientSession_coll__map">
-<area shape="rect" title="Represents a connection to a particular domain/port pair." alt="" coords="1207,375,1404,401"/>
-<area shape="rect" href="classGhoti_1_1Wave_1_1HasClientParameters.html" title="Base class to provide consistent defaults to Server and ServerSession classes." alt="" coords="369,237,615,264"/>
-<area shape="rect" href="classGhoti_1_1Wave_1_1Client.html" title="Represents a client and all of its HTTP connections." alt="" coords="817,181,963,208"/>
-<area shape="rect" href="classGhoti_1_1Wave_1_1HasParameters.html" title=" " alt="" coords="5,230,249,271"/>
-<area shape="rect" title=" " alt="" coords="787,301,993,387"/>
-<area shape="rect" title=" " alt="" coords="363,5,621,149"/>
-<area shape="rect" title=" " alt="" coords="444,173,540,200"/>
-<area shape="rect" title=" " alt="" coords="813,411,967,453"/>
-<area shape="rect" href="classGhoti_1_1Wave_1_1Parser.html" title="Parses a HTTP/1.1 data stream into discrete messages." alt="" coords="815,477,965,504"/>
-<area shape="rect" title=" " alt="" coords="373,410,611,451"/>
-<area shape="rect" title=" " alt="" coords="43,497,212,538"/>
-<area shape="rect" title=" " alt="" coords="373,539,611,595"/>
-<area shape="rect" title=" " alt="" coords="807,529,973,570"/>
+<area shape="rect" title="Represents a connection to a particular domain/port pair." alt="" coords="1535,151,1732,177"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1HasClientParameters.html" title="Base class to provide consistent defaults to Server and ServerSession classes." alt="" coords="703,21,950,48"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1ResponseParser.html" title="Specialized class for handling the response parser, to make it easier to pass in ClientParameters." alt="" coords="1109,48,1321,75"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1Client.html" title="Represents a client and all of its HTTP connections." alt="" coords="1142,208,1289,235"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1HasParameters.html" title=" " alt="" coords="288,7,532,49"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1Parser.html" title="Parses a HTTP/1.1 data stream into discrete messages." alt="" coords="752,132,901,159"/>
+<area shape="rect" title=" " alt="" coords="291,73,529,114"/>
+<area shape="rect" title=" " alt="" coords="5,170,175,211"/>
+<area shape="rect" title=" " alt="" coords="291,201,529,257"/>
+<area shape="rect" title=" " alt="" coords="1112,99,1319,184"/>
+<area shape="rect" title=" " alt="" coords="697,255,956,399"/>
+<area shape="rect" title=" " alt="" coords="779,204,875,231"/>
+<area shape="rect" title=" " alt="" coords="1138,259,1293,301"/>
+<area shape="rect" title=" " alt="" coords="1133,325,1298,366"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -163,21 +164,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a801f653acda0a51134428e4e75d94175"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1ClientSession.html#a801f653acda0a51134428e4e75d94175">enqueue</a> (std::shared_ptr&lt; <a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &gt; request, std::shared_ptr&lt; <a class="el" href="classGhoti_1_1Wave_1_1Message.html">Message</a> &gt; response)</td></tr>
 <tr class="memdesc:a801f653acda0a51134428e4e75d94175"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a request/response pair to the session's queue.  <a href="classGhoti_1_1Wave_1_1ClientSession.html#a801f653acda0a51134428e4e75d94175">More...</a><br /></td></tr>
 <tr class="separator:a801f653acda0a51134428e4e75d94175"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16c33162398386c8332ac49401f575da"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; std::any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasClientParameters.html#a16c33162398386c8332ac49401f575da">getParameterDefault</a> (const <a class="el" href="client_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &amp;parameter) override</td></tr>
+<tr class="memitem:a16c33162398386c8332ac49401f575da"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; std::any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasClientParameters.html#a16c33162398386c8332ac49401f575da">getParameterDefault</a> (const <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &amp;parameter) override</td></tr>
 <tr class="memdesc:a16c33162398386c8332ac49401f575da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide a default value for the provided parameter key.  <a href="classGhoti_1_1Wave_1_1HasClientParameters.html#a16c33162398386c8332ac49401f575da">More...</a><br /></td></tr>
 <tr class="separator:a16c33162398386c8332ac49401f575da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd42b1fa09cccdcbed0b53cbf73dfc67"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; std::any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#acd42b1fa09cccdcbed0b53cbf73dfc67">getParameterDefault</a> ([[maybe_unused]]const <a class="el" href="client_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &amp;parameter)</td></tr>
+<tr class="memitem:acd42b1fa09cccdcbed0b53cbf73dfc67"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; std::any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#acd42b1fa09cccdcbed0b53cbf73dfc67">getParameterDefault</a> ([[maybe_unused]]const <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &amp;parameter)</td></tr>
 <tr class="memdesc:acd42b1fa09cccdcbed0b53cbf73dfc67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide a default value for the provided parameter key.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#acd42b1fa09cccdcbed0b53cbf73dfc67">More...</a><br /></td></tr>
 <tr class="separator:acd42b1fa09cccdcbed0b53cbf73dfc67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4265357a45a4e60981dbcec19f420905"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; std::any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a4265357a45a4e60981dbcec19f420905">getParameterAny</a> (const <a class="el" href="client_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &amp;parameter)</td></tr>
+<tr class="memitem:a4265357a45a4e60981dbcec19f420905"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; std::any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a4265357a45a4e60981dbcec19f420905">getParameterAny</a> (const <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &amp;parameter)</td></tr>
 <tr class="memdesc:a4265357a45a4e60981dbcec19f420905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the named parameter if it exists, checking locally first, then checking the global defaults.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#a4265357a45a4e60981dbcec19f420905">More...</a><br /></td></tr>
 <tr class="separator:a4265357a45a4e60981dbcec19f420905"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7e2e49d458ea3ef91f8785ba2baff54"><td class="memItemLeft" align="right" valign="top">const std::optional&lt; U &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ab7e2e49d458ea3ef91f8785ba2baff54">getParameter</a> (const <a class="el" href="client_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &amp;parameter)</td></tr>
+<tr class="memitem:ab7e2e49d458ea3ef91f8785ba2baff54"><td class="memItemLeft" align="right" valign="top">const std::optional&lt; U &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ab7e2e49d458ea3ef91f8785ba2baff54">getParameter</a> (const <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &amp;parameter)</td></tr>
 <tr class="memdesc:ab7e2e49d458ea3ef91f8785ba2baff54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parameter as a specified type.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#ab7e2e49d458ea3ef91f8785ba2baff54">More...</a><br /></td></tr>
 <tr class="separator:ab7e2e49d458ea3ef91f8785ba2baff54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50544b9660d50494722fcef9a6e49b6a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">HasParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a50544b9660d50494722fcef9a6e49b6a">setParameter</a> (const <a class="el" href="client_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &amp;parameter, const std::any &amp;value)</td></tr>
+<tr class="memitem:a50544b9660d50494722fcef9a6e49b6a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">HasParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a50544b9660d50494722fcef9a6e49b6a">setParameter</a> (const <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &amp;parameter, const std::any &amp;value)</td></tr>
 <tr class="memdesc:a50544b9660d50494722fcef9a6e49b6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a parameter.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#a50544b9660d50494722fcef9a6e49b6a">More...</a><br /></td></tr>
 <tr class="separator:a50544b9660d50494722fcef9a6e49b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6b208f61e376db2dfcdafa25a0abccc"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="hasParameters_8hpp.html#a027597370faf01a3a20c857f00140e8f">ParameterMap</a>&lt; <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ae6b208f61e376db2dfcdafa25a0abccc">getAllParameters</a> () const</td></tr>
+<tr class="memdesc:ae6b208f61e376db2dfcdafa25a0abccc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current explicitly-set parameters and their values.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#ae6b208f61e376db2dfcdafa25a0abccc">More...</a><br /></td></tr>
+<tr class="separator:ae6b208f61e376db2dfcdafa25a0abccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -217,10 +221,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1ClientSession.html#aa48a01937d99d516ad6675ca2dfefe51">finished</a></td></tr>
 <tr class="memdesc:aa48a01937d99d516ad6675ca2dfefe51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tracks whether or not the session has completed all pending communications. <br /></td></tr>
 <tr class="separator:aa48a01937d99d516ad6675ca2dfefe51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63c6ae47c6a049d3207b72624ad3b843"><td class="memItemLeft" align="right" valign="top"><a id="a63c6ae47c6a049d3207b72624ad3b843"></a>
-<a class="el" href="classGhoti_1_1Wave_1_1Parser.html">Parser</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1ClientSession.html#a63c6ae47c6a049d3207b72624ad3b843">parser</a></td></tr>
-<tr class="memdesc:a63c6ae47c6a049d3207b72624ad3b843"><td class="mdescLeft">&#160;</td><td class="mdescRight">The parser object used to parse the raw HTTP stream. <br /></td></tr>
-<tr class="separator:a63c6ae47c6a049d3207b72624ad3b843"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addd81033a8baca026ba95c53f4cf35f9"><td class="memItemLeft" align="right" valign="top"><a id="addd81033a8baca026ba95c53f4cf35f9"></a>
+<a class="el" href="classGhoti_1_1Wave_1_1ResponseParser.html">ResponseParser</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1ClientSession.html#addd81033a8baca026ba95c53f4cf35f9">parser</a></td></tr>
+<tr class="memdesc:addd81033a8baca026ba95c53f4cf35f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The parser object used to parse the raw HTTP stream. <br /></td></tr>
+<tr class="separator:addd81033a8baca026ba95c53f4cf35f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a487eab307f9c4eb1d1c51b5905f7614e"><td class="memItemLeft" align="right" valign="top"><a id="a487eab307f9c4eb1d1c51b5905f7614e"></a>
 <a class="el" href="classGhoti_1_1Wave_1_1Client.html">Client</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1ClientSession.html#a487eab307f9c4eb1d1c51b5905f7614e">client</a></td></tr>
 <tr class="memdesc:a487eab307f9c4eb1d1c51b5905f7614e"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the client object. <br /></td></tr>
@@ -229,7 +233,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a0266e2cc0aeef34de4afb85bcd29f591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tracks message/response pairs.  <a href="classGhoti_1_1Wave_1_1ClientSession.html#a0266e2cc0aeef34de4afb85bcd29f591">More...</a><br /></td></tr>
 <tr class="separator:a0266e2cc0aeef34de4afb85bcd29f591"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7569d91eb2b6810fcd8a0b35465c9a60"><td class="memItemLeft" align="right" valign="top"><a id="a7569d91eb2b6810fcd8a0b35465c9a60"></a>
-<a class="el" href="hasParameters_8hpp.html#a027597370faf01a3a20c857f00140e8f">ParameterMap</a>&lt; <a class="el" href="client_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a7569d91eb2b6810fcd8a0b35465c9a60">parameterValues</a></td></tr>
+<a class="el" href="hasParameters_8hpp.html#a027597370faf01a3a20c857f00140e8f">ParameterMap</a>&lt; <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a7569d91eb2b6810fcd8a0b35465c9a60">parameterValues</a></td></tr>
 <tr class="memdesc:a7569d91eb2b6810fcd8a0b35465c9a60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store explicitly set parameter key/value pairs. <br /></td></tr>
 <tr class="separator:a7569d91eb2b6810fcd8a0b35465c9a60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -342,6 +346,34 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a id="ae6b208f61e376db2dfcdafa25a0abccc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6b208f61e376db2dfcdafa25a0abccc">&#9670;&nbsp;</a></span>getAllParameters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="hasParameters_8hpp.html#a027597370faf01a3a20c857f00140e8f">ParameterMap</a>&lt;<a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &gt;&amp; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a>  &gt;::getAllParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the current explicitly-set parameters and their values. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current explicitly-set parameters. </dd></dl>
+
+</div>
+</div>
 <a id="ab7e2e49d458ea3ef91f8785ba2baff54"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab7e2e49d458ea3ef91f8785ba2baff54">&#9670;&nbsp;</a></span>getParameter()</h2>
 
@@ -352,7 +384,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::optional&lt;U&gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="client_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a>  &gt;::getParameter </td>
+          <td class="memname">const std::optional&lt;U&gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a>  &gt;::getParameter </td>
           <td>(</td>
           <td class="paramtype">const T &amp;&#160;</td>
           <td class="paramname"><em>parameter</em></td><td>)</td>
@@ -388,7 +420,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::optional&lt;std::any&gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="client_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a>  &gt;::getParameterAny </td>
+          <td class="memname">virtual std::optional&lt;std::any&gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a>  &gt;::getParameterAny </td>
           <td>(</td>
           <td class="paramtype">const T &amp;&#160;</td>
           <td class="paramname"><em>parameter</em></td><td>)</td>
@@ -423,7 +455,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::optional&lt;std::any&gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="client_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a>  &gt;::getParameterDefault </td>
+          <td class="memname">virtual std::optional&lt;std::any&gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a>  &gt;::getParameterDefault </td>
           <td>(</td>
           <td class="paramtype">[[maybe_unused] ]const T &amp;&#160;</td>
           <td class="paramname"><em>parameter</em></td><td>)</td>
@@ -461,7 +493,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="memname">optional&lt; any &gt; HasClientParameters::getParameterDefault </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="client_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a> &amp;&#160;</td>
           <td class="paramname"><em>parameter</em></td><td>)</td>
           <td></td>
         </tr>
@@ -586,9 +618,9 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">HasParameters</a>&amp; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="client_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a>  &gt;::setParameter </td>
+          <td class="memname">virtual <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">HasParameters</a>&amp; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a>  &gt;::setParameter </td>
           <td>(</td>
-          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="hasClientParameters_8hpp.html#a59e62b6506178821b988e87c519e3140">Ghoti::Wave::ClientParameter</a>  &amp;&#160;</td>
           <td class="paramname"><em>parameter</em>, </td>
         </tr>
         <tr>
@@ -619,6 +651,8 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The calling object, to allow for chaining. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classGhoti_1_1Wave_1_1Client.html#a1632a81fae14a57d81dbb124d44373fc">Ghoti::Wave::Client</a>.</p>
 
 </div>
 </div>

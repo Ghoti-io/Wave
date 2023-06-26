@@ -45,6 +45,7 @@ var classGhoti_1_1Wave_1_1Parser =
     ] ],
     [ "Parser", "classGhoti_1_1Wave_1_1Parser.html#a651d50fdabf3f324177aea48be538780", null ],
     [ "createNewMessage", "classGhoti_1_1Wave_1_1Parser.html#a2ff414c5948042e505cc4d84240329dd", null ],
+    [ "getMEMCHUNKSIZELIMIT", "classGhoti_1_1Wave_1_1Parser.html#a08c81d2678f673cc4b166423edd67944", null ],
     [ "parseMessageTarget", "classGhoti_1_1Wave_1_1Parser.html#a30e2feceabd18108c005fc4d38de7c46", null ],
     [ "processChunk", "classGhoti_1_1Wave_1_1Parser.html#afc4ff85b48ad66fa9e06e9f32e07981f", null ],
     [ "registerMessage", "classGhoti_1_1Wave_1_1Parser.html#ad30005371048deaf8771cf24de45c806", null ],
