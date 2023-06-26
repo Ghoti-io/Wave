@@ -128,7 +128,7 @@ class ServerSession : public HasServerParameters {
   /**
    * The parser object used to parse the raw HTTP stream.
    */
-  Parser parser;
+  RequestParser parser;
 
   /**
    * A pointer to the server object.

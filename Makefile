@@ -16,6 +16,8 @@ INCLUDE := -I include/ -I include/wave
 LIBOBJECTS := $(OBJ_DIR)/blob.o \
 							$(OBJ_DIR)/client.o \
 							$(OBJ_DIR)/clientSession.o \
+							$(OBJ_DIR)/hasClientParameters.o \
+							$(OBJ_DIR)/hasServerParameters.o \
 							$(OBJ_DIR)/parser.o \
 							$(OBJ_DIR)/parsing.o \
 							$(OBJ_DIR)/response.o \
@@ -42,36 +44,45 @@ DEP_BLOB = \
 	include/wave/blob.hpp
 DEP_HASPARAMETERS = \
 	include/wave/hasParameters.hpp
+DEP_HASCLIENTPARAMETERS = \
+	$(DEP_HASPARAMETERS) \
+	include/wave/hasClientParameters.hpp
+DEP_HASSERVERPARAMETERS = \
+	$(DEP_HASPARAMETERS) \
+	include/wave/hasServerParameters.hpp
 DEP_MESSAGE = \
 	$(DEP_BLOB) \
 	$(DEP_PARSING) \
 	include/wave/message.hpp
 DEP_PARSER = \
+	$(DEP_HASCLIENTPARAMETERS) \
+	$(DEP_HASSERVERPARAMETERS) \
 	$(DEP_PARSING) \
 	$(DEP_MESSAGE) \
 	include/wave/parser.hpp
 DEP_RESPONSE = \
 	include/wave/response.hpp
 DEP_CLIENTSESSION = \
-	$(DEP_HASPARAMETERS) \
+	$(DEP_HASCLIENTPARAMETERS) \
 	$(DEP_PARSER) \
 	$(DEP_MESSAGE) \
 	include/wave/clientSession.hpp
 DEP_SERVERSESSION = \
-	$(DEP_HASPARAMETERS) \
+	$(DEP_HASSERVERPARAMETERS) \
 	$(DEP_PARSER) \
 	$(DEP_MESSAGE) \
 	include/wave/serverSession.hpp
 DEP_CLIENT = \
-	$(DEP_HASPARAMETERS) \
+	$(DEP_HASCLIENTPARAMETERS) \
 	$(DEP_CLIENTSESSION) \
 	include/wave/client.hpp
 DEP_SERVER = \
-	$(DEP_HASPARAMETERS) \
+	$(DEP_HASSERVERPARAMETERS) \
 	$(DEP_SERVERSESSION) \
 	include/wave/server.hpp
 DEP_WAVE = \
-	$(DEP_HASPARAMETERS) \
+	$(DEP_HASCLIENTPARAMETERS) \
+	$(DEP_HASSERVERPARAMETERS) \
 	$(DEP_CLIENT) \
 	$(DEP_CLIENTSESSION) \
 	$(DEP_MACROS) \
@@ -101,6 +112,14 @@ $(OBJ_DIR)/client.o: \
 $(OBJ_DIR)/clientSession.o: \
 				src/clientSession.cpp \
 				$(DEP_CLIENTSESSION)
+
+$(OBJ_DIR)/hasClientParameters.o: \
+				src/hasClientParameters.cpp \
+				$(DEP_HASCLIENTPARAMETERS)
+
+$(OBJ_DIR)/hasServerParameters.o: \
+				src/hasServerParameters.cpp \
+				$(DEP_HASSERVERPARAMETERS)
 
 $(OBJ_DIR)/parser.o: \
 				src/parser.cpp \

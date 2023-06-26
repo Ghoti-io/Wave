@@ -15,38 +15,11 @@
 #include <set>
 #include <string>
 #include <thread>
-#include "wave/hasParameters.hpp"
+#include "wave/hasClientParameters.hpp"
 
 namespace Ghoti::Wave {
 class ClientSession;
 class Message;
-
-/**
- * Sessings parameters which influence the behavior of Wave and its
- * components.
- */
-enum class ClientParameter {
-  MAXBUFFERSIZE, ///< The read/write buffer size used when interacting with
-                 ///<   sockets.
-};
-
-/**
- * Base class to provide consistent defaults to Server and ServerSession
- * classes.
- */
-class HasClientParameters: public Ghoti::Wave::HasParameters<Ghoti::Wave::ClientParameter> {
-  public:
-  /**
-   * Provide a default value for the provided parameter key.
-   *
-   * The default behavior of this function is to only return an empty optional
-   * value.  The intent is for this to be overridden by subclasses.
-   *
-   * @param parameter The parameter key to fetch.
-   * @return The associated value.
-   */
-  virtual std::optional<std::any> getParameterDefault(const Ghoti::Wave::ClientParameter & parameter) override;
-};
 
 /**
  * Represents a client and all of its HTTP connections.
@@ -117,6 +90,17 @@ class Client : public HasClientParameters {
    *   response when the request is completed.
    */
   std::shared_ptr<Message> sendRequest(std::shared_ptr<Message> message);
+
+  /**
+   * Set a parameter.
+   *
+   * Values will be propagated to all client sessions.
+   *
+   * @param parameter The parameter key to be set.
+   * @param value The parameter value to be set.
+   * @return The calling object, to allow for chaining.
+   */
+  virtual Client & setParameter(const ClientParameter & parameter, const std::any & value) override;
 
   private:
   /**

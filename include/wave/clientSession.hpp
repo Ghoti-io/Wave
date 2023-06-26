@@ -172,7 +172,7 @@ class ClientSession : public HasClientParameters {
   /**
    * The parser object used to parse the raw HTTP stream.
    */
-  Parser parser;
+  ResponseParser parser;
 
   /**
    * A pointer to the client object.

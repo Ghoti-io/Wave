@@ -220,11 +220,51 @@ TEST(Message, Fields) {
   }
 }
 
+TEST(Integration, Simple) {
+  {
+    Server s{};
+    Client c{};
+    s.start();
+    auto request = make_shared<Message>(Message::Type::REQUEST);
+    request
+      ->setDomain("127.0.0.1")
+      .setPort(s.getPort())
+      .setTarget("/foo");
+    auto response = c.sendRequest(request);
+    response->getReadySemaphore().acquire();
+
+    // Verify the basic Response Message details.
+    ASSERT_EQ(response->getTransport(), Message::Transport::FIXED);
+    ASSERT_EQ(response->getContentLength(), 12);
+  }
+}
+
+TEST(Client, BufferSize) {
+  {
+    Server s{};
+    Client c{};
+    c.setParameter(ClientParameter::MAXBUFFERSIZE, uint32_t{10});
+    s.setParameter(ServerParameter::MEMCHUNKSIZELIMIT, uint32_t{10});
+    s.start();
+    auto request = make_shared<Message>(Message::Type::REQUEST);
+    request
+      ->setDomain("127.0.0.1")
+      .setPort(s.getPort())
+      .setTarget("/foo");
+    auto response = c.sendRequest(request);
+    response->getReadySemaphore().acquire();
+
+    // Verify the basic Response Message details.
+    ASSERT_EQ(response->getTransport(), Message::Transport::FIXED);
+    ASSERT_EQ(response->getContentLength(), 12);
+  }
+}
+
 int main(int argc, char** argv) {
   s.start();
   serverPort = s.getPort();
 
-  //while (0) {
+  while (0) {
     cout << "listening on " << s.getAddress() << ":" << s.getPort() << endl;
 
     Client c{};
@@ -240,7 +280,7 @@ int main(int argc, char** argv) {
     cout << "After wait" << endl;
 
     cout << *response;
-  //}
+  }
 
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

@@ -19,17 +19,6 @@ using namespace Ghoti::Pool;
 using namespace Ghoti::Wave;
 
 
-optional<any> HasClientParameters::getParameterDefault(const ClientParameter & p) {
-  static unordered_map<ClientParameter, any> defaults{
-    {ClientParameter::MAXBUFFERSIZE, {uint32_t{4096}}},
-  };
-  if (defaults.contains(p)) {
-    return defaults[p];
-  }
-  return {};
-};
-
-
 /**
  * Helper function to create a ClientSession connection to the provided
  * domain and port.
@@ -130,6 +119,10 @@ void Client::dispatchLoop(stop_token stopToken) {
         if ((sessions.size() < max_connections) && (requestQueue.size())) {
           auto [request, response] = requestQueue.front();
           auto clientSession = createClientSession(domain, port, this, response);
+          // Propagate settings.
+          for (auto & [param, value] : this->getAllParameters()) {
+            clientSession->setParameter(param, value);
+          }
           if (clientSession) {
             requestQueue.pop();
             clientSession->enqueue(request, response);
@@ -218,6 +211,19 @@ Client& Client::stop() {
     this->dispatchThread.request_stop();
     this->dispatchThread.join();
     this->running = false;
+  }
+  return *this;
+}
+
+Client & Client::setParameter(const ClientParameter & parameter, const std::any & value) {
+  HasClientParameters::setParameter(parameter, value);
+  for (auto & [domain, portMap] : this->domains) {
+    for (auto & [port, sessionsPair] : portMap) {
+      auto & [sessions, requestQueue] = sessionsPair;
+      for (auto & session : sessions) {
+        session->setParameter(parameter, value);
+      }
+    }
   }
   return *this;
 }

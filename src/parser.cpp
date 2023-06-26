@@ -354,11 +354,14 @@ void Parser::processChunk(const char * buffer, size_t len) {
                       this->currentMessage->setStatusCode(400).setErrorMessage("Invalid Content-Length");
                     }
                     else {
+                      // Converting ASCII numbers to an integer, one character
+                      // at a time.
                       contentLength *= 10;
                       contentLength += ch - '0';
                     }
                   }
                   this->contentLength = contentLength;
+                  this->currentMessage->setTransport(Message::Transport::FIXED);
                 }
                 SET_MINOR_STATE(CRLF);
               }
@@ -603,5 +606,19 @@ shared_ptr<Message> Parser::createNewMessage() const {
     default:
       return make_shared<Message>(Message::Type::RESPONSE);
   }
+}
+
+RequestParser::RequestParser() : Parser(REQUEST) {}
+
+uint32_t RequestParser::getMEMCHUNKSIZELIMIT() {
+  auto result = this->getParameter<uint32_t>(ServerParameter::MEMCHUNKSIZELIMIT);
+  return result ? *result : 0;
+}
+
+ResponseParser::ResponseParser() : Parser(RESPONSE) {}
+
+uint32_t ResponseParser::getMEMCHUNKSIZELIMIT() {
+  auto result = this->getParameter<uint32_t>(ClientParameter::MEMCHUNKSIZELIMIT);
+  return result ? *result : 0;
 }
 

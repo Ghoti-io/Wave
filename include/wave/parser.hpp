@@ -9,6 +9,8 @@
 
 #include <queue>
 #include <ghoti.io/shared_string_view.hpp>
+#include "wave/hasClientParameters.hpp"
+#include "wave/hasServerParameters.hpp"
 #include "wave/message.hpp"
 
 namespace Ghoti::Wave {
@@ -66,6 +68,13 @@ class Parser {
   std::queue<std::shared_ptr<Message>> messages;
 
   private:
+
+  /**
+   * Return the parameter value for MEMCHUNKSIZELIMIT.
+   *
+   * @return The parameter value.
+   */
+  virtual uint32_t getMEMCHUNKSIZELIMIT() = 0;
 
   /**
    * Primary state tracking values.
@@ -214,6 +223,45 @@ class Parser {
   size_t contentLength;
 };
 
+/**
+ * Specialized class for handling the request parser, to make it easier to
+ * pass in ServerParameters.
+ */
+class RequestParser : public Parser, public HasServerParameters {
+  public:
+  /**
+   * Default constructor.
+   */
+  RequestParser();
+
+  private:
+  /**
+   * Return the parameter value for MEMCHUNKSIZELIMIT.
+   *
+   * @return The parameter value.
+   */
+  virtual uint32_t getMEMCHUNKSIZELIMIT() override;
+};
+
+/**
+ * Specialized class for handling the response parser, to make it easier to
+ * pass in ClientParameters.
+ */
+class ResponseParser : public Parser, public HasClientParameters {
+  public:
+  /**
+   * Default constructor.
+   */
+  ResponseParser();
+
+  private:
+  /**
+   * Return the parameter value for MEMCHUNKSIZELIMIT.
+   *
+   * @return The parameter value.
+   */
+  virtual uint32_t getMEMCHUNKSIZELIMIT() override;
+};
 }
 
 #endif // GHOTI_WAVE_PARSER_HPP

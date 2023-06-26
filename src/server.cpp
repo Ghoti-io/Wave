@@ -16,28 +16,6 @@ using namespace std;
 using namespace Ghoti::Pool;
 using namespace Ghoti::Wave;
 
-static string request {R"(GET /hello.html HTTP/1.1
-Host: 0.0.0.0
-Accept-Language: en)"};
-
-static string response {R"(HTTP/1.1 200 OK
-Server: Hello
-Content-Length: 13
-Content-Type: text/plain
-
-Hello, world)"};
-
-
-optional<any> HasServerParameters::getParameterDefault(const ServerParameter & p) {
-  static unordered_map<ServerParameter, any> defaults{
-    {ServerParameter::MAXBUFFERSIZE, {uint32_t{4096}}},
-  };
-  if (defaults.contains(p)) {
-    return defaults[p];
-  }
-  return {};
-};
-
 
 void Server::dispatchLoop(stop_token stopToken) {
   // Create the worker pool queue.
@@ -78,7 +56,11 @@ void Server::dispatchLoop(stop_token stopToken) {
       this_thread::sleep_for(1ms);
     }
     else {
-      this->sessions.emplace(hClient, make_shared<ServerSession>(hClient, this));
+      auto ss{make_shared<ServerSession>(hClient, this)};
+      for (auto & [param, value] : this->getAllParameters()) {
+        ss->setParameter(param, value);
+      }
+      this->sessions.emplace(hClient, ss);
     }
   }
 
@@ -230,4 +212,11 @@ Server& Server::stop() {
   return *this;
 }
 
+Server & Server::setParameter(const ServerParameter & parameter, const std::any & value) {
+  HasServerParameters::setParameter(parameter, value);
+  for (auto & [socket, session] : this->sessions) {
+    session->setParameter(parameter, value);
+  }
+  return *this;
+}
 

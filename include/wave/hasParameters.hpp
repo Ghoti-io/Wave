@@ -151,6 +151,15 @@ class HasParameters {
     return *this;
   }
 
+  /**
+   * Get the current explicitly-set parameters and their values.
+   *
+   * @return The current explicitly-set parameters.
+   */
+  const ParameterMap<T> & getAllParameters() const {
+    return this->parameterValues;
+  }
+
   private:
   /**
    * Store explicitly set parameter key/value pairs.

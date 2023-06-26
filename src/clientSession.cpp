@@ -4,15 +4,16 @@
  * Define the Ghoti::Wave::ClientSession class.
  */
 
-#include <arpa/inet.h>
-#include <ghoti.io/pool.hpp>
+#include <cassert>
 #include <iostream>
 #include <poll.h>
-#include <sys/socket.h>
 #include <sstream>
 #include <set>
 #include <string.h>
 #include <unistd.h>
+#include <arpa/inet.h>
+#include <ghoti.io/pool.hpp>
+#include <sys/socket.h>
 #include "wave/clientSession.hpp"
 #include "wave/message.hpp"
 
@@ -29,7 +30,7 @@ ClientSession::ClientSession(int hServer, Client * client) :
   readSequence{0},
   working{false},
   finished{false},
-  parser{Parser::Type::RESPONSE},
+  parser{},
   client{client},
   messages{} {
 }
@@ -117,6 +118,7 @@ void ClientSession::read() {
 
   while (1) {
     auto maxBufferSize = *this->getParameter<uint32_t>(ClientParameter::MAXBUFFERSIZE);
+    assert(maxBufferSize);
     vector<char> bufferVector(maxBufferSize);
     char * buffer{bufferVector.data()};
     ssize_t byte_count = recv(this->hServer, buffer, maxBufferSize, 0);

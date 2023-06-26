@@ -13,36 +13,10 @@
 #include <memory>
 #include <string>
 #include <thread>
-#include "wave/hasParameters.hpp"
+#include "wave/hasServerParameters.hpp"
 
 namespace Ghoti::Wave {
 class ServerSession;
-
-/**
- * Sessings parameters which influence the behavior of a Server.
- */
-enum class ServerParameter {
-  MAXBUFFERSIZE, ///< The read/write buffer size used when interacting with
-                 ///<   sockets.
-};
-
-/**
- * Base class to provide consistent defaults to Server and ServerSession
- * classes.
- */
-class HasServerParameters : public Ghoti::Wave::HasParameters<Ghoti::Wave::ServerParameter> {
-  public:
-  /**
-   * Provide a default value for the provided parameter key.
-   *
-   * The default behavior of this function is to only return an empty optional
-   * value.  The intent is for this to be overridden by subclasses.
-   *
-   * @param parameter The parameter key to fetch.
-   * @return The associated value.
-   */
-  virtual std::optional<std::any> getParameterDefault(const Ghoti::Wave::ServerParameter & parameter) override;
-};
 
 /**
  * The base Server class.
@@ -50,7 +24,7 @@ class HasServerParameters : public Ghoti::Wave::HasParameters<Ghoti::Wave::Serve
  * This class is the foundation of the Ghoti.io HTTP server.  It serves as the
  * interface to control and expand the server programmatically.
  */
-class Server : public HasServerParameters {
+class Server : public Ghoti::Wave::HasServerParameters {
   public:
   /**
    * These are the error codes that the Server may generate when control
@@ -189,6 +163,17 @@ class Server : public HasServerParameters {
    *   the thread should be safely shut down.
    */
   void dispatchLoop(std::stop_token stoken);
+
+  /**
+   * Set a parameter.
+   *
+   * Values will be propagated to all Server sessions.
+   *
+   * @param parameter The parameter key to be set.
+   * @param value The parameter value to be set.
+   * @return The calling object, to allow for chaining.
+   */
+  virtual Server & setParameter(const ServerParameter & parameter, const std::any & value) override;
 
   private:
   /**
