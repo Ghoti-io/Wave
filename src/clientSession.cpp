@@ -218,3 +218,9 @@ void ClientSession::enqueue(shared_ptr<Message> request, shared_ptr<Message> res
   ++this->requestSequence;
 }
 
+ClientSession & ClientSession::setParameter(const ClientParameter & parameter, const std::any & value) {
+  HasClientParameters::setParameter(parameter, value);
+  this->parser.setParameter(parameter, value);
+  return *this;
+}
+

@@ -236,15 +236,17 @@ TEST(Integration, Simple) {
     // Verify the basic Response Message details.
     ASSERT_EQ(response->getTransport(), Message::Transport::FIXED);
     ASSERT_EQ(response->getContentLength(), 12);
+    ASSERT_EQ(response->getMessageBody().getType(), Blob::Type::TEXT);
   }
 }
 
 TEST(Client, BufferSize) {
   {
+    // Verify the response message body is a file-based chunk (because the
+    // response is 12 bytes, but we will set the size limit to 10 bytes).
     Server s{};
     Client c{};
-    c.setParameter(ClientParameter::MAXBUFFERSIZE, uint32_t{10});
-    s.setParameter(ServerParameter::MEMCHUNKSIZELIMIT, uint32_t{10});
+    c.setParameter(ClientParameter::MEMCHUNKSIZELIMIT, uint32_t{10});
     s.start();
     auto request = make_shared<Message>(Message::Type::REQUEST);
     request
@@ -257,6 +259,7 @@ TEST(Client, BufferSize) {
     // Verify the basic Response Message details.
     ASSERT_EQ(response->getTransport(), Message::Transport::FIXED);
     ASSERT_EQ(response->getContentLength(), 12);
+    ASSERT_EQ(response->getMessageBody().getType(), Blob::Type::FILE);
   }
 }
 
