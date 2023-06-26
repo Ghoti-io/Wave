@@ -238,8 +238,8 @@ const shared_string_view & Message::getDomain() const {
   return this->domain;
 }
 
-void Message::setReady(bool isFinished) {
-  this->parsingIsFinished = isFinished;
+void Message::setReady(bool parsingIsFinished) {
+  this->parsingIsFinished = parsingIsFinished;
   this->readySemaphore.release();
 }
 

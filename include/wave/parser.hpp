@@ -9,6 +9,7 @@
 
 #include <queue>
 #include <ghoti.io/shared_string_view.hpp>
+#include "wave/blob.hpp"
 #include "wave/hasClientParameters.hpp"
 #include "wave/hasServerParameters.hpp"
 #include "wave/message.hpp"
@@ -221,6 +222,11 @@ class Parser {
    * The content length that was encountered when parsing the header.
    */
   size_t contentLength;
+
+  /**
+   * The current chunk being collected.
+   */
+  Ghoti::Wave::Blob currentChunk;
 };
 
 /**

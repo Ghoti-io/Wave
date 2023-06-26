@@ -110,7 +110,8 @@ Parser::Parser(Type type) :
   cursor{0},
   input{},
   currentMessage{make_shared<Message>(type == REQUEST ? Message::Type::REQUEST : Message::Type::RESPONSE)},
-  contentLength{0} {
+  contentLength{0},
+  currentChunk{} {
     SET_NEW_HEADER;
   }
 
@@ -352,6 +353,7 @@ void Parser::processChunk(const char * buffer, size_t len) {
                     if ((contentLength >= 0) && !isdigit(ch)) {
                       contentLength = -1;
                       this->currentMessage->setStatusCode(400).setErrorMessage("Invalid Content-Length");
+                      break;
                     }
                     else {
                       // Converting ASCII numbers to an integer, one character
@@ -550,11 +552,37 @@ void Parser::processChunk(const char * buffer, size_t len) {
             break;
           }
           case MESSAGE_READ: {
+            auto cursorStart = this->cursor;
+
+            // Read in as much as possible, until the fixed contentLength is
+            // reached, whichever is first.
             while ((this->cursor < input_length) && ((this->cursor - this->minorStart) < this->contentLength)) {
               ++this->cursor;
             }
+
+            // Move the processed part into a chunk..
+            if (this->currentChunk.append(this->input.substr(cursorStart, this->cursor - cursorStart))) {
+              // The append failed.  We can't do anything else.
+              // Insufficient Storage
+              // https://datatracker.ietf.org/doc/html/rfc4918#section-11.5
+              this->currentMessage->setStatusCode(507).setErrorMessage("Insufficient Storage");
+              break;
+            }
+
+            // If the chunk is too big in memory, convert it to a file.
+            if ((this->currentChunk.getType() == Blob::Type::TEXT) && (this->currentChunk.getText().length() > this->getMEMCHUNKSIZELIMIT())) {
+              if (this->currentChunk.convertToFile()) {
+                // Insufficient Storage
+                // https://datatracker.ietf.org/doc/html/rfc4918#section-11.5
+                this->currentMessage->setStatusCode(507).setErrorMessage("Insufficient Storage");
+                break;
+              }
+            }
+
+            // If there is no more to read, then finalize the message.
             if ((this->cursor - this->minorStart) == this->contentLength) {
-              this->currentMessage->setMessageBody(this->input.substr(this->minorStart, this->cursor - this->minorStart));
+              this->currentMessage->setMessageBody(move(this->currentChunk));
+              this->currentChunk = {};
               // This is the end of the message.
               this->currentMessage->setReady(true);
               this->messages.emplace(move(this->currentMessage));

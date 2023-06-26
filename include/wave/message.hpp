@@ -267,10 +267,10 @@ class Message {
    * Notify anyone monitoring the readySemaphore that there is data ready to
    * be processed.
    *
-   * @param isFinished `true` if the message transmission is completed,
+   * @param parsingIsFinished `true` if the message transmission is completed,
    *   otherwise `false`.
    */
-  void setReady(bool isFinished);
+  void setReady(bool parsingIsFinished);
 
   /**
    * Indicate that the message parsing is completed for this message.

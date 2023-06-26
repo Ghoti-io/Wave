@@ -57,6 +57,7 @@ DEP_MESSAGE = \
 DEP_PARSER = \
 	$(DEP_HASCLIENTPARAMETERS) \
 	$(DEP_HASSERVERPARAMETERS) \
+	$(DEP_BLOB) \
 	$(DEP_PARSING) \
 	$(DEP_MESSAGE) \
 	include/wave/parser.hpp
