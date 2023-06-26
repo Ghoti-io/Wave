@@ -13,6 +13,7 @@ using namespace Ghoti::Wave;
 enum class Param {
   TEST1,
   TEST2,
+  TEST3,
 };
 
 template<>
@@ -27,9 +28,58 @@ optional<any> Ghoti::Wave::HasParameters<Param>::getParameterDefault(const Param
 };
 
 TEST(HasParameters, Default) {
+  HasParameters<Param> p{};
+  // Verify default values exist and are of the correct type.
+  ASSERT_TRUE(p.getParameterAny(Param::TEST1));
+  ASSERT_FALSE(p.getParameter<uint16_t>(Param::TEST1));
+  ASSERT_TRUE(p.getParameter<uint32_t>(Param::TEST1));
+  ASSERT_EQ(*p.getParameter<uint32_t>(Param::TEST1), 1);
+
+  ASSERT_TRUE(p.getParameterAny(Param::TEST2));
+  ASSERT_FALSE(p.getParameter<uint16_t>(Param::TEST2));
+  ASSERT_TRUE(p.getParameter<string>(Param::TEST2));
+  ASSERT_EQ(*p.getParameter<string>(Param::TEST2), "foo");
+
+  // Verify that a default value does not exist.
+  ASSERT_FALSE(p.getParameterAny(Param::TEST3));
+  ASSERT_FALSE(p.getParameter<uint16_t>(Param::TEST3));
+  ASSERT_FALSE(p.getParameter<string>(Param::TEST3));
+}
+
+TEST(HasParameters, Set) {
   {
     HasParameters<Param> p{};
-    ASSERT_FALSE(p.getParameter<int>(Param::TEST1));
+    HasParameters<Param> p2{};
+
+    // Verify that `p` contains what we expect.
+    ASSERT_TRUE(p.getParameterAny(Param::TEST1));
+    ASSERT_EQ(*p.getParameter<uint32_t>(Param::TEST1), 1);
+
+    // Set TEST1 to a different type.
+    p.setParameter(Param::TEST1, bool{true});
+    ASSERT_TRUE(p.getParameterAny(Param::TEST1));
+    ASSERT_TRUE(p.getParameter<bool>(Param::TEST1));
+    ASSERT_FALSE(p.getParameter<uint32_t>(Param::TEST1));
+    ASSERT_EQ(*p.getParameter<bool>(Param::TEST1), true);
+
+    // Validate that the default values are not changed for other instances.
+    ASSERT_EQ(*p2.getParameter<uint32_t>(Param::TEST1), 1);
+  }
+  {
+    // Verify that chaining works.
+    HasParameters<Param> p{};
+    ASSERT_TRUE(p.getParameter<uint32_t>(Param::TEST1));
+    ASSERT_TRUE(p.getParameter<string>(Param::TEST2));
+    ASSERT_FALSE(p.getParameterAny(Param::TEST3));
+    p.setParameter(Param::TEST1, double{1})
+      .setParameter(Param::TEST2, double{2})
+      .setParameter(Param::TEST3, double{3});
+    ASSERT_TRUE(p.getParameter<double>(Param::TEST1));
+    ASSERT_TRUE(p.getParameter<double>(Param::TEST2));
+    ASSERT_TRUE(p.getParameter<double>(Param::TEST3));
+    ASSERT_EQ(*p.getParameter<double>(Param::TEST1), 1.);
+    ASSERT_EQ(*p.getParameter<double>(Param::TEST2), 2.);
+    ASSERT_EQ(*p.getParameter<double>(Param::TEST3), 3.);
   }
 }
 

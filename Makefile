@@ -156,11 +156,10 @@ $(APP_DIR)/test: \
 
 $(APP_DIR)/test-hasParameters: \
 				test/test-hasParameters.cpp \
-				$(DEP_HASPARAMETERS) \
-				$(OBJ_DIR)/hasParameters.o
+				$(DEP_HASPARAMETERS)
 	@echo "\n### Compiling Wave HasParameters Test ###"
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) $(OBJ_DIR)/hasParameters.o
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS)
 
 ####################################################################
 # Commands
