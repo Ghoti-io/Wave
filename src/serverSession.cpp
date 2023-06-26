@@ -108,7 +108,7 @@ void ServerSession::read() {
   scoped_lock lock{*this->controlMutex};
 
   while (1) {
-    auto maxBufferSize = *this->getParameter<uint32_t>(Server::Parameter::MAXBUFFERSIZE);
+    auto maxBufferSize = *this->getParameter<uint32_t>(ServerParameter::MAXBUFFERSIZE);
     vector<char> bufferVector(maxBufferSize);
     char * buffer{bufferVector.data()};
     ssize_t byte_count = recv(hClient, buffer, maxBufferSize, 0);

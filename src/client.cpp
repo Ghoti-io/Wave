@@ -18,16 +18,10 @@ using namespace std;
 using namespace Ghoti::Pool;
 using namespace Ghoti::Wave;
 
-/**
- * Provides default values for Client::Parameter values.
- *
- * @param p The parameter to look up.
- * @return The default value associated with the value (if any).
- */
-template<>
-optional<any> Ghoti::Wave::HasParameters<Client::Parameter>::getParameterDefault(const Client::Parameter& p) {
-  static unordered_map<Client::Parameter, any> defaults{
-    {Client::Parameter::MAXBUFFERSIZE, {uint32_t{4096}}},
+
+optional<any> HasClientParameters::getParameterDefault(const ClientParameter & p) {
+  static unordered_map<ClientParameter, any> defaults{
+    {ClientParameter::MAXBUFFERSIZE, {uint32_t{4096}}},
   };
   if (defaults.contains(p)) {
     return defaults[p];

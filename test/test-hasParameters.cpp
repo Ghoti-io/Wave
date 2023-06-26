@@ -10,25 +10,30 @@
 using namespace std;
 using namespace Ghoti::Wave;
 
+/// @cond HIDDEN_SYMBOLS
 enum class Param {
   TEST1,
   TEST2,
   TEST3,
 };
 
-template<>
-optional<any> Ghoti::Wave::HasParameters<Param>::getParameterDefault(const Param & p) {
-  if (p == Param::TEST1) {
-    return uint32_t{1};
+class HasParam : public HasParameters<Param> {
+  public:
+  optional<any> getParameterDefault(const Param & p) override {
+    if (p == Param::TEST1) {
+      return uint32_t{1};
+    }
+    if (p == Param::TEST2) {
+      return string{"foo"};
+    }
+    return {};
   }
-  if (p == Param::TEST2) {
-    return string{"foo"};
-  }
-  return {};
 };
 
+/// @endcond
+
 TEST(HasParameters, Default) {
-  HasParameters<Param> p{};
+  HasParam p{};
   // Verify default values exist and are of the correct type.
   ASSERT_TRUE(p.getParameterAny(Param::TEST1));
   ASSERT_FALSE(p.getParameter<uint16_t>(Param::TEST1));
@@ -46,10 +51,10 @@ TEST(HasParameters, Default) {
   ASSERT_FALSE(p.getParameter<string>(Param::TEST3));
 }
 
-TEST(HasParameters, Set) {
+TEST(HasParam, Set) {
   {
-    HasParameters<Param> p{};
-    HasParameters<Param> p2{};
+    HasParam p{};
+    HasParam p2{};
 
     // Verify that `p` contains what we expect.
     ASSERT_TRUE(p.getParameterAny(Param::TEST1));
@@ -67,7 +72,7 @@ TEST(HasParameters, Set) {
   }
   {
     // Verify that chaining works.
-    HasParameters<Param> p{};
+    HasParam p{};
     ASSERT_TRUE(p.getParameter<uint32_t>(Param::TEST1));
     ASSERT_TRUE(p.getParameter<string>(Param::TEST2));
     ASSERT_FALSE(p.getParameterAny(Param::TEST3));

@@ -13,9 +13,36 @@
 #include <memory>
 #include <string>
 #include <thread>
+#include "wave/hasParameters.hpp"
 
 namespace Ghoti::Wave {
 class ServerSession;
+
+/**
+ * Sessings parameters which influence the behavior of a Server.
+ */
+enum class ServerParameter {
+  MAXBUFFERSIZE, ///< The read/write buffer size used when interacting with
+                 ///<   sockets.
+};
+
+/**
+ * Base class to provide consistent defaults to Server and ServerSession
+ * classes.
+ */
+class HasServerParameters : public Ghoti::Wave::HasParameters<Ghoti::Wave::ServerParameter> {
+  public:
+  /**
+   * Provide a default value for the provided parameter key.
+   *
+   * The default behavior of this function is to only return an empty optional
+   * value.  The intent is for this to be overridden by subclasses.
+   *
+   * @param parameter The parameter key to fetch.
+   * @return The associated value.
+   */
+  virtual std::optional<std::any> getParameterDefault(const Ghoti::Wave::ServerParameter & parameter) override;
+};
 
 /**
  * The base Server class.
@@ -23,17 +50,8 @@ class ServerSession;
  * This class is the foundation of the Ghoti.io HTTP server.  It serves as the
  * interface to control and expand the server programmatically.
  */
-class Server {
+class Server : public HasServerParameters {
   public:
-  /**
-   * Sessings parameters which influence the behavior of Wave and its
-   * components.
-   */
-  enum class Parameter {
-    MAXBUFFERSIZE, ///< The read/write buffer size used when interacting with
-                   ///<   sockets.
-  };
-
   /**
    * These are the error codes that the Server may generate when control
    * functions fail.

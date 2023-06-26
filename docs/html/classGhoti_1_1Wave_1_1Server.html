@@ -98,25 +98,33 @@ $(document).ready(function(){initNavTree('classGhoti_1_1Wave_1_1Server.html','')
 
 <p><code>#include &lt;<a class="el" href="server_8hpp_source.html">server.hpp</a>&gt;</code></p>
 <div class="dynheader">
+Inheritance diagram for Ghoti::Wave::Server:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGhoti_1_1Wave_1_1Server__inherit__graph.png" border="0" usemap="#aGhoti_1_1Wave_1_1Server_inherit__map" alt="Inheritance graph"/></div>
+<map name="aGhoti_1_1Wave_1_1Server_inherit__map" id="aGhoti_1_1Wave_1_1Server_inherit__map">
+<area shape="rect" title="The base Server class." alt="" coords="55,169,206,196"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1HasServerParameters.html" title="Base class to provide consistent defaults to Server and ServerSession classes." alt="" coords="5,95,256,121"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1HasParameters.html" title=" " alt="" coords="7,5,255,47"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
 Collaboration diagram for Ghoti::Wave::Server:</div>
 <div class="dyncontent">
 <div class="center"><img src="classGhoti_1_1Wave_1_1Server__coll__graph.png" border="0" usemap="#aGhoti_1_1Wave_1_1Server_coll__map" alt="Collaboration graph"/></div>
 <map name="aGhoti_1_1Wave_1_1Server_coll__map" id="aGhoti_1_1Wave_1_1Server_coll__map">
-<area shape="rect" title="The base Server class." alt="" coords="649,63,800,90"/>
-<area shape="rect" title=" " alt="" coords="355,13,441,39"/>
-<area shape="rect" title=" " alt="" coords="27,5,165,47"/>
-<area shape="rect" title=" " alt="" coords="350,63,446,90"/>
-<area shape="rect" title=" " alt="" coords="300,114,496,170"/>
-<area shape="rect" title=" " alt="" coords="5,121,187,163"/>
+<area shape="rect" title="The base Server class." alt="" coords="771,102,921,129"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1HasServerParameters.html" title="Base class to provide consistent defaults to Server and ServerSession classes." alt="" coords="367,17,617,43"/>
+<area shape="rect" href="classGhoti_1_1Wave_1_1HasParameters.html" title=" " alt="" coords="5,5,253,47"/>
+<area shape="rect" title=" " alt="" coords="449,74,535,101"/>
+<area shape="rect" title=" " alt="" coords="60,71,199,112"/>
+<area shape="rect" title=" " alt="" coords="444,125,540,151"/>
+<area shape="rect" title=" " alt="" coords="394,175,590,231"/>
+<area shape="rect" title=" " alt="" coords="39,183,220,224"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ac513ce7b86405c16285bffa52545ccb4"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Server.html#ac513ce7b86405c16285bffa52545ccb4">Parameter</a> { <a class="el" href="classGhoti_1_1Wave_1_1Server.html#ac513ce7b86405c16285bffa52545ccb4af2f31a8f9d68f088b5be1070b5007d41">MAXBUFFERSIZE</a>
- }</td></tr>
-<tr class="memdesc:ac513ce7b86405c16285bffa52545ccb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sessings parameters which influence the behavior of Wave and its components.  <a href="classGhoti_1_1Wave_1_1Server.html#ac513ce7b86405c16285bffa52545ccb4">More...</a><br /></td></tr>
-<tr class="separator:ac513ce7b86405c16285bffa52545ccb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d609467a71ba8ed1976e1b053c4f154"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Server.html#a9d609467a71ba8ed1976e1b053c4f154">ErrorCode</a> { <a class="el" href="classGhoti_1_1Wave_1_1Server.html#a9d609467a71ba8ed1976e1b053c4f154aa363eff6955835302b21ec4e8475abd5">NO_ERROR</a>
 , <a class="el" href="classGhoti_1_1Wave_1_1Server.html#a9d609467a71ba8ed1976e1b053c4f154a4395472630c1241d013f1eb00aad24e6">SERVER_ALREADY_RUNNING</a>
 , <a class="el" href="classGhoti_1_1Wave_1_1Server.html#a9d609467a71ba8ed1976e1b053c4f154a109747a826ef24ae6d8fae4c93334e26">START_FAILED</a>
@@ -168,6 +176,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7c9f0bda456b04571ab7abef19a0d3cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Server.html#a7c9f0bda456b04571ab7abef19a0d3cc">dispatchLoop</a> (std::stop_token stoken)</td></tr>
 <tr class="memdesc:a7c9f0bda456b04571ab7abef19a0d3cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Dispatch loop used by the thread pool to handle asynchronous reading and writing of the server ports.  <a href="classGhoti_1_1Wave_1_1Server.html#a7c9f0bda456b04571ab7abef19a0d3cc">More...</a><br /></td></tr>
 <tr class="separator:a7c9f0bda456b04571ab7abef19a0d3cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48131f3939253684c0e4d28ef4865a16"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; std::any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasServerParameters.html#a48131f3939253684c0e4d28ef4865a16">getParameterDefault</a> (const <a class="el" href="server_8hpp.html#a823697918491fbf3b49077794f7be222">Ghoti::Wave::ServerParameter</a> &amp;parameter) override</td></tr>
+<tr class="memdesc:a48131f3939253684c0e4d28ef4865a16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide a default value for the provided parameter key.  <a href="classGhoti_1_1Wave_1_1HasServerParameters.html#a48131f3939253684c0e4d28ef4865a16">More...</a><br /></td></tr>
+<tr class="separator:a48131f3939253684c0e4d28ef4865a16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd42b1fa09cccdcbed0b53cbf73dfc67"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; std::any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#acd42b1fa09cccdcbed0b53cbf73dfc67">getParameterDefault</a> ([[maybe_unused]]const <a class="el" href="server_8hpp.html#a823697918491fbf3b49077794f7be222">Ghoti::Wave::ServerParameter</a> &amp;parameter)</td></tr>
+<tr class="memdesc:acd42b1fa09cccdcbed0b53cbf73dfc67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide a default value for the provided parameter key.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#acd42b1fa09cccdcbed0b53cbf73dfc67">More...</a><br /></td></tr>
+<tr class="separator:acd42b1fa09cccdcbed0b53cbf73dfc67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4265357a45a4e60981dbcec19f420905"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; std::any &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a4265357a45a4e60981dbcec19f420905">getParameterAny</a> (const <a class="el" href="server_8hpp.html#a823697918491fbf3b49077794f7be222">Ghoti::Wave::ServerParameter</a> &amp;parameter)</td></tr>
+<tr class="memdesc:a4265357a45a4e60981dbcec19f420905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the named parameter if it exists, checking locally first, then checking the global defaults.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#a4265357a45a4e60981dbcec19f420905">More...</a><br /></td></tr>
+<tr class="separator:a4265357a45a4e60981dbcec19f420905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7e2e49d458ea3ef91f8785ba2baff54"><td class="memItemLeft" align="right" valign="top">const std::optional&lt; U &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#ab7e2e49d458ea3ef91f8785ba2baff54">getParameter</a> (const <a class="el" href="server_8hpp.html#a823697918491fbf3b49077794f7be222">Ghoti::Wave::ServerParameter</a> &amp;parameter)</td></tr>
+<tr class="memdesc:ab7e2e49d458ea3ef91f8785ba2baff54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parameter as a specified type.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#ab7e2e49d458ea3ef91f8785ba2baff54">More...</a><br /></td></tr>
+<tr class="separator:ab7e2e49d458ea3ef91f8785ba2baff54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50544b9660d50494722fcef9a6e49b6a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">HasParameters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a50544b9660d50494722fcef9a6e49b6a">setParameter</a> (const <a class="el" href="server_8hpp.html#a823697918491fbf3b49077794f7be222">Ghoti::Wave::ServerParameter</a> &amp;parameter, const std::any &amp;value)</td></tr>
+<tr class="memdesc:a50544b9660d50494722fcef9a6e49b6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a parameter.  <a href="classGhoti_1_1Wave_1_1HasParameters.html#a50544b9660d50494722fcef9a6e49b6a">More...</a><br /></td></tr>
+<tr class="separator:a50544b9660d50494722fcef9a6e49b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -206,6 +229,10 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1Server.html#a403cc13de9330a6a47309f4bc6bba376">port</a></td></tr>
 <tr class="memdesc:a403cc13de9330a6a47309f4bc6bba376"><td class="mdescLeft">&#160;</td><td class="mdescRight">The port that the server is configured to use. <br /></td></tr>
 <tr class="separator:a403cc13de9330a6a47309f4bc6bba376"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7569d91eb2b6810fcd8a0b35465c9a60"><td class="memItemLeft" align="right" valign="top"><a id="a7569d91eb2b6810fcd8a0b35465c9a60"></a>
+<a class="el" href="hasParameters_8hpp.html#a027597370faf01a3a20c857f00140e8f">ParameterMap</a>&lt; <a class="el" href="server_8hpp.html#a823697918491fbf3b49077794f7be222">Ghoti::Wave::ServerParameter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html#a7569d91eb2b6810fcd8a0b35465c9a60">parameterValues</a></td></tr>
+<tr class="memdesc:a7569d91eb2b6810fcd8a0b35465c9a60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store explicitly set parameter key/value pairs. <br /></td></tr>
+<tr class="separator:a7569d91eb2b6810fcd8a0b35465c9a60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The base <a class="el" href="classGhoti_1_1Wave_1_1Server.html" title="The base Server class.">Server</a> class. </p>
@@ -230,34 +257,6 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr><td class="fieldname"><a id="a9d609467a71ba8ed1976e1b053c4f154a4395472630c1241d013f1eb00aad24e6"></a>SERVER_ALREADY_RUNNING&#160;</td><td class="fielddoc"><p>The change could not be applied because the server is already running. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a9d609467a71ba8ed1976e1b053c4f154a109747a826ef24ae6d8fae4c93334e26"></a>START_FAILED&#160;</td><td class="fielddoc"><p>The server could not be started. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="ac513ce7b86405c16285bffa52545ccb4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac513ce7b86405c16285bffa52545ccb4">&#9670;&nbsp;</a></span>Parameter</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="classGhoti_1_1Wave_1_1Server.html#ac513ce7b86405c16285bffa52545ccb4">Ghoti::Wave::Server::Parameter</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Sessings parameters which influence the behavior of Wave and its components. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac513ce7b86405c16285bffa52545ccb4af2f31a8f9d68f088b5be1070b5007d41"></a>MAXBUFFERSIZE&#160;</td><td class="fielddoc"><p>The read/write buffer size used when interacting with sockets. </p>
 </td></tr>
 </table>
 
@@ -425,6 +424,149 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="ab7e2e49d458ea3ef91f8785ba2baff54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7e2e49d458ea3ef91f8785ba2baff54">&#9670;&nbsp;</a></span>getParameter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::optional&lt;U&gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="server_8hpp.html#a823697918491fbf3b49077794f7be222">Ghoti::Wave::ServerParameter</a>  &gt;::getParameter </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>parameter</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the parameter as a specified type. </p>
+<p>The result is returned as an optional. If there is no parameter value, then the optional value will be false.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parameter</td><td>The parameter value to get. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The (optional) parameter value. </dd></dl>
+
+</div>
+</div>
+<a id="a4265357a45a4e60981dbcec19f420905"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4265357a45a4e60981dbcec19f420905">&#9670;&nbsp;</a></span>getParameterAny()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::optional&lt;std::any&gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="server_8hpp.html#a823697918491fbf3b49077794f7be222">Ghoti::Wave::ServerParameter</a>  &gt;::getParameterAny </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>parameter</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the named parameter if it exists, checking locally first, then checking the global defaults. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parameter</td><td>The parameter to get. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The parameter value if it exists. </dd></dl>
+
+</div>
+</div>
+<a id="acd42b1fa09cccdcbed0b53cbf73dfc67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd42b1fa09cccdcbed0b53cbf73dfc67">&#9670;&nbsp;</a></span>getParameterDefault() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::optional&lt;std::any&gt; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="server_8hpp.html#a823697918491fbf3b49077794f7be222">Ghoti::Wave::ServerParameter</a>  &gt;::getParameterDefault </td>
+          <td>(</td>
+          <td class="paramtype">[[maybe_unused] ]const T &amp;&#160;</td>
+          <td class="paramname"><em>parameter</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Provide a default value for the provided parameter key. </p>
+<p>The default behavior of this function is to only return an empty optional value. The intent is for this to be overridden by subclasses.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parameter</td><td>The parameter key to fetch. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The associated value. </dd></dl>
+
+</div>
+</div>
+<a id="a48131f3939253684c0e4d28ef4865a16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48131f3939253684c0e4d28ef4865a16">&#9670;&nbsp;</a></span>getParameterDefault() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">optional&lt; any &gt; HasServerParameters::getParameterDefault </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="server_8hpp.html#a823697918491fbf3b49077794f7be222">Ghoti::Wave::ServerParameter</a> &amp;&#160;</td>
+          <td class="paramname"><em>parameter</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Provide a default value for the provided parameter key. </p>
+<p>The default behavior of this function is to only return an empty optional value. The intent is for this to be overridden by subclasses.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parameter</td><td>The parameter key to fetch. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The associated value. </dd></dl>
+
+</div>
+</div>
 <a id="a0bebc34d68fc248fabfdd6f77b0c938e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0bebc34d68fc248fabfdd6f77b0c938e">&#9670;&nbsp;</a></span>getPort()</h2>
 
@@ -511,6 +653,52 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The server object. </dd></dl>
+
+</div>
+</div>
+<a id="a50544b9660d50494722fcef9a6e49b6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50544b9660d50494722fcef9a6e49b6a">&#9670;&nbsp;</a></span>setParameter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">HasParameters</a>&amp; <a class="el" href="classGhoti_1_1Wave_1_1HasParameters.html">Ghoti::Wave::HasParameters</a>&lt; <a class="el" href="server_8hpp.html#a823697918491fbf3b49077794f7be222">Ghoti::Wave::ServerParameter</a>  &gt;::setParameter </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>parameter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::any &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set a parameter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parameter</td><td>The parameter key to be set. </td></tr>
+    <tr><td class="paramname">value</td><td>The parameter value to be set. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The calling object, to allow for chaining. </dd></dl>
 
 </div>
 </div>

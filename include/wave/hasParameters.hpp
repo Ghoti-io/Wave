@@ -26,13 +26,12 @@ using ParameterMap = std::unordered_map<T, std::any>;
  * key/value pairs as settings, in which the keys are of an enum type and the
  * values may be of any type.
  *
- * In order to use this class, the programmer must supply two things.
+ * In order to use this class, the programmer must supply one or two things.
  *   1. An `enum` or `enum class` type (with values defined, of course).
- *   2. A function to supply default values.
+ *   2. (Optional) A function to supply default values.
  *
- * The default value function must be defined by the programmer.  The prototype
- * is defined in the header file via the template, but the definition must be
- * written, even if the definition only returns a default (empty) value.
+ * The default value function provided by the class will only provide an empty
+ * object, but the programmer may create a subclass to override this behavior.
  *
  * A simple example of the usage of this class can be seen below:
  *
@@ -42,43 +41,49 @@ using ParameterMap = std::unordered_map<T, std::any>;
  *   GIMME_A_STRING,
  * };
  *
- * template<>
- * optional<any> Ghoti::Wave::HasParameters<Foo>::getParameterDefault(const Foo & p) {
- *   if (p == Foo::GIMME_A_INT) {
- *     return int{1};
+ * class FooWithDefaults : public Ghoti::Wave::HasParameters<Foo> {
+ *   public:
+ *   optional<any> getParameterDefault(const Foo & p) {
+ *     if (p == Foo::GIMME_A_INT) {
+ *       return int{1};
+ *     }
+ *     if (p == Foo::GIMME_A_STRING) {
+ *       return string{"foo"};
+ *     }
+ *     return {};
  *   }
- *   if (p == Foo::GIMME_A_STRING) {
- *     return string{"foo"};
- *   }
- *   return {};
- * }
+ * };
  * @endcode
  *
- * Alternate example of `HasParameters`:
+ * Alternate example of `FooWithDefaults` declaration:
  *
  * @code{cpp}
- * template<>
- * optional<any> Ghoti::Wave::HasParameters<Foo>::getParameterDefault(const Foo & p) {
- *   unordered_map<Foo, optional<any>> defaults{
- *     {Foo::GIMME_A_INT, {int{1}}},
- *     {Foo::GIMME_A_STRING, {string{"foo"}}},
- *   };
- *
- *   return defaults.contains(p) ? defaults[p] : {};
- * }
+ * class FooWithDefaults : public Ghoti::Wave::HasParameters<Foo> {
+ *   public:
+ *   optional<any> getParameterDefault(const Foo & p) {
+ *     unordered_map<Foo, optional<any>> defaults{
+ *       {Foo::GIMME_A_INT, {int{1}}},
+ *       {Foo::GIMME_A_STRING, {string{"foo"}}},
+ *     };
+ *     return defaults.contains(p) ? defaults[p] : {};
+ *   }
+ * };
  * @endcode
  *
  *
  * To Use it:
  *
  * @code{cpp}
- * class Something : public HasParameters<Foo> {}
  * int main() {
- *   Something s{};
- *   cout << s.getParameter<uint32_t>(Foo::GIMME_A_INT) << endl;
+ *   FooWithDefaults f{};
+ *   cout << *f.getParameter<uint32_t>(Foo::GIMME_A_INT) << endl;
  *   return 0;
  * }
  * @endcode
+ *
+ * Remember that `getParameter()` returns an `optional<any>` and
+ * `getParameters<type>()` returns an `optional<type>`.  In either case,
+ * you should verify that the optional value is set before use.
  */
 template <typename T>
 class HasParameters {
@@ -89,28 +94,17 @@ class HasParameters {
   HasParameters() : parameterValues{} {}
 
   /**
-   * The constructor.
+   * Provide a default value for the provided parameter key.
    *
-   * Create a parameter map with initial values.
-   *
-   * @param defaultValues The initial settings to be used.
-   */
-  HasParameters(const ParameterMap<T> & defaultValues) : parameterValues{defaultValues} {}
-
-  /**
-   * This is only a prototype.  The actual function must be supplied by the
-   * programmer in order to implement the desired default values.  See the
-   * example in the class documentation.
-   *
-   * This definition declares the function prototype which the programmer must
-   * then supply.  The programmer does not need to redeclare the prototype
-   * itself, but only needs to make sure that the function definition is
-   * implemented as part of the standard compilation step.
+   * The default behavior of this function is to only return an empty optional
+   * value.  The intent is for this to be overridden by subclasses.
    *
    * @param parameter The parameter key to fetch.
    * @return The associated value.
    */
-  static std::optional<std::any> getParameterDefault(const T & parameter);
+  virtual std::optional<std::any> getParameterDefault([[maybe_unused]]const T & parameter) {
+    return {};
+  }
 
   /**
    * Gets the named parameter if it exists, checking locally first, then
@@ -119,7 +113,7 @@ class HasParameters {
    * @param parameter The parameter to get.
    * @return The parameter value if it exists.
    */
-  std::optional<std::any> getParameterAny(const T & parameter) {
+  virtual std::optional<std::any> getParameterAny(const T & parameter) {
     if (this->parameterValues.contains(parameter)) {
       return this->parameterValues[parameter];
     }
@@ -152,7 +146,7 @@ class HasParameters {
    * @param value The parameter value to be set.
    * @return The calling object, to allow for chaining.
    */
-  HasParameters & setParameter(const T & parameter, const std::any & value) {
+  virtual HasParameters & setParameter(const T & parameter, const std::any & value) {
     this->parameterValues[parameter] = value;
     return *this;
   }

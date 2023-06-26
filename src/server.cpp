@@ -27,16 +27,10 @@ Content-Type: text/plain
 
 Hello, world)"};
 
-/**
- * Provides default values for Server::Parameter values.
- *
- * @param p The parameter to look up.
- * @return The default value associated with the value (if any).
- */
-template<>
-optional<any> Ghoti::Wave::HasParameters<Server::Parameter>::getParameterDefault(const Server::Parameter& p) {
-  static unordered_map<Server::Parameter, any> defaults{
-    {Server::Parameter::MAXBUFFERSIZE, {uint32_t{4096}}},
+
+optional<any> HasServerParameters::getParameterDefault(const ServerParameter & p) {
+  static unordered_map<ServerParameter, any> defaults{
+    {ServerParameter::MAXBUFFERSIZE, {uint32_t{4096}}},
   };
   if (defaults.contains(p)) {
     return defaults[p];

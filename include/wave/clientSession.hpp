@@ -23,7 +23,7 @@ namespace Ghoti::Wave {
 /**
  * Represents a connection to a particular domain/port pair.
  */
-class ClientSession : public HasParameters<Ghoti::Wave::Client::Parameter> {
+class ClientSession : public HasClientParameters {
   public:
   /**
    * Sessings parameters which influence the behavior of Wave and its

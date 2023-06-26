@@ -24,7 +24,7 @@ namespace Ghoti::Wave {
 /**
  * Represents a persistent connection with a client.
  */
-class ServerSession : public HasParameters<Ghoti::Wave::Server::Parameter> {
+class ServerSession : public HasServerParameters {
   public:
   /**
    * The constructor.

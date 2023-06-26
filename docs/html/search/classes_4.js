@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['parser_229',['Parser',['../classGhoti_1_1Wave_1_1Parser.html',1,'Ghoti::Wave']]]
+  ['parser_235',['Parser',['../classGhoti_1_1Wave_1_1Parser.html',1,'Ghoti::Wave']]]
 ];
