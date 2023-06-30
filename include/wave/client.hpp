@@ -8,7 +8,7 @@
 #define GHOTI_WAVE_CLIENT_HPP
 
 #include <ghoti.io/pool.hpp>
-#include <ghoti.io/shared_string_view.hpp>
+#include <ghoti.io/util/shared_string_view.hpp>
 #include <map>
 #include <memory>
 #include <queue>

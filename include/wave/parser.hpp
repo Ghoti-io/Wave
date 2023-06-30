@@ -8,7 +8,7 @@
 #define GHOTI_WAVE_PARSER_HPP
 
 #include <queue>
-#include <ghoti.io/shared_string_view.hpp>
+#include <ghoti.io/util/shared_string_view.hpp>
 #include "wave/blob.hpp"
 #include "wave/hasClientParameters.hpp"
 #include "wave/hasServerParameters.hpp"

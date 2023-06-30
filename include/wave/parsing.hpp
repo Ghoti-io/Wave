@@ -7,7 +7,7 @@
 #define CLIENT_HPP
 
 #include <string>
-#include <ghoti.io/shared_string_view.hpp>
+#include <ghoti.io/util/shared_string_view.hpp>
 
 namespace Ghoti::Wave {
 

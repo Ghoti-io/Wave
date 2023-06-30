@@ -28,7 +28,7 @@ LIBOBJECTS := $(OBJ_DIR)/blob.o \
 TESTFLAGS := `pkg-config --libs --cflags gtest`
 
 
-WAVELIBRARY := -L $(APP_DIR) -lghoti.io-wave `pkg-config --libs --cflags ghoti.io-shared_string_view ghoti.io-os`
+WAVELIBRARY := -L $(APP_DIR) -lghoti.io-wave `pkg-config --libs --cflags ghoti.io-util ghoti.io-os ghoti.io-pool`
 
 
 all: $(APP_DIR)/$(TARGET) ## Build the shared library

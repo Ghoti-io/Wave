@@ -184,30 +184,44 @@ void ClientSession::write() {
   scoped_lock lock{*this->controlMutex};
 
   if (this->writeSequence < this->requestSequence) {
+    int32_t bytesWritten{-1};
+    size_t attemptedWriteLength{0};
+
     // Attempt to write out some of the response.
     auto & [request, response] = this->messages[this->writeSequence];
-    auto assembledMessage = request->getRenderedHeader1() + string{"Content-Length: "} + to_string(request->getContentLength()) + "\r\n\r\n";
-    if (request->getContentLength()) {
-      assembledMessage += request->getMessageBody().getText();
+    // Default to FIXED if no other transport has been declared.
+    if (request->getTransport() == Message::Transport::UNDECLARED) {
+      request->setTransport(Message::Transport::FIXED);
     }
 
-    // Write out as much as possible.
-    auto bytesWritten = ::write(this->hServer, string{assembledMessage}.c_str() + this->writeOffset, assembledMessage.length() - this->writeOffset);
+    switch (request->getTransport()) {
+    case Message::Transport::FIXED: {
+      auto assembledMessage = request->getRenderedHeader1() + string{"Content-Length: "} + to_string(request->getContentLength()) + "\r\n\r\n";
+      if (request->getContentLength()) {
+        assembledMessage += request->getMessageBody().getText();
+      }
+      attemptedWriteLength = assembledMessage.length() - this->writeOffset;
 
-    // Detect any errors.
-    if (bytesWritten == -1) {
-      cout << "Error writing request: " << strerror(errno) << endl;
-      this->finished = true;
-      close(this->hServer);
-      return;
+      // Write out as much as possible.
+      bytesWritten = ::write(this->hServer, string{assembledMessage}.c_str() + this->writeOffset, attemptedWriteLength);
+
+      // Detect any errors.
+      if (bytesWritten == -1) {
+        cout << "Error writing request: " << strerror(errno) << endl;
+        this->finished = true;
+        close(this->hServer);
+        return;
+      }
+
+      // Advance the internal pointer.
+      this->writeOffset += bytesWritten;
+
+      // If everything has been written, then move to the next message.
+      if (this->writeOffset == attemptedWriteLength) {
+        ++this->writeSequence;
+      }
     }
-
-    // Advance the internal pointer.
-    this->writeOffset += bytesWritten;
-
-    // If everything has been written, then move to the next message.
-    if (this->writeOffset == assembledMessage.length()) {
-      ++this->writeSequence;
+    default: {}
     }
   }
   this->working = false;

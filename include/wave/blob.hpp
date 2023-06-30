@@ -7,7 +7,7 @@
 #ifndef GHOTI_WAVE_BLOB_HPP
 #define GHOTI_WAVE_BLOB_HPP
 
-#include <ghoti.io/shared_string_view.hpp>
+#include <ghoti.io/util/shared_string_view.hpp>
 #include <ghoti.io/os/file.hpp>
 
 namespace Ghoti::Wave {

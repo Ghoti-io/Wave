@@ -12,7 +12,7 @@
 #include <semaphore>
 #include <string>
 #include <vector>
-#include <ghoti.io/shared_string_view.hpp>
+#include <ghoti.io/util/shared_string_view.hpp>
 #include "wave/blob.hpp"
 
 namespace Ghoti::Wave {
@@ -324,6 +324,11 @@ class Message {
   bool parsingIsFinished;
 
   /**
+   * Track whether or not the header has been sent.
+   */
+  bool headerIsSent;
+
+  /**
    * The Message::Type of the message.
    */
   Type type;
@@ -352,6 +357,16 @@ class Message {
    * The contentLength of the message.
    */
   size_t contentLength;
+
+  /**
+   * Track the number of bytes of the current chunk that have been sent.
+   */
+  size_t chunkBytesSent;
+
+  /**
+   * Track the current chunk that is being sent.
+   */
+  size_t currentChunk;
 
   /**
    * A cached version of the HTTP/1.1 header.
