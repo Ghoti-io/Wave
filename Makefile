@@ -162,6 +162,30 @@ $(APP_DIR)/$(TARGET): \
 # Unit Tests
 ####################################################################
 
+OBJDEP_BLOB = \
+	$(OBJ_DIR)/blob.o
+
+$(APP_DIR)/test-blob: \
+				test/test-blob.cpp \
+				$(DEP_BLOB) \
+				$(OBJDEP_BLOB)
+	@echo "\n### Compiling Wave Blob Test ###"
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) `pkg-config --libs --cflags ghoti.io-util ghoti.io-os` $(OBJDEP_BLOB)
+
+OBJDEP_MESSAGE = \
+	$(OBJDEP_BLOB) \
+	$(OBJ_DIR)/parsing.o \
+	$(OBJ_DIR)/message.o
+
+$(APP_DIR)/test-message: \
+				test/test-message.cpp \
+				$(DEP_MESSAGE) \
+				$(OBJDEP_MESSAGE)
+	@echo "\n### Compiling Wave Message Test ###"
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) `pkg-config --libs --cflags ghoti.io-util ghoti.io-os` $(OBJDEP_MESSAGE)
+
 $(APP_DIR)/test: \
 				test/test.cpp \
 				$(DEP_WAVE) \
@@ -200,12 +224,16 @@ test-watch: ## Watch the file directory for changes and run the unit tests
 
 test: ## Make and run the Unit tests
 test: \
+				$(APP_DIR)/test-blob \
+				$(APP_DIR)/test-message \
 				$(APP_DIR)/test
 	@echo "\033[0;32m"
 	@echo "############################"
 	@echo "### Running normal tests ###"
 	@echo "############################"
 	@echo "\033[0m"
+	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-blob --gtest_brief=1
+	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-message --gtest_brief=1
 	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test --gtest_brief=1
 
 clean: ## Remove all contents of the build directories.
