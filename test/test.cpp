@@ -26,30 +26,32 @@ TEST(Blob, General) {
     ASSERT_EQ(b.getType(), Blob::Type::TEXT);
     ASSERT_EQ(b.getText(), "");
     ASSERT_EQ(string{b.getFile()}, "");
-    ASSERT_EQ(b.size(), 0);
-    ASSERT_EQ(b.length(), 0);
+    ASSERT_TRUE(b.sizeOrError());
+    ASSERT_EQ(*b.sizeOrError(), 0);
+    ASSERT_EQ(*b.lengthOrError(), 0);
   }
   {
     // Blob object using a text string.
-    Blob b{"a"};
+    Blob b{"ab"};
     ASSERT_EQ(b.getType(), Blob::Type::TEXT);
-    ASSERT_EQ(b.getText(), "a");
+    ASSERT_EQ(b.getText(), "ab");
     ASSERT_EQ(string{b.getFile()}, "");
-    ASSERT_EQ(b.size(), 1);
-    ASSERT_EQ(b.length(), 1);
+    ASSERT_TRUE(b.sizeOrError());
+    ASSERT_EQ(*b.sizeOrError(), 2);
+    ASSERT_EQ(*b.lengthOrError(), 2);
   }
   {
     // Set up a temporary file and write something to it.
     auto f{OS::File::createTemp(tempName)};
-    ASSERT_FALSE(f.append("a"));
+    ASSERT_FALSE(f.append("ab"));
 
     // Verify that the file is succesfully moved into the blob object.
     Blob b{move(f)};
     ASSERT_EQ(b.getType(), Blob::Type::FILE);
     ASSERT_EQ(b.getText(), "");
-    ASSERT_EQ(string{b.getFile()}, "a");
-    ASSERT_EQ(b.size(), 1);
-    ASSERT_EQ(b.length(), 1);
+    ASSERT_EQ(string{b.getFile()}, "ab");
+    ASSERT_EQ(*b.sizeOrError(), 2);
+    ASSERT_EQ(*b.lengthOrError(), 2);
   }
   {
     // Create a Blob with text.
@@ -64,23 +66,23 @@ TEST(Blob, General) {
     ASSERT_FALSE(b.append("b"));
     // Verify the file wite was successful.
     ASSERT_EQ(string{b.getFile()}, "ab");
-    ASSERT_EQ(b.size(), 2);
-    ASSERT_EQ(b.length(), 2);
+    ASSERT_EQ(*b.sizeOrError(), 2);
+    ASSERT_EQ(*b.lengthOrError(), 2);
   }
   {
     // Truncating a blob with text in memory.
     Blob b{"abc"};
-    ASSERT_EQ(b.size(), 3);
+    ASSERT_EQ(*b.sizeOrError(), 3);
     ASSERT_FALSE(b.truncate("hello"));
-    ASSERT_EQ(b.size(), 5);
+    ASSERT_EQ(*b.sizeOrError(), 5);
   }
   {
     // Truncating a blob with text in a file.
     Blob b{"abc"};
     b.convertToFile();
-    ASSERT_EQ(b.size(), 3);
+    ASSERT_EQ(*b.sizeOrError(), 3);
     ASSERT_FALSE(b.truncate("hello"));
-    ASSERT_EQ(b.size(), 5);
+    ASSERT_EQ(*b.sizeOrError(), 5);
   }
 }
 

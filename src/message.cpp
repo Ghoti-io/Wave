@@ -206,7 +206,8 @@ Message::Type Message::getType() const {
 }
 
 Message & Message::setMessageBody(Blob && messageBody) {
-  this->contentLength = messageBody.length();
+  auto len = messageBody.lengthOrError();
+  this->contentLength = len ? *len : 0;
   this->messageBody = move(messageBody);
   this->transport = Message::Transport::FIXED;
   return *this;

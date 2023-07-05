@@ -8,6 +8,7 @@
 #define GHOTI_WAVE_BLOB_HPP
 
 #include <ghoti.io/util/shared_string_view.hpp>
+#include <ghoti.io/util/errorOr.hpp>
 #include <ghoti.io/os/file.hpp>
 
 namespace Ghoti::Wave {
@@ -83,26 +84,24 @@ class Blob {
   /**
    * Get the size of the text in the blob.
    *
-   * If the file operation encounters an error, then it will return a
-   * size of 0.  It is up to the caller to investigate to see if there is
-   * a problem with the file.
+   * If the file operation encounters an error, then the error will be
+   * returned instead.
    *
-   * @return The size of the text in bytes.
+   * @return The size of the text in bytes, or error.
    */
-  uint32_t size() const noexcept;
+  Ghoti::Util::ErrorOr<size_t> sizeOrError() const noexcept;
 
   /**
    * Alias for Blob.size().
    *
    * Get the size of the text in the blob.
    *
-   * If the file operation encounters an error, then it will return a
-   * size of 0.  It is up to the caller to investigate to see if there is
-   * a problem with the file.
+   * If the file operation encounters an error, then the error will be
+   * returned instead.
    *
-   * @return The size of the text in bytes.
+   * @return The size of the text in bytes, or error.
    */
-  uint32_t length() const noexcept;
+  Ghoti::Util::ErrorOr<size_t> lengthOrError() const noexcept;
 
   /**
    * Get the text in the blob.
@@ -130,7 +129,7 @@ class Blob {
   Ghoti::Wave::Blob::Type getType() const;
 
   /**
-   * Compare a file against a string.
+   * Compare a blob against a string.
    *
    * @param rhs The string to compare against.
    * @return True if the values are equivalent, False otherwise.

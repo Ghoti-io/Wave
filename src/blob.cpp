@@ -8,6 +8,7 @@
 #include "blob.hpp"
 
 using namespace std;
+using namespace Ghoti;
 using namespace Ghoti::Wave;
 
 Blob::Blob() : type{Blob::Type::TEXT}, text{}, file{} {}
@@ -16,16 +17,19 @@ Blob::Blob(const Ghoti::shared_string_view & text) : type{Blob::Type::TEXT}, tex
 
 Blob::Blob(Ghoti::OS::File && file) : type{Blob::Type::FILE}, text{}, file{move(file)} {}
 
-uint32_t Blob::size() const noexcept {
+Util::ErrorOr<size_t> Blob::sizeOrError() const noexcept {
   if (this->type == Blob::Type::TEXT) {
     return this->text.length();
   }
   error_code ec{};
-  return filesystem::file_size(this->file.getPath(), ec);
+  auto size = filesystem::file_size(this->file.getPath(), ec);
+  return ec
+    ? Util::ErrorOr<size_t>{ec}
+    : Util::ErrorOr<size_t>{size};
 }
 
-uint32_t Blob::length() const noexcept {
-  return this->size();
+Util::ErrorOr<size_t> Blob::lengthOrError() const noexcept {
+  return this->sizeOrError();
 }
 
 void Blob::set(Ghoti::shared_string_view & text) {
