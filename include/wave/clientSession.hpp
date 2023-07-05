@@ -9,13 +9,13 @@
 
 #include <condition_variable>
 #include <ghoti.io/pool.hpp>
+#include <ghoti.io/util/hasParameters.hpp>
 #include <memory>
 #include <mutex>
 #include <ostream>
 #include <map>
 #include <string>
 #include "wave/client.hpp"
-#include "wave/hasParameters.hpp"
 #include "wave/message.hpp"
 #include "wave/parser.hpp"
 

@@ -7,7 +7,7 @@
 #ifndef GHOTI_WAVE_HASSERVERPARAMETERS_HPP
 #define GHOTI_WAVE_HASSERVERPARAMETERS_HPP
 
-#include "wave/hasParameters.hpp"
+#include <ghoti.io/util/hasParameters.hpp>
 
 namespace Ghoti::Wave {
 class ServerSession;
@@ -26,7 +26,7 @@ enum class ServerParameter {
  * Base class to provide consistent defaults to Server and ServerSession
  * classes.
  */
-class HasServerParameters : public Ghoti::Wave::HasParameters<Ghoti::Wave::ServerParameter> {
+class HasServerParameters : public Ghoti::Util::HasParameters<Ghoti::Wave::ServerParameter> {
   public:
   /**
    * Provide a default value for the provided parameter key.
@@ -37,7 +37,7 @@ class HasServerParameters : public Ghoti::Wave::HasParameters<Ghoti::Wave::Serve
    * @param parameter The parameter key to fetch.
    * @return The associated value.
    */
-  virtual std::optional<std::any> getParameterDefault(const Ghoti::Wave::ServerParameter & parameter) override;
+  virtual Ghoti::Util::ErrorOr<std::any> getParameterDefault(const Ghoti::Wave::ServerParameter & parameter) override;
 };
 
 }

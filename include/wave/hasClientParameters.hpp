@@ -7,7 +7,7 @@
 #ifndef GHOTI_WAVE_HASCLIENTPARAMETERS_HPP
 #define GHOTI_WAVE_HASCLIENTPARAMETERS_HPP
 
-#include "wave/hasParameters.hpp"
+#include <ghoti.io/util/hasParameters.hpp>
 
 namespace Ghoti::Wave {
 
@@ -26,7 +26,7 @@ enum class ClientParameter {
  * Base class to provide consistent defaults to Server and ServerSession
  * classes.
  */
-class HasClientParameters: public Ghoti::Wave::HasParameters<Ghoti::Wave::ClientParameter> {
+class HasClientParameters: public Ghoti::Util::HasParameters<Ghoti::Wave::ClientParameter> {
   public:
   /**
    * Provide a default value for the provided parameter key.
@@ -37,7 +37,7 @@ class HasClientParameters: public Ghoti::Wave::HasParameters<Ghoti::Wave::Client
    * @param parameter The parameter key to fetch.
    * @return The associated value.
    */
-  virtual std::optional<std::any> getParameterDefault(const Ghoti::Wave::ClientParameter & parameter) override;
+  virtual Ghoti::Util::ErrorOr<std::any> getParameterDefault(const Ghoti::Wave::ClientParameter & parameter) override;
 };
 
 }
