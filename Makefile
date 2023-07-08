@@ -16,8 +16,6 @@ INCLUDE := -I include/ -I include/wave
 LIBOBJECTS := $(OBJ_DIR)/blob.o \
 							$(OBJ_DIR)/client.o \
 							$(OBJ_DIR)/clientSession.o \
-							$(OBJ_DIR)/hasClientParameters.o \
-							$(OBJ_DIR)/hasServerParameters.o \
 							$(OBJ_DIR)/parser.o \
 							$(OBJ_DIR)/parsing.o \
 							$(OBJ_DIR)/response.o \
@@ -28,7 +26,7 @@ LIBOBJECTS := $(OBJ_DIR)/blob.o \
 TESTFLAGS := `pkg-config --libs --cflags gtest`
 
 
-WAVELIBRARY := -L $(APP_DIR) -lghoti.io-wave `pkg-config --libs --cflags ghoti.io-util ghoti.io-os ghoti.io-pool`
+WAVELIBRARY := -L $(APP_DIR) -lghoti.io-wave `pkg-config --libs --cflags ghoti.io-util ghoti.io-pool`
 
 
 all: $(APP_DIR)/$(TARGET) ## Build the shared library
@@ -110,14 +108,6 @@ $(OBJ_DIR)/clientSession.o: \
 				src/clientSession.cpp \
 				$(DEP_CLIENTSESSION)
 
-$(OBJ_DIR)/hasClientParameters.o: \
-				src/hasClientParameters.cpp \
-				$(DEP_HASCLIENTPARAMETERS)
-
-$(OBJ_DIR)/hasServerParameters.o: \
-				src/hasServerParameters.cpp \
-				$(DEP_HASSERVERPARAMETERS)
-
 $(OBJ_DIR)/parser.o: \
 				src/parser.cpp \
 				$(DEP_PARSER)
@@ -171,7 +161,7 @@ $(APP_DIR)/test-blob: \
 				$(OBJDEP_BLOB)
 	@echo "\n### Compiling Wave Blob Test ###"
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) `pkg-config --libs --cflags ghoti.io-util ghoti.io-os` $(OBJDEP_BLOB)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) `pkg-config --libs --cflags ghoti.io-util` $(OBJDEP_BLOB)
 
 OBJDEP_MESSAGE = \
 	$(OBJDEP_BLOB) \
@@ -184,7 +174,7 @@ $(APP_DIR)/test-message: \
 				$(OBJDEP_MESSAGE)
 	@echo "\n### Compiling Wave Message Test ###"
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) `pkg-config --libs --cflags ghoti.io-util ghoti.io-os` $(OBJDEP_MESSAGE)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) `pkg-config --libs --cflags ghoti.io-util` $(OBJDEP_MESSAGE)
 
 $(APP_DIR)/test: \
 				test/test.cpp \

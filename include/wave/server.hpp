@@ -165,15 +165,16 @@ class Server : public Ghoti::Wave::HasServerParameters {
   void dispatchLoop(std::stop_token stoken);
 
   /**
-   * Set a parameter.
+   * Provide a default value for the provided parameter key.
    *
-   * Values will be propagated to all Server sessions.
+   * The default behavior of this function is to only return an empty optional
+   * value.  The intent is for this to be overridden by subclasses.  This is an
+   * example of one such override.
    *
-   * @param parameter The parameter key to be set.
-   * @param value The parameter value to be set.
-   * @return The calling object, to allow for chaining.
+   * @param parameter The parameter key to fetch.
+   * @return The associated value.
    */
-  virtual Server & setParameter(const ServerParameter & parameter, const std::any & value) override;
+  virtual Ghoti::Util::ErrorOr<std::any> getParameterDefault(const Ghoti::Wave::ServerParameter & parameter) override;
 
   private:
   /**

@@ -15,7 +15,7 @@ Blob::Blob() : type{Blob::Type::TEXT}, text{}, file{} {}
 
 Blob::Blob(const Ghoti::shared_string_view & text) : type{Blob::Type::TEXT}, text{text}, file{} {}
 
-Blob::Blob(Ghoti::OS::File && file) : type{Blob::Type::FILE}, text{}, file{move(file)} {}
+Blob::Blob(Ghoti::Util::File && file) : type{Blob::Type::FILE}, text{}, file{move(file)} {}
 
 Util::ErrorOr<size_t> Blob::sizeOrError() const noexcept {
   if (this->type == Blob::Type::TEXT) {
@@ -38,7 +38,7 @@ void Blob::set(Ghoti::shared_string_view & text) {
   this->file = {};
 }
 
-void Blob::set(Ghoti::OS::File && file) {
+void Blob::set(Ghoti::Util::File && file) {
   this->text = {};
   this->file = move(file);
   this->type = Blob::Type::FILE;
@@ -48,7 +48,7 @@ const Ghoti::shared_string_view & Blob::getText() const {
   return this->text;
 }
 
-const Ghoti::OS::File & Blob::getFile() const {
+const Ghoti::Util::File & Blob::getFile() const {
   return this->file;
 }
 
@@ -85,7 +85,7 @@ error_code Blob::convertToFile() {
   }
 
   // Attempt to create a temporary file.
-  this->file = Ghoti::OS::File::createTemp("");
+  this->file = Ghoti::Util::File::createTemp("");
   error_code ec{};
   if ((ec = this->file.test())) {
     return ec;

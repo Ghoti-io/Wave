@@ -121,17 +121,6 @@ class ClientSession : public HasClientParameters {
    */
   void enqueue(std::shared_ptr<Message> request, std::shared_ptr<Message> response);
 
-  /**
-   * Set a parameter.
-   *
-   * Values will be propagated to the parser.
-   *
-   * @param parameter The parameter key to be set.
-   * @param value The parameter value to be set.
-   * @return The calling object, to allow for chaining.
-   */
-  virtual ClientSession & setParameter(const ClientParameter & parameter, const std::any & value) override;
-
   private:
   /**
    * The socket handle to the server.

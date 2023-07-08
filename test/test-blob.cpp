@@ -6,7 +6,7 @@
 
 #include <string>
 #include <gtest/gtest.h>
-#include <ghoti.io/os/file.hpp>
+#include <ghoti.io/util/file.hpp>
 #include "wave/blob.hpp"
 
 using namespace std;
@@ -38,7 +38,7 @@ TEST(Blob, General) {
   }
   {
     // Set up a temporary file and write something to it.
-    auto f{OS::File::createTemp(tempName)};
+    auto f{Util::File::createTemp(tempName)};
     ASSERT_FALSE(f.append("ab"));
 
     // Verify that the file is succesfully moved into the blob object.

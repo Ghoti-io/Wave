@@ -6,7 +6,6 @@
 
 #include <string>
 #include <gtest/gtest.h>
-#include <ghoti.io/os/file.hpp>
 #include "wave.hpp"
 
 using namespace std;

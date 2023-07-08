@@ -23,22 +23,9 @@ enum class ServerParameter {
 };
 
 /**
- * Base class to provide consistent defaults to Server and ServerSession
- * classes.
+ * Identifies a class as accepting ClientParameters.
  */
-class HasServerParameters : public Ghoti::Util::HasParameters<Ghoti::Wave::ServerParameter> {
-  public:
-  /**
-   * Provide a default value for the provided parameter key.
-   *
-   * The default behavior of this function is to only return an empty optional
-   * value.  The intent is for this to be overridden by subclasses.
-   *
-   * @param parameter The parameter key to fetch.
-   * @return The associated value.
-   */
-  virtual Ghoti::Util::ErrorOr<std::any> getParameterDefault(const Ghoti::Wave::ServerParameter & parameter) override;
-};
+using HasServerParameters = Ghoti::Util::HasParameters<Ghoti::Wave::ServerParameter>;
 
 }
 #endif // GHOTI_WAVE_HASSERVERPARAMETERS_HPP

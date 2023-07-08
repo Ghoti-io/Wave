@@ -33,6 +33,7 @@ ClientSession::ClientSession(int hServer, Client * client) :
   parser{},
   client{client},
   messages{} {
+  this->parser.setInheritFrom(this);
 }
 
 ClientSession::~ClientSession() {
@@ -230,11 +231,5 @@ void ClientSession::write() {
 void ClientSession::enqueue(shared_ptr<Message> request, shared_ptr<Message> response) {
   this->messages[this->requestSequence] = {request, response};
   ++this->requestSequence;
-}
-
-ClientSession & ClientSession::setParameter(const ClientParameter & parameter, const std::any & value) {
-  HasClientParameters::setParameter(parameter, value);
-  this->parser.setParameter(parameter, value);
-  return *this;
 }
 

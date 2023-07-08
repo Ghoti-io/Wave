@@ -57,9 +57,7 @@ void Server::dispatchLoop(stop_token stopToken) {
     }
     else {
       auto ss{make_shared<ServerSession>(hClient, this)};
-      for (auto & [param, value] : this->getAllParameters()) {
-        ss->setParameter(param, value);
-      }
+      ss->setInheritFrom(this);
       this->sessions.emplace(hClient, ss);
     }
   }
@@ -212,11 +210,14 @@ Server& Server::stop() {
   return *this;
 }
 
-Server & Server::setParameter(const ServerParameter & parameter, const std::any & value) {
-  HasServerParameters::setParameter(parameter, value);
-  for (auto & [socket, session] : this->sessions) {
-    session->setParameter(parameter, value);
+Ghoti::Util::ErrorOr<any> Server::getParameterDefault(const ServerParameter & p) {
+  static unordered_map<ServerParameter, any> defaults{
+    {ServerParameter::MAXBUFFERSIZE, {uint32_t{4096}}},
+    {ServerParameter::MEMCHUNKSIZELIMIT, {uint32_t{1024 * 1024}}},
+  };
+  if (defaults.contains(p)) {
+    return defaults[p];
   }
-  return *this;
-}
+  return make_error_code(Util::ErrorCode::PARAMETER_NOT_FOUND);
+};
 

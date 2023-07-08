@@ -9,7 +9,7 @@
 
 #include <ghoti.io/util/shared_string_view.hpp>
 #include <ghoti.io/util/errorOr.hpp>
-#include <ghoti.io/os/file.hpp>
+#include <ghoti.io/util/file.hpp>
 
 namespace Ghoti::Wave {
 
@@ -24,7 +24,7 @@ namespace Ghoti::Wave {
  * (a threshold decision which is left up to the programmer, and is not a part
  * of this object), then it can be converted to disk storage.  The disk storage
  * is likewise specifically useful for our approach to HTTP messages.  In short,
- * Blob makes use of the Ghoti::OS::File object, which will put files into the
+ * Blob makes use of the Ghoti::Util::File object, which will put files into the
  * OS temp directory by default, and clean up after itself when the file object
  * goes out of scope (if not handled in other ways).
  *
@@ -61,7 +61,7 @@ class Blob {
    *
    * @param file The file the blob should contain.
    */
-  Blob(Ghoti::OS::File && file);
+  Blob(Ghoti::Util::File && file);
 
   /**
    * Set the text contents of the Blob.
@@ -79,7 +79,7 @@ class Blob {
    *
    * @param file The file the blob should contain.
    */
-  void set(Ghoti::OS::File && file);
+  void set(Ghoti::Util::File && file);
 
   /**
    * Get the size of the text in the blob.
@@ -119,7 +119,7 @@ class Blob {
    *
    * @return The file in the blob.
    */
-  const Ghoti::OS::File & getFile() const;
+  const Ghoti::Util::File & getFile() const;
 
   /**
    * Get the Ghoti::Wave::Blob::Type of data the blob contains.
@@ -179,7 +179,7 @@ class Blob {
   /**
    * The file data the blob contains.
    */
-  Ghoti::OS::File file;
+  Ghoti::Util::File file;
 };
 
 /**
