@@ -3,6 +3,7 @@
  * Define the Ghoti::Wave::Message class.
  */
 
+#include <cassert>
 #include <iostream>
 #include "wave/message.hpp"
 #include "wave/parsing.hpp"
@@ -261,23 +262,54 @@ uint32_t Message::getId() const {
   return this->id;
 }
 
+Message & Message::addChunk(Ghoti::Wave::Blob && blob) {
+  this->setTransport(Message::Transport::CHUNKED);
+  auto m{make_shared<Message>(Message::Type::CHUNK)};
+  m->setMessageBody(move(blob));
+  this->chunks.emplace_back(move(m));
+  return *this;
+}
+
+Message & Message::addChunk(std::shared_ptr<Message> chunk) {
+  this->chunks.emplace_back(chunk);
+  return *this;
+}
+
+const std::vector<std::shared_ptr<Message>> & Message::getChunks() const {
+  return this->chunks;
+}
+
 ostream & Ghoti::Wave::operator<<(ostream & out, Message & message) {
-  if (message.getType() == Message::Type::REQUEST) {
-    out << "Request:" << endl
-      << "  Domain: " << message.getDomain() << endl
-      << "  Port: " << message.getPort() << endl
-      << "  Method: " << message.getMethod() << endl
-      << "  Target: " << message.getTarget() << endl;
-  }
-  else {
-    out << "Response:" << endl;
-    out << "  StatusCode: " << message.getStatusCode() << endl;
+  string indent{"  "};
+
+  switch(message.getType()) {
+    case Message::Type::REQUEST: {
+      out << "Request:" << endl
+        << "  Domain: " << message.getDomain() << endl
+        << "  Port: " << message.getPort() << endl
+        << "  Method: " << message.getMethod() << endl
+        << "  Target: " << message.getTarget() << endl;
+      break;
+    }
+    case Message::Type::RESPONSE: {
+      out << "Response:" << endl;
+      out << "  StatusCode: " << message.getStatusCode() << endl;
+      break;
+    }
+    case Message::Type::CHUNK: {
+      indent = "    ";
+      break;
+    }
+    default : {
+      assert(false);
+    };
   }
 
+
   if (message.getFields().size()) {
-    out << "  Fields:" << endl;
+    out << indent << "Fields:" << endl;
     for (auto & [name, values] : message.getFields()) {
-      out << "    " << name << ": ";
+      out << indent << "  " << name << ": ";
       size_t i = values.size();
 
       for (auto & value : values) {
@@ -287,14 +319,32 @@ ostream & Ghoti::Wave::operator<<(ostream & out, Message & message) {
     }
   }
 
-  if (message.getType() == Message::Type::RESPONSE) {
-    size_t contentLength = message.getContentLength();
-    out << "  Content-Length: " << contentLength << endl;
-    out << "  Message: " << message.getMessage() << endl;
-    if (contentLength) {
-      out << message.getMessageBody();
+  switch (message.getTransport()) {
+    case Message::Transport::FIXED: {
+      size_t contentLength = message.getContentLength();
+      if (contentLength) {
+        out << indent << "Content-Length: " << contentLength << endl;
+        out << indent << "Message: " << message.getMessage() << endl;
+        if (contentLength) {
+          out << message.getMessageBody();
+        }
+        out << endl;
+      }
+      break;
     }
-   out << endl;
+    case Message::Transport::CHUNKED: {
+      auto chunks = message.getChunks();
+      if (chunks.size()) {
+        cout << "Chunks:" << endl;
+        auto i{0u};
+        for (auto & chunk : chunks) {
+          cout << "  Chunk " << i++ << endl;
+          cout << *chunk;
+        }
+      }
+      break;
+    }
+    default: {}
   }
   return out;
 }

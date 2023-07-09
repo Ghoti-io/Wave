@@ -12,15 +12,25 @@
 #include <semaphore>
 #include <string>
 #include <vector>
+#include <ghoti.io/util/hasParameters.hpp>
 #include <ghoti.io/util/shared_string_view.hpp>
 #include "wave/blob.hpp"
 
 namespace Ghoti::Wave {
+/**
+ * Parameters for tracking message parameters.
+ */
+enum class MessageParameters {
+  CHUNK_DELIMITER,
+  MULTIPART_DELIMITER,
+};
+
+using HasMessageParameters = Ghoti::Util::HasParameters<MessageParameters>;
 
 /**
  * Represents a HTTP message.
  */
-class Message {
+class Message : public HasMessageParameters {
   public:
 
   /**
@@ -29,6 +39,7 @@ class Message {
   enum Type {
     REQUEST,  ///< A HTTP Request.
     RESPONSE, ///< A HTTP Response.
+    CHUNK,    ///< A chunk part for a parent, chunked transfer message.
   };
 
   /**
@@ -302,6 +313,29 @@ class Message {
    */
   uint32_t getId() const;
 
+  /**
+   * Add a chunk for a chunked transfer.
+   *
+   * @param blob The blob that represents this chunk.
+   * @return The Message object.
+   */
+  Message & addChunk(Ghoti::Wave::Blob && blob);
+
+  /**
+   * Add a chunk for a chunked transfer.
+   *
+   * @param chunk A chunk to add to the message.
+   * @return The Message object.
+   */
+  Message & addChunk(std::shared_ptr<Message> chunk);
+
+  /**
+   * Get the collection of chunks that have been added to the message.
+   *
+   * @return The collection of chunks that have been added to the message.
+   */
+  const std::vector<std::shared_ptr<Message>> & getChunks() const;
+
   private:
   /**
    * Used to track whether or not the header has been rendered to a string.
@@ -402,6 +436,12 @@ class Message {
    * The content body of the message.
    */
   Ghoti::Wave::Blob messageBody;
+
+  /**
+   * The collection of chunks that make up the message (if this is a chunked
+   * message).
+   */
+  std::vector<std::shared_ptr<Ghoti::Wave::Message>> chunks;
 
   /**
    * A collection of headers and their associated values.

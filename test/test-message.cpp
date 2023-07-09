@@ -96,6 +96,27 @@ TEST(Message, Fields) {
   }
 }
 
+TEST(Message, Chunks) {
+  {
+    Message m{Message::Type::REQUEST};
+    ASSERT_EQ(m.getTransport(), Message::Transport::UNDECLARED);
+    ASSERT_EQ(m.getChunks().size(), 0);
+    Blob b{};
+    b.append("hello");
+    m.addChunk(move(b));
+    ASSERT_EQ(m.getTransport(), Message::Transport::CHUNKED);
+    ASSERT_EQ(m.getChunks().size(), 1);
+    b = {};
+    b.append("world!");
+    m.addChunk(move(b));
+    ASSERT_EQ(m.getTransport(), Message::Transport::CHUNKED);
+    ASSERT_EQ(m.getChunks().size(), 2);
+    cout << "CHUNKED" << endl;
+    cout << m << endl;
+    cout << "--------------------------" << endl;
+  }
+}
+
 int main(int argc, char** argv) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
