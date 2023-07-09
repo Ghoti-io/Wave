@@ -58,7 +58,7 @@ static std::shared_ptr<ClientSession> createClientSession(const Ghoti::shared_st
 
   if (connect(hSocket, (sockaddr*)&client_address, sizeof(client_address)) < 0) {
     if (errno != EINPROGRESS) {
-      response->setErrorMessage(string("Connection Failed: ") + strerror(errno));
+      response->setErrorMessage("Connection Failed: "s + strerror(errno));
       response->setReady(true);
       return {};
     }
@@ -67,7 +67,7 @@ static std::shared_ptr<ClientSession> createClientSession(const Ghoti::shared_st
     // The TCP handshake is still in progress.
     pollfd pollFd{hSocket, POLLOUT, 0};
     if (poll(&pollFd, 1, -1) == -1) {
-      response->setErrorMessage(string("Connection Failed: ") + strerror(errno));
+      response->setErrorMessage("Connection Failed: "s + strerror(errno));
       response->setReady(true);
       return {};
     }
@@ -76,7 +76,7 @@ static std::shared_ptr<ClientSession> createClientSession(const Ghoti::shared_st
     FD_ZERO(&write_fds);
     FD_SET(hSocket, &write_fds);
     if (select(hSocket + 1, NULL, &write_fds, NULL, NULL) < 0) {
-      response->setErrorMessage(string("Connection Failed: ") + strerror(errno));
+      response->setErrorMessage("Connection Failed: "s + strerror(errno));
       response->setReady(true);
       return {};
     }
@@ -85,13 +85,13 @@ static std::shared_ptr<ClientSession> createClientSession(const Ghoti::shared_st
     int connect_error = 0;
     socklen_t connect_error_len = sizeof(connect_error);
     if (getsockopt(hSocket, SOL_SOCKET, SO_ERROR, &connect_error, &connect_error_len) < 0) {
-      response->setErrorMessage(string("Could not get socket error."));
+      response->setErrorMessage("Could not get socket error."s);
       response->setReady(true);
       return {};
     }
 
     if (connect_error != 0) {
-      response->setErrorMessage(string("Connection Failed: ") + strerror(errno));
+      response->setErrorMessage("Connection Failed: "s + strerror(errno));
       response->setReady(true);
       return {};
     }

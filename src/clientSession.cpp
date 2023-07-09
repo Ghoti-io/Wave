@@ -197,7 +197,7 @@ void ClientSession::write() {
 
     switch (request->getTransport()) {
     case Message::Transport::FIXED: {
-      auto assembledMessage = request->getRenderedHeader1() + string{"Content-Length: "} + to_string(request->getContentLength()) + "\r\n\r\n";
+      auto assembledMessage = request->getRenderedHeader1() + "Content-Length: " + to_string(request->getContentLength()) + "\r\n\r\n";
       if (request->getContentLength()) {
         assembledMessage += request->getMessageBody().getText();
       }
