@@ -69,6 +69,28 @@ class Message : public HasMessageParameters {
   Message(Type type);
 
   /**
+   * Get the Message::Type of the message.
+   *
+   * @return The Message::Type of the message.
+   */
+  Type getType() const noexcept;
+
+  /**
+   * Set the Message::Transport type of the Message.
+   *
+   * @param type The transport type of the Message.
+   * @return The Message object.
+   */
+  Message & setTransport(Message::Transport transport) noexcept;
+
+  /**
+   * Get the Message::Transport type of the Message.
+   *
+   * @return The transport type of the Message.
+   */
+  Message::Transport getTransport() const noexcept;
+
+  /**
    * Move the contents of `source` into the `this` object, except for the
    * promise and future attributes.
    *
@@ -96,21 +118,6 @@ class Message : public HasMessageParameters {
    * @return `true` if there is an error, `false` otherwise.
    */
   bool hasError() const;
-
-  /**
-   * Set the Message::Transport type of the Message.
-   *
-   * @param type The transport type of the Message.
-   * @return The Message object.
-   */
-  Message & setTransport(Message::Transport transport);
-
-  /**
-   * Get the Message::Transport type of the Message.
-   *
-   * @return The transport type of the Message.
-   */
-  Message::Transport getTransport() const;
 
   /**
    * Set the status code of the message.
@@ -214,13 +221,6 @@ class Message : public HasMessageParameters {
   const std::map<Ghoti::shared_string_view, std::vector<Ghoti::shared_string_view>> & getFields() const;
 
   /**
-   * Get the Message::Type of the message.
-   *
-   * @return The Message::Type of the message.
-   */
-  Type getType() const;
-
-  /**
    * Set the content body of the message.
    *
    * Sets the transport type to Message::Transport::FIXED.
@@ -278,13 +278,13 @@ class Message : public HasMessageParameters {
    * Notify anyone monitoring the readySemaphore that there is data ready to
    * be processed.
    *
-   * @param parsingIsFinished `true` if the message transmission is completed,
+   * @param messageIsFinished `true` if the message transmission is completed,
    *   otherwise `false`.
    */
-  void setReady(bool parsingIsFinished);
+  void setReady(bool messageIsFinished);
 
   /**
-   * Indicate that the message parsing is completed for this message.
+   * Indicate that the message is complete and fully formed for this message.
    *
    * @return `true` if the message parsing is complete, `false` otherwise.
    */
@@ -348,19 +348,16 @@ class Message : public HasMessageParameters {
   bool errorIsSet;
 
   /**
-   * Indicates whether or not the message is "finished" (i.e., there is no
-   * more content expected) when the readySemaphore is set.
-   *
-   * Streaming, multipart, and chunked messages will use the readySemaphore
-   * to indicate that some part of the message is newly available so that
-   * processing can be done in a streaming format.
-   */
-  bool parsingIsFinished;
-
-  /**
    * Track whether or not the header has been sent.
    */
   bool headerIsSent;
+
+  /**
+   * Indicates that a message is fully created.  If `false`, it indicates that
+   * the message may still be in the process of being formed, even though
+   * transmission may have already begun (e.g., CHUNKED).
+   */
+  bool messageIsFinished;
 
   /**
    * The Message::Type of the message.

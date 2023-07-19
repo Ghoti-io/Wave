@@ -17,7 +17,8 @@ static shared_string_view defaultMethod{"GET"};
 Message::Message(Type type) :
   headerIsRendered{false},
   errorIsSet{false},
-  parsingIsFinished{false},
+  headerIsSent{false},
+  messageIsFinished{false},
   type{type},
   transport{UNDECLARED},
   id{0},
@@ -38,7 +39,8 @@ void Message::adoptContents(Message & source) {
   // The semaphore cannot be moved, so we have to do things the hard way.
   this->headerIsRendered = move(source.headerIsRendered);
   this->errorIsSet = move(source.errorIsSet);
-  this->parsingIsFinished = move(source.parsingIsFinished);
+  this->headerIsSent = move(source.headerIsSent);
+  this->messageIsFinished = move(source.messageIsFinished);
   this->type = move(source.type);
   this->transport = move(source.transport);
   this->id = move(source.id);
@@ -51,11 +53,31 @@ void Message::adoptContents(Message & source) {
   this->target = move(source.target);
   this->version = move(source.version);
   this->messageBody = move(source.messageBody);
+  this->chunks = move(source.chunks);
   this->headers = move(source.headers);
-  // The semaphore is not copied, but we can synchronize the state.
+
+  // We have to take special care to migrate anything inherited via
+  // polymorphism.
+  HasMessageParameters::operator=(move(source));
+
+  // The semaphore is not copied, but we can synchronize the state (if the
+  // source message has already been released, that is).
   if (source.readySemaphore.try_acquire()) {
     this->readySemaphore.release();
   }
+}
+
+Message::Type Message::getType() const noexcept {
+  return this->type;
+}
+
+Message & Message::setTransport(Transport transport) noexcept {
+  this->transport = transport;
+  return *this;
+}
+
+Message::Transport Message::getTransport() const noexcept {
+  return this->transport;
 }
 
 const shared_string_view & Message::getRenderedHeader1() {
@@ -117,15 +139,6 @@ const shared_string_view & Message::getRenderedHeader1() {
 
 bool Message::hasError() const {
   return this->errorIsSet;
-}
-
-Message & Message::setTransport(Transport transport) {
-  this->transport = transport;
-  return *this;
-}
-
-Message::Transport Message::getTransport() const {
-  return this->transport;
 }
 
 Message & Message::setStatusCode(size_t statusCode) {
@@ -202,10 +215,6 @@ const map<shared_string_view, vector<shared_string_view>> & Message::getFields()
   return this->headers;
 }
 
-Message::Type Message::getType() const {
-  return this->type;
-}
-
 Message & Message::setMessageBody(Blob && messageBody) {
   auto len = messageBody.lengthOrError();
   this->contentLength = len ? *len : 0;
@@ -240,13 +249,13 @@ const shared_string_view & Message::getDomain() const {
   return this->domain;
 }
 
-void Message::setReady(bool parsingIsFinished) {
-  this->parsingIsFinished = parsingIsFinished;
+void Message::setReady(bool messageIsFinished) {
+  this->messageIsFinished = messageIsFinished;
   this->readySemaphore.release();
 }
 
 bool Message::isFinished() const noexcept {
-  return this->parsingIsFinished;
+  return this->messageIsFinished;
 }
 
 binary_semaphore & Message::getReadySemaphore() {

@@ -7,6 +7,7 @@
 #ifndef GHOTI_WAVE_CLIENTSESSION_HPP
 #define GHOTI_WAVE_CLIENTSESSION_HPP
 
+#include <any>
 #include <condition_variable>
 #include <ghoti.io/pool.hpp>
 #include <ghoti.io/util/hasParameters.hpp>
@@ -25,6 +26,7 @@ namespace Ghoti::Wave {
  */
 class ClientSession : public HasClientParameters {
   public:
+
   /**
    * Sessings parameters which influence the behavior of Wave and its
    * components.
@@ -145,12 +147,6 @@ class ClientSession : public HasClientParameters {
   size_t writeSequence;
 
   /**
-   * A byte offset, used to track how many bytes of a message have been
-   * written, so that individual write attempts do not duplicate data.
-   */
-  size_t writeOffset;
-
-  /**
    * The index number of the current request being received.
    *
    * A session may send many requests before a single response is completely
@@ -182,9 +178,9 @@ class ClientSession : public HasClientParameters {
   /**
    * Tracks message/response pairs.
    *
-   * messages[request sequence #] = <request, response>
+   * messages[request sequence #] = <request, response, send state>
    */
-  std::map<uint64_t, std::pair<std::shared_ptr<Message>, std::shared_ptr<Message>>> messages;
+  std::map<uint64_t, std::tuple<std::shared_ptr<Message>, std::shared_ptr<Message>, std::any>> messages;
 };
 
 }

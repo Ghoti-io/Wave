@@ -13,7 +13,6 @@ using namespace std;
 using namespace Ghoti;
 using namespace Ghoti::Wave;
 
-
 TEST(Message, Defaults) {
   {
     Message m{Message::Type::REQUEST};
@@ -114,6 +113,19 @@ TEST(Message, Chunks) {
     cout << "CHUNKED" << endl;
     cout << m << endl;
     cout << "--------------------------" << endl;
+  }
+}
+
+TEST(Message, adoptContents) {
+  {
+    Message m1{Message::Type::REQUEST};
+    Blob b{};
+    b.append("hello");
+    m1.addChunk(move(b));
+    Message m2{Message::Type::RESPONSE};
+    m2.adoptContents(m1);
+    ASSERT_EQ(m2.getType(), Message::Type::REQUEST);
+    ASSERT_EQ(m2.getChunks().size(), 1);
   }
 }
 

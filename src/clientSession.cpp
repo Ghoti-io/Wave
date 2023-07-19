@@ -21,12 +21,53 @@ using namespace std;
 using namespace Ghoti::Pool;
 using namespace Ghoti::Wave;
 
+#define SEND_OFFSET_T uint32_t
+#define CURRENT_CHUNK_T uint32_t
+
+/**
+ * Track the phase of the message send/receive lifetime.
+ *
+ * Helper class only for use in the Ghoti::Wave::ClientSession object file.
+ */
+enum Phase {
+  NEW,               ///< The Message has not started being transmitted or
+                     ///<   received yet.
+  SEND_HEADER,       ///< The Header is being sent.
+  SEND_FIXED,        ///< A fixed-length message is being sent.
+  SEND_MULTIPART,    ///< A Multipart message is being sent.
+  SEND_CHUNK_HEADER, ///< A Chunk Header is being sent.
+  SEND_CHUNK_BODY,   ///< A Chunk body is being sent.
+  SEND_STREAM,       ///< A streaming message is being sent.
+  FINISHED,          ///< The message is finished.
+  ERROR,             ///< There was an error performing the write.
+};
+
+/**
+ * Message attributes available (to avoid writing a lot of getters/setters.
+ *
+ * Helper class only for use in the Ghoti::Wave::ClientSession object file.
+ */
+enum class Attribute {
+  SEND_OFFSET,     ///< `uint32_t` Offset of the currently sent part.
+  CURRENT_CHUNK,   ///< `uint32_t` The current chunk being transferred.
+};
+
+/**
+ * Helper definition tracking the state of a message that is being transferred.
+ *
+ * <Phase, writeOffset, currentChunk>
+ */
+struct WriteState {
+  Phase phase;
+  uint32_t writeOffset;
+  uint32_t currentChunk;
+};
+
 ClientSession::ClientSession(int hServer, Client * client) :
   controlMutex{make_unique<mutex>()},
   hServer{hServer},
   requestSequence{0},
   writeSequence{0},
-  writeOffset{0},
   readSequence{0},
   working{false},
   finished{false},
@@ -131,7 +172,7 @@ void ClientSession::read() {
         auto temp = this->parser.messages.front();
         this->parser.messages.pop();
 
-        auto [request, response] = this->messages[this->readSequence];
+        auto & [request, response, writeState] = this->messages[this->readSequence];
         response->adoptContents(*temp);
         this->messages.erase(this->readSequence);
         ++this->readSequence;
@@ -181,55 +222,95 @@ void ClientSession::read() {
   this->working = false;
 }
 
+/**
+ * Helper macro for repeatedly writing different parts of the message.
+ *
+ * Requires the following variables to be used in the calling code block:
+ *  - `writeOffset`: How much of `source` has already been written.
+ *  - `this` : The ClientSession object.
+ *  - `phase` : The Phase of transfer of the message.
+ *
+ * @param source The text to be written.
+ * @param completedTarget The new Phase to transition to, if all of `source`
+ *   has been fully and successfully written.
+ */
+#define ATTEMPT_WRITE(source, completedTarget) \
+  auto attemptedWriteLength = (source).length() - writeOffset; \
+  auto bytesWritten = ::write(this->hServer, string{source}.c_str() + writeOffset, attemptedWriteLength); \
+  if (bytesWritten == -1) { \
+    phase = ERROR; \
+  } \
+  else { \
+    writeOffset += bytesWritten; \
+    if (writeOffset == source.length()) { \
+      phase = (completedTarget); \
+    } \
+    else { \
+      writeOffset += bytesWritten; \
+    } \
+  }
+
+
 void ClientSession::write() {
   scoped_lock lock{*this->controlMutex};
 
   if (this->writeSequence < this->requestSequence) {
-    int32_t bytesWritten{-1};
-    size_t attemptedWriteLength{0};
-
     // Attempt to write out some of the response.
-    auto & [request, response] = this->messages[this->writeSequence];
-    // Default to FIXED if no other transport has been declared.
-    if (request->getTransport() == Message::Transport::UNDECLARED) {
-      request->setTransport(Message::Transport::FIXED);
+    auto & [request, response, anyState] = this->messages[this->writeSequence];
+    auto & [phase, writeOffset, currentChunk] = any_cast<WriteState &>(anyState);
+
+    if (phase == NEW) {
+      // Default to FIXED if no other transport has been declared.
+      if (request->getTransport() == Message::Transport::UNDECLARED) {
+        request->setTransport(Message::Transport::FIXED);
+      }
+      phase = SEND_HEADER;
     }
 
     switch (request->getTransport()) {
-    case Message::Transport::FIXED: {
-      auto assembledMessage = request->getRenderedHeader1() + "Content-Length: " + to_string(request->getContentLength()) + "\r\n\r\n";
-      if (request->getContentLength()) {
-        assembledMessage += request->getMessageBody().getText();
+      case Message::Transport::FIXED: {
+        switch (phase) {
+          case SEND_HEADER: {
+            auto header = request->getRenderedHeader1() + "Content-Length: " + to_string(request->getContentLength()) + "\r\n\r\n";
+
+            // Write out as much as possible.
+            ATTEMPT_WRITE(header, request->getContentLength()
+              ? SEND_FIXED
+              : FINISHED);
+            break;
+          }
+          case SEND_FIXED: {
+            auto message = request->getMessageBody().getText();
+            ATTEMPT_WRITE(message, FINISHED);
+            break;
+          }
+          case FINISHED: {
+            // Move to the next message.
+            ++writeSequence;
+            break;
+          }
+          case ERROR: {
+            // There was an error writing to the socket.
+            cerr << "Error writing request: " << strerror(errno) << endl;
+            this->finished = true;
+            close(this->hServer);
+            return;
+          }
+          default: {}
+        };
       }
-      attemptedWriteLength = assembledMessage.length() - this->writeOffset;
-
-      // Write out as much as possible.
-      bytesWritten = ::write(this->hServer, string{assembledMessage}.c_str() + this->writeOffset, attemptedWriteLength);
-
-      // Detect any errors.
-      if (bytesWritten == -1) {
-        cout << "Error writing request: " << strerror(errno) << endl;
-        this->finished = true;
-        close(this->hServer);
-        return;
-      }
-
-      // Advance the internal pointer.
-      this->writeOffset += bytesWritten;
-
-      // If everything has been written, then move to the next message.
-      if (this->writeOffset == attemptedWriteLength) {
-        ++this->writeSequence;
-      }
-    }
-    default: {}
+      default: {}
     }
   }
   this->working = false;
 }
 
 void ClientSession::enqueue(shared_ptr<Message> request, shared_ptr<Message> response) {
-  this->messages[this->requestSequence] = {request, response};
+  this->messages[this->requestSequence] = {request, response, WriteState{
+    .phase = NEW,
+    .writeOffset = 0,
+    .currentChunk = 0,
+  }};
   ++this->requestSequence;
 }
 
