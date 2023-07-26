@@ -322,19 +322,11 @@ class Message : public HasMessageParameters {
   Message & addChunk(Ghoti::Wave::Blob && blob);
 
   /**
-   * Add a chunk for a chunked transfer.
-   *
-   * @param chunk A chunk to add to the message.
-   * @return The Message object.
-   */
-  Message & addChunk(std::shared_ptr<Message> chunk);
-
-  /**
    * Get the collection of chunks that have been added to the message.
    *
    * @return The collection of chunks that have been added to the message.
    */
-  const std::vector<std::shared_ptr<Message>> & getChunks() const;
+  const std::vector<Ghoti::Wave::Blob> & getChunks() const;
 
   private:
   /**
@@ -438,7 +430,7 @@ class Message : public HasMessageParameters {
    * The collection of chunks that make up the message (if this is a chunked
    * message).
    */
-  std::vector<std::shared_ptr<Ghoti::Wave::Message>> chunks;
+  std::vector<Ghoti::Wave::Blob> chunks;
 
   /**
    * A collection of headers and their associated values.

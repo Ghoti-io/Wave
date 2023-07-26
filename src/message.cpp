@@ -273,18 +273,11 @@ uint32_t Message::getId() const {
 
 Message & Message::addChunk(Ghoti::Wave::Blob && blob) {
   this->setTransport(Message::Transport::CHUNKED);
-  auto m{make_shared<Message>(Message::Type::CHUNK)};
-  m->setMessageBody(move(blob));
-  this->chunks.emplace_back(move(m));
+  this->chunks.emplace_back(move(blob));
   return *this;
 }
 
-Message & Message::addChunk(std::shared_ptr<Message> chunk) {
-  this->chunks.emplace_back(chunk);
-  return *this;
-}
-
-const std::vector<std::shared_ptr<Message>> & Message::getChunks() const {
+const std::vector<Ghoti::Wave::Blob> & Message::getChunks() const {
   return this->chunks;
 }
 
@@ -342,13 +335,13 @@ ostream & Ghoti::Wave::operator<<(ostream & out, Message & message) {
       break;
     }
     case Message::Transport::CHUNKED: {
-      auto chunks = message.getChunks();
+      auto & chunks = message.getChunks();
       if (chunks.size()) {
         cout << "Chunks:" << endl;
         auto i{0u};
         for (auto & chunk : chunks) {
           cout << "  Chunk " << i++ << endl;
-          cout << *chunk;
+          cout << chunk;
         }
       }
       break;
