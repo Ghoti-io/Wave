@@ -43,12 +43,12 @@ class Parser {
   Parser(Type type);
 
   /**
-   * Process a chunk of data.
+   * Process a block of data.
    *
    * @param buffer The buffer to be processed.
    * @param len The length of the buffer in bytes.
    */
-  void processChunk(const char * buffer, size_t len);
+  void processBlock(const char * buffer, size_t len);
   void parseMessageTarget(const Ghoti::shared_string_view & target);
 
   /**
@@ -90,6 +90,7 @@ class Parser {
     NEW_HEADER,    ///< Expect a new message header.
     FIELD_LINE,    ///< Expect a new header field.
     MESSAGE_BODY,  ///< Expect the message body.
+    CHUNKED_BODY,  ///< Expect a chunked body.
   };
 
   /**
@@ -133,6 +134,8 @@ class Parser {
     AFTER_HEADER_FIELDS,       ///< Header fields processed.
     MESSAGE_START,             ///< Message started.
     MESSAGE_READ,              ///< Message being read.
+    CHUNK_HEADER,              ///< Chunk header being read.
+    CHUNK_BODY,                ///< Chunk body being read.
   };
 
   /**

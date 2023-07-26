@@ -129,13 +129,13 @@ void Parser::parseMessageTarget([[maybe_unused]]const shared_string_view & targe
   // https://datatracker.ietf.org/doc/html/rfc9112#name-asterisk-form
 }
 
-void Parser::processChunk(const char * buffer, size_t len) {
+void Parser::processBlock(const char * buffer, size_t len) {
   //cout << "Processing (" << len << "): " << string(buffer, len) << endl;
   this->input += string(buffer, len);
   size_t input_length = this->input.length();
   while (!this->currentMessage->hasError() && (this->cursor < input_length)) {
     switch (this->readStateMajor) {
-      case NEW_HEADER:
+      case NEW_HEADER: {
         // https://datatracker.ietf.org/doc/html/rfc9112#name-request-line
         // request-line   = method SP request-target SP HTTP-version
         switch (this->readStateMinor) {
@@ -256,8 +256,9 @@ void Parser::processChunk(const char * buffer, size_t len) {
             this->currentMessage->setStatusCode(400).setErrorMessage(REQUEST_STATUS_ERROR);
           }
         }
-      break;
-      case FIELD_LINE:
+        break;
+      }
+      case FIELD_LINE: {
         // https://datatracker.ietf.org/doc/html/rfc9110#section-5.2
         switch (this->readStateMinor) {
           case BEGINNING_OF_FIELD_LINE: {
@@ -528,8 +529,9 @@ void Parser::processChunk(const char * buffer, size_t len) {
             this->currentMessage->setErrorMessage("foo");
           }
         }
-      break;
-      case MESSAGE_BODY:
+        break;
+      }
+      case MESSAGE_BODY: {
         switch (this->readStateMinor) {
           case MESSAGE_START: {
             // Increment the cursor, which was not done at the end of the
@@ -599,7 +601,14 @@ void Parser::processChunk(const char * buffer, size_t len) {
             this->currentMessage->setErrorMessage("foo");
           }
         }
-      break;
+        break;
+      }
+      case CHUNKED_BODY: {
+        switch (this->readStateMinor) {
+          default: {}
+        }
+        break;
+      }
       default: {
         this->currentMessage->setErrorMessage("foo");
       }

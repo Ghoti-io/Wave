@@ -37,6 +37,7 @@ enum Phase {
   SEND_MULTIPART,    ///< A Multipart message is being sent.
   SEND_CHUNK_HEADER, ///< A Chunk Header is being sent.
   SEND_CHUNK_BODY,   ///< A Chunk body is being sent.
+  SEND_LAST_CHUNK,   ///< The last chunk of size 0.
   SEND_STREAM,       ///< A streaming message is being sent.
   FINISHED,          ///< The message is finished.
   ERROR,             ///< There was an error performing the write.
@@ -165,7 +166,7 @@ void ClientSession::read() {
     char * buffer{bufferVector.data()};
     ssize_t byte_count = recv(this->hServer, buffer, maxBufferSize, 0);
     if (byte_count > 0) {
-      this->parser.processChunk(buffer, byte_count);
+      this->parser.processBlock(buffer, byte_count);
 
       // Notify the requester that we have a response.
       while (!this->parser.messages.empty()) {
@@ -267,39 +268,125 @@ void ClientSession::write() {
       phase = SEND_HEADER;
     }
 
-    switch (request->getTransport()) {
-      case Message::Transport::FIXED: {
-        switch (phase) {
-          case SEND_HEADER: {
-            auto header = request->getRenderedHeader1() + "Content-Length: " + to_string(request->getContentLength()) + "\r\n\r\n";
+    bool stop{false};
+    while (!stop) {
+      switch (request->getTransport()) {
+        case Message::Transport::FIXED: {
+          switch (phase) {
+            case SEND_HEADER: {
+              auto header = request->getRenderedHeader1() + "Content-Length: " + to_string(request->getContentLength()) + "\r\n\r\n";
 
-            // Write out as much as possible.
-            ATTEMPT_WRITE(header, request->getContentLength()
-              ? SEND_FIXED
-              : FINISHED);
-            break;
+              // Write out as much as possible.
+              ATTEMPT_WRITE(header, request->getContentLength()
+                ? SEND_FIXED
+                : FINISHED);
+              break;
+            }
+            case SEND_FIXED: {
+              auto message = request->getMessageBody().getText();
+              ATTEMPT_WRITE(message, FINISHED);
+              stop = true;
+              break;
+            }
+            case FINISHED: {
+              // Move to the next message.
+              ++writeSequence;
+              stop = true;
+              break;
+            }
+            case ERROR: {
+              // There was an error writing to the socket.
+              cerr << "Error writing request: " << strerror(errno) << endl;
+              this->finished = true;
+              close(this->hServer);
+              stop = true;
+              break;
+            }
+            default: {
+              assert(false);
+            }
           }
-          case SEND_FIXED: {
-            auto message = request->getMessageBody().getText();
-            ATTEMPT_WRITE(message, FINISHED);
-            break;
+          break;
+        }
+
+        case Message::Transport::CHUNKED: {
+          switch (phase) {
+            case SEND_HEADER: {
+              auto header = request->getRenderedHeader1() + "Transfer-Encoding: chunked\r\n\r\n";
+
+              // Write out as much as possible.
+              ATTEMPT_WRITE(header, request->getContentLength()
+                ? SEND_CHUNK_HEADER
+                : FINISHED);
+              break;
+            }
+            case SEND_CHUNK_HEADER: {
+              if (currentChunk < request->getChunks().size()) {
+                auto & chunk = request->getChunks()[currentChunk];
+                auto size = chunk.sizeOrError();
+                if (size) {
+                  stringstream ss{};
+                  ss << uppercase << hex << *size;
+                  auto header = ss.str() + "\r\n";
+
+                  // Write out as much as possible.
+                  ATTEMPT_WRITE(header, SEND_CHUNK_BODY);
+                }
+                else {
+                  cerr << "Error reading blob length" << endl;
+                  phase = ERROR;
+                }
+              }
+              else {
+                // There are no chunks waiting to write.  Either we are waiting
+                // on more chunks, or there is nothing else to write.
+                if (request->isFinished()) {
+                  phase = SEND_LAST_CHUNK;
+                }
+              }
+              break;
+            }
+            case SEND_CHUNK_BODY: {
+              if (currentChunk < request->getChunks().size()) {
+                auto & chunk = request->getChunks()[currentChunk];
+                string body{(chunk.getType() == Blob::Type::TEXT
+                  ? string{chunk.getText()}
+                  : string{chunk.getFile()})
+                  + "\r\n"};
+
+                // Write out as much as possible.
+                ATTEMPT_WRITE(body, SEND_CHUNK_HEADER);
+              }
+              stop = true;
+              break;
+            }
+            case SEND_LAST_CHUNK: {
+              string body{"0\r\n\r\n"};
+              ATTEMPT_WRITE(body, FINISHED);
+              break;
+            }
+            case FINISHED: {
+              // Move to the next message.
+              ++writeSequence;
+              stop = true;
+              break;
+            }
+            case ERROR: {
+              // There was an error writing to the socket.
+              cerr << "Error writing request: " << strerror(errno) << endl;
+              this->finished = true;
+              close(this->hServer);
+              stop = true;
+              break;
+            }
+            default: {
+              assert(false);
+            }
           }
-          case FINISHED: {
-            // Move to the next message.
-            ++writeSequence;
-            break;
-          }
-          case ERROR: {
-            // There was an error writing to the socket.
-            cerr << "Error writing request: " << strerror(errno) << endl;
-            this->finished = true;
-            close(this->hServer);
-            return;
-          }
-          default: {}
-        };
+          break;
+        }
+        default: {}
       }
-      default: {}
     }
   }
   this->working = false;

@@ -31,6 +31,7 @@ ServerSession::ServerSession(int hClient, Server * server) :
   hClient{hClient},
   requestSequence{0},
   writeOffset{0},
+  chunkOffset{0},
   working{false},
   finished{false},
   parser{},
@@ -88,6 +89,7 @@ bool ServerSession::hasWriteDataWaiting() {
           break;
         }
         case Message::Transport::CHUNKED : {
+          dataIsWaiting = true;
           break;
         }
         case Message::Transport::STREAM : {
@@ -116,7 +118,7 @@ void ServerSession::read() {
     char * buffer{bufferVector.data()};
     ssize_t byte_count = recv(hClient, buffer, maxBufferSize, 0);
     if (byte_count > 0) {
-      this->parser.processChunk(buffer, byte_count);
+      this->parser.processBlock(buffer, byte_count);
 
       // Enqueue the completed messages for processing.
       while (!this->parser.messages.empty()) {
@@ -209,9 +211,7 @@ void ServerSession::write() {
         // If everything has been written, then remove this message from the
         // pipeline queue.
         if (this->writeOffset == assembledMessage.length()) {
-          this->messages.erase(currentRequest);
-          this->pipeline.pop();
-          this->writeOffset = 0;
+          this->removeCompletedMessage();
         }
         break;
       }
@@ -226,5 +226,13 @@ void ServerSession::write() {
       }
     }
   }
+}
+
+void ServerSession::removeCompletedMessage() {
+  auto currentRequest = this->pipeline.front();
+  this->messages.erase(currentRequest);
+  this->pipeline.pop();
+  this->writeOffset = 0;
+  this->chunkOffset = 0;
 }
 

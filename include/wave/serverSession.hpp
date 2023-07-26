@@ -97,6 +97,14 @@ class ServerSession : public HasServerParameters {
    */
   void write();
 
+  /**
+   * Remove the current completed message and reset all internal counters.
+   *
+   * It is up to the caller to ensure that the control mutex is properly locked
+   * before calling this function.
+   */
+  void removeCompletedMessage();
+
   private:
   /**
    * The socket handle to the client.
@@ -113,6 +121,11 @@ class ServerSession : public HasServerParameters {
    * so that individual write attempts do not duplicate data.
    */
   size_t writeOffset;
+
+  /**
+   * A counter to track which chunk is being written.
+   */
+  size_t chunkOffset;
 
   /**
    * Tracks whether or not the session has work queued.
