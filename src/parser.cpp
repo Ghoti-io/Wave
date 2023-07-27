@@ -5,6 +5,7 @@
  */
 
 #include <arpa/inet.h>
+#include <cassert>
 #include <ghoti.io/pool.hpp>
 #include <iostream>
 #include <set>
@@ -258,13 +259,17 @@ void Parser::processBlock(const char * buffer, size_t len) {
         }
         break;
       }
-      case FIELD_LINE: {
+      case FIELD_LINE:
+      case TRAILER: {
         // https://datatracker.ietf.org/doc/html/rfc9110#section-5.2
+        // https://datatracker.ietf.org/doc/html/rfc9112#name-chunked-trailer-section
         switch (this->readStateMinor) {
           case BEGINNING_OF_FIELD_LINE: {
             // Intentionally not advancing the cursor in this step.
             if ((this->input[this->cursor] == '\r') || (this->input[this->cursor] == '\n')) {
-              SET_MINOR_STATE(AFTER_HEADER_FIELDS);
+              SET_MINOR_STATE(this->readStateMajor == FIELD_LINE
+                ? AFTER_HEADER_FIELDS
+                : TRAILER_FINISHED);
             }
             else {
               SET_MINOR_STATE(FIELD_NAME);
@@ -346,7 +351,12 @@ void Parser::processBlock(const char * buffer, size_t len) {
               // If anything remains, then it is the field value.
               if (tempCursor >= this->minorStart) {
                 auto value = this->input.substr(this->minorStart, tempCursor - this->minorStart + 1);
-                this->currentMessage->addFieldValue(this->tempFieldName, value);
+                if (this->readStateMajor == FIELD_LINE) {
+                  this->currentMessage->addFieldValue(this->tempFieldName, value);
+                }
+                else {
+                  this->currentMessage->addTrailerFieldValue(this->tempFieldName, value);
+                }
                 if (this->tempFieldName == "CONTENT-LENGTH") {
                   // https://datatracker.ietf.org/doc/html/rfc9112#name-content-length
                   int32_t contentLength{0};
@@ -364,7 +374,9 @@ void Parser::processBlock(const char * buffer, size_t len) {
                     }
                   }
                   this->contentLength = contentLength;
-                  this->currentMessage->setTransport(Message::Transport::FIXED);
+                  if (this->readStateMajor == FIELD_LINE) {
+                    this->currentMessage->setTransport(Message::Transport::FIXED);
+                  }
                 }
                 SET_MINOR_STATE(CRLF);
               }
@@ -418,7 +430,12 @@ void Parser::processBlock(const char * buffer, size_t len) {
               }
               // If anything remains, then it is the field value.
               if (tempCursor >= this->minorStart) {
-                this->currentMessage->addFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
+                if (this->readStateMajor == FIELD_LINE) {
+                  this->currentMessage->addFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
+                }
+                else {
+                  this->currentMessage->addTrailerFieldValue(this->tempFieldName, this->input.substr(this->minorStart, tempCursor - this->minorStart + 1));
+                }
                 if (this->input[this->cursor] == ',') {
                   SET_MINOR_STATE(FIELD_VALUE_COMMA);
                 }
@@ -468,7 +485,12 @@ void Parser::processBlock(const char * buffer, size_t len) {
           }
           case QUOTED_FIELD_VALUE_CLOSE: {
             SET_MINOR_STATE(AFTER_FIELD_VALUE);
-            this->currentMessage->addFieldValue(this->tempFieldName, this->tempFieldValue);
+            if (this->readStateMajor == FIELD_LINE) {
+              this->currentMessage->addFieldValue(this->tempFieldName, this->tempFieldValue);
+            }
+            else {
+              this->currentMessage->addTrailerFieldValue(this->tempFieldName, this->tempFieldValue);
+            }
             break;
           }
           case AFTER_FIELD_VALUE: {
@@ -502,30 +524,38 @@ void Parser::processBlock(const char * buffer, size_t len) {
             this->tempFieldName = "";
             break;
           }
-          case AFTER_HEADER_FIELDS: {
+          case AFTER_HEADER_FIELDS:
+          case TRAILER_FINISHED: {
             // CR `MAY` be ignored, so look for either CRLF or just LF.
             // https://datatracker.ietf.org/doc/html/rfc9112#section-2.2-3
             size_t len = this->cursor - this->minorStart;
             while ((this->cursor < input_length) && (len < 2)) {
-              if (((len == 0) && !((this->input[this->cursor] == '\r') || (this->input[this->cursor] == '\n')))
-                || ((len == 1) && (this->input[this->cursor] != '\n'))) {
+              ++this->cursor;
+              ++len;
+              if (((len == 1) && !((this->input[this->cursor] == '\r') || (this->input[this->cursor] == '\n')))
+                || ((len == 2) && (this->input[this->cursor] != '\n'))) {
                 this->currentMessage->setStatusCode(400).setErrorMessage("Error reading field line.");
               }
               if (!this->currentMessage->hasError() && (this->input[this->cursor] == '\n')) {
-                // Note: We are not incrementing the cursor here.  That way, in
-                // the event that the message ends at this point (e.g., there
-                // is no body message), the not-yet-incremented cursor allows
-                // us to move execution to the next phase.  If we need to end
-                // processing at that point, then so be it.
-                SET_MAJOR_STATE(MESSAGE_BODY, MESSAGE_START);
+                if (this->readStateMajor == FIELD_LINE) {
+                  // Note: We are un-incrementing the cursor here.  That way,
+                  // in the event that the message ends at this point (e.g.,
+                  // there is no body message), the not-yet-incremented cursor
+                  // allows us to move execution to the next phase.  If we need
+                  // to end processing at that point, then so be it.
+                  this->cursor -= len;
+                  SET_MAJOR_STATE(MESSAGE_BODY, MESSAGE_START);
+                }
+                else {
+                  SET_MAJOR_STATE(FINISHED, MESSAGE_FINISHED);
+                }
                 break;
               }
-              ++this->cursor;
-              ++len;
             }
             break;
           }
           default: {
+            assert(false);
             this->currentMessage->setErrorMessage("foo");
           }
         }
@@ -585,19 +615,12 @@ void Parser::processBlock(const char * buffer, size_t len) {
             if ((this->cursor - this->minorStart) == this->contentLength) {
               this->currentMessage->setMessageBody(move(this->currentChunk));
               this->currentChunk = {};
-              // This is the end of the message.
-              this->currentMessage->setReady(true);
-              this->messages.emplace(move(this->currentMessage));
-              this->currentMessage = this->createNewMessage();
-
-              // Break the input so that each message has its own shared_string_view.
-              START_NEW_INPUT;
-
-              SET_NEW_HEADER;
+              SET_MAJOR_STATE(FINISHED, MESSAGE_FINISHED);
             }
             break;
           }
           default: {
+            assert(false);
             this->currentMessage->setErrorMessage("foo");
           }
         }
@@ -605,11 +628,145 @@ void Parser::processBlock(const char * buffer, size_t len) {
       }
       case CHUNKED_BODY: {
         switch (this->readStateMinor) {
-          default: {}
+          case CHUNK_START: {
+            this->chunkSize = 0;
+            this->extensions = "";
+            this->currentChunk = {};
+            SET_MINOR_STATE(CHUNK_SIZE);
+            break;
+          }
+          case CHUNK_SIZE: {
+            // https://datatracker.ietf.org/doc/html/rfc9112#section-7.1-3
+            // overflowProtect is used to make sure that calculating chunkSize
+            // will not overflow when reading in a new digit.
+            // The approach is assume that size_t is 16 bits.  overflowProtect
+            // should then be the maximum value that can fit into 8 bits,
+            // calculated as ((1 << (16 - 8)) - 1).
+            // If size_t is 64 bits, then overflowProtect should be the maximum
+            // value that can fit into 64 - 8, or 56 bits, calculated as
+            // ((1 << (64 - 8)) - 1).
+            size_t overflowProtect = (1 << (sizeof(size_t) - 8)) - 1;
+            while((this->cursor < input_length) && isxdigit(this->input[this->cursor])) {
+              if (this->chunkSize > overflowProtect) {
+                // This next digit will cause an overflow, so error instead.
+                this->currentMessage->setStatusCode(400).setErrorMessage("Chunk size too large.");
+                break;
+              }
+              char ch = this->input[this->cursor];
+              this->chunkSize <<= 8;
+              this->chunkSize += isdigit(ch)
+                ? ch - '0'
+                : isupper(ch)
+                  ? ch - 'A' + 10
+                  : ch - 'a' + 10;
+              ++this->cursor;
+            }
+            if (this->cursor < input_length) {
+              SET_MINOR_STATE(AFTER_CHUNK_SIZE);
+            }
+            break;
+          }
+          case AFTER_CHUNK_SIZE: {
+            READ_WHITESPACE_OPTIONAL(CHUNK_EXTENSIONS_IDENTIFIER);
+            break;
+          }
+          case CHUNK_EXTENSIONS_IDENTIFIER: {
+            if (this->input[this->cursor] == ';') {
+              ++this->cursor;
+              SET_MINOR_STATE(CHUNK_EXTENSIONS);
+            }
+            else {
+              SET_MINOR_STATE(CRLF);
+            }
+            break;
+          }
+          case CHUNK_EXTENSIONS: {
+            // https://datatracker.ietf.org/doc/html/rfc9112#name-chunk-extensions
+            // TODO: parse these into a list of extension name/value pairs.
+            //   I'm not doing it at the moment because the use of these
+            //   extension values are implementation specific, and it's just a
+            //   lot of complexity for a feature that's not being used at the
+            //   moment.
+            while ((this->cursor < input_length) && !isCRLFChar(this->input[this->cursor])) {
+              ++this->cursor;
+            }
+            if (this->cursor < input_length) {
+              this->extensions = this->input.substr(this->minorStart, this->cursor - this->minorStart);
+              SET_MINOR_STATE(AFTER_CHUNK_EXTENSIONS);
+            }
+            break;
+          }
+          case AFTER_CHUNK_EXTENSIONS: {
+            READ_CRLF_REQUIRED(CHUNK_BODY, 400, "Error reading chunk size/extensions.");
+            break;
+          }
+          case CHUNK_BODY: {
+            auto cursorStart = this->cursor;
+
+            // Read in as much as possible, until the fixed contentLength is
+            // reached, whichever is first.
+            while ((this->cursor < input_length) && ((this->cursor - this->minorStart) < this->chunkSize)) {
+              ++this->cursor;
+            }
+
+            // Move the processed part into a chunk..
+            if (this->currentChunk.append(this->input.substr(cursorStart, this->cursor - cursorStart))) {
+              // The append failed.  We can't do anything else.
+              // Insufficient Storage
+              // https://datatracker.ietf.org/doc/html/rfc4918#section-11.5
+              this->currentMessage->setStatusCode(507).setErrorMessage("Insufficient Storage");
+              break;
+            }
+
+            // If the chunk is too big in memory, convert it to a file.
+            if ((this->currentChunk.getType() == Blob::Type::TEXT) && (this->currentChunk.getText().length() > this->getMEMCHUNKSIZELIMIT())) {
+              if (this->currentChunk.convertToFile()) {
+                // Insufficient Storage
+                // https://datatracker.ietf.org/doc/html/rfc4918#section-11.5
+                this->currentMessage->setStatusCode(507).setErrorMessage("Insufficient Storage");
+                break;
+              }
+            }
+
+            // If there is no more to read, then finalize the message.
+            if ((this->cursor - this->minorStart) == this->chunkSize) {
+              this->currentMessage->addChunk(move(this->currentChunk));
+              this->currentChunk = {};
+              this->currentMessage->setReady(false);
+
+              // If this was a 0-length chunk, then it was the last chunk and
+              // we should move on to the Trailer section.  Else, try to read
+              // the next chunk.
+              if (this->chunkSize) {
+                SET_MINOR_STATE(CHUNK_START);
+                START_NEW_INPUT;
+              }
+              else {
+                SET_MAJOR_STATE(TRAILER, BEGINNING_OF_FIELD_LINE);
+              }
+            }
+            break;
+          }
+          default: {
+            assert(false);
+          }
         }
         break;
       }
+      case FINISHED: {
+        // This is the end of the message.
+        this->currentMessage->setReady(true);
+        this->messages.emplace(move(this->currentMessage));
+        this->currentMessage = this->createNewMessage();
+
+        // Break the input so that each message has its own shared_string_view.
+        START_NEW_INPUT;
+
+        SET_NEW_HEADER;
+        break;
+      }
       default: {
+        assert(false);
         this->currentMessage->setErrorMessage("foo");
       }
     }

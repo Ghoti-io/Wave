@@ -32,6 +32,7 @@ Message::Message(Type type) :
   version{},
   messageBody{},
   headers{},
+  trailers{},
   readySemaphore{0} {
 }
 
@@ -55,6 +56,7 @@ void Message::adoptContents(Message & source) {
   this->messageBody = move(source.messageBody);
   this->chunks = move(source.chunks);
   this->headers = move(source.headers);
+  this->trailers = move(source.trailers);
 
   // We have to take special care to migrate anything inherited via
   // polymorphism.
@@ -211,8 +213,17 @@ Message & Message::addFieldValue(const shared_string_view & name, const shared_s
   return *this;
 }
 
+Message & Message::addTrailerFieldValue(const shared_string_view & name, const shared_string_view & value) {
+  this->trailers[name].push_back(value);
+  return *this;
+}
+
 const map<shared_string_view, vector<shared_string_view>> & Message::getFields() const {
   return this->headers;
+}
+
+const map<shared_string_view, vector<shared_string_view>> & Message::getTrailerFields() const {
+  return this->trailers;
 }
 
 Message & Message::setMessageBody(Blob && messageBody) {

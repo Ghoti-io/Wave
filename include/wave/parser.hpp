@@ -91,6 +91,8 @@ class Parser {
     FIELD_LINE,    ///< Expect a new header field.
     MESSAGE_BODY,  ///< Expect the message body.
     CHUNKED_BODY,  ///< Expect a chunked body.
+    TRAILER,       ///< Look for an (optional) trailer section.
+    FINISHED,      ///< The message is finished.
   };
 
   /**
@@ -134,8 +136,17 @@ class Parser {
     AFTER_HEADER_FIELDS,       ///< Header fields processed.
     MESSAGE_START,             ///< Message started.
     MESSAGE_READ,              ///< Message being read.
-    CHUNK_HEADER,              ///< Chunk header being read.
+    CHUNK_START,               ///< The beginning of a new chunk.
+    CHUNK_SIZE,                ///< Chunk header being read.
+    AFTER_CHUNK_SIZE,          ///< Chunk size is read, extensions may follow.
+    CHUNK_EXTENSIONS_IDENTIFIER, ///< Identifies that a chunk extension will
+                                 ///<   follow.
+    CHUNK_EXTENSIONS,          ///< Chunk Extensions being read.
+    AFTER_CHUNK_EXTENSIONS,    ///< Newline after chunk extensions.
     CHUNK_BODY,                ///< Chunk body being read.
+    AFTER_CHUNK_BODY,          ///< Chunk body is complete.
+    TRAILER_FINISHED,          ///< The trailer section is finished.
+    MESSAGE_FINISHED,          ///< The message is finished.
   };
 
   /**
@@ -191,6 +202,11 @@ class Parser {
   Ghoti::shared_string_view tempFieldValue;
 
   /**
+   * The extensions that accompany the chunk.
+   */
+  Ghoti::shared_string_view extensions;
+
+  /**
    * A map to store a Message associated with a sequence.
    *
    * This approach is used so that the parser can be informed of the existence
@@ -225,6 +241,11 @@ class Parser {
    * The content length that was encountered when parsing the header.
    */
   size_t contentLength;
+
+  /**
+   * The size of the chunk currently being read (in bytes).
+   */
+  size_t chunkSize;
 
   /**
    * The current chunk being collected.

@@ -214,11 +214,27 @@ class Message : public HasMessageParameters {
   Message & addFieldValue(const Ghoti::shared_string_view & name, const Ghoti::shared_string_view & value);
 
   /**
+   * Add a trailer key/value pair.
+   *
+   * @param name The field name.
+   * @param value The field value.
+   * @return The Message object.
+   */
+  Message & addTrailerFieldValue(const Ghoti::shared_string_view & name, const Ghoti::shared_string_view & value);
+
+  /**
    * Get the map of all header field key/value pairs.
    *
    * fields[field name] = [field value]
    */
   const std::map<Ghoti::shared_string_view, std::vector<Ghoti::shared_string_view>> & getFields() const;
+
+  /**
+   * Get the map of all trailer field key/value pairs.
+   *
+   * fields[field name] = [field value]
+   */
+  const std::map<Ghoti::shared_string_view, std::vector<Ghoti::shared_string_view>> & getTrailerFields() const;
 
   /**
    * Set the content body of the message.
@@ -438,6 +454,13 @@ class Message : public HasMessageParameters {
    * `headers[field name] = [field value]`
    */
   std::map<Ghoti::shared_string_view, std::vector<Ghoti::shared_string_view>> headers;
+
+  /**
+   * A collection of trailers and their associated values.
+   *
+   * `trailer[field name] = [field value]`
+   */
+  std::map<Ghoti::shared_string_view, std::vector<Ghoti::shared_string_view>> trailers;
 
   /**
    * The semaphore used for asynchronous notification of when the message
